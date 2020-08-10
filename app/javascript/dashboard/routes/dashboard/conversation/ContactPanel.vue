@@ -23,7 +23,7 @@
             :href="`mailto:${contact.email}`"
             class="contact--email"
           >
-            <i v-bind:class="{'fa fa-badge-check id-verified': contact['identifier'],  'fa fa-exclamation-circle id-unverified': !contact['identifier']}"></i>
+            <i v-bind:class="{'fa fa-badge-check id-verified': contact['id'],  'fa fa-exclamation-circle id-unverified': !contact['id']}"></i>
             <span>
               {{ contact.email }}
             </span>
