@@ -23,6 +23,10 @@
             :href="`mailto:${contact.email}`"
             class="contact--email"
           >
+            <i
+              v-bind:class="[{contact.identifier : fa fa-badge-check id-verified}, fa fa-exclamation-circle id-unverified"
+              >
+            </i>
             <span>
               {{ contact.email }}
             </span>
@@ -171,11 +175,6 @@ export default {
     contact() {
       return this.$store.getters['contacts/getContact'](this.contactId);
     },
-    identityVerification() {
-      if (contactId) {
-
-      }
-    }
   },
   watch: {
     conversationId(newConversationId, prevConversationId) {
