@@ -107,7 +107,6 @@
 </template>
 
 <script>
-Vue.config.devtools = true;
 import { mapGetters } from 'vuex';
 import Thumbnail from 'dashboard/components/widgets/Thumbnail.vue';
 import ContactConversations from './ContactConversations.vue';
