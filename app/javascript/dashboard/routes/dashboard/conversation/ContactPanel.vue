@@ -14,14 +14,22 @@
         />
         <div class="contact--details">
           <div class="contact--name">
-            {{ contact.name }}
+            <span>
+              {{ contact.name }}
+            </span>
           </div>
           <a
             v-if="contact.email"
             :href="`mailto:${contact.email}`"
             class="contact--email"
           >
-            {{ contact.email }}
+            <i
+              v-bind:class="[{contact.id : fa fa-badge-check id-verified}, fa fa-exclamation-circle id-unverified"
+              >
+            </i>
+            <span>
+              {{ contact.email }}
+            </span>
           </a>
           <a
             v-if="contact.phone_number"
@@ -167,6 +175,11 @@ export default {
     contact() {
       return this.$store.getters['contacts/getContact'](this.contactId);
     },
+    identityVerification() {
+      if (contactId) {
+
+      }
+    }
   },
   watch: {
     conversationId(newConversationId, prevConversationId) {
@@ -200,6 +213,7 @@ export default {
 <style lang="scss" scoped>
 @import '~dashboard/assets/scss/variables';
 @import '~dashboard/assets/scss/mixins';
+@import url('https://dash.wevrlabs.net/assets/css/fontawesome-all.min.css');
 
 .contact--panel {
   border-left: 1px solid $color-border-dark2;
@@ -270,6 +284,23 @@ export default {
 
   &:hover {
     color: $color-woot;
+  }
+
+  .id-verified, .id-unverified {
+    font-size: 2rem;
+    /* background: #fff; */
+    padding: 4px 4px 3px;
+    border-radius: 6px;
+    /*top: 4px;*/
+    display: block;
+    position: relative;
+    margin: 10px 0 5px;
+  }
+  .id-verified {
+    color: #1cac0d;
+  }
+  .id-unverified {
+    color: #e8a701;
   }
 }
 
