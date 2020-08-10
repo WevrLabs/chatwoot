@@ -23,10 +23,6 @@
             :href="`mailto:${contact.email}`"
             class="contact--email"
           >
-            <i
-              v-bind:class="[{contact.id : fa fa-badge-check id-verified}, fa fa-exclamation-circle id-unverified"
-              >
-            </i>
             <span>
               {{ contact.email }}
             </span>
@@ -111,6 +107,7 @@
 </template>
 
 <script>
+Vue.config.devtools = true;
 import { mapGetters } from 'vuex';
 import Thumbnail from 'dashboard/components/widgets/Thumbnail.vue';
 import ContactConversations from './ContactConversations.vue';
