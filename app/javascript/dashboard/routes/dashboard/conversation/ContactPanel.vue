@@ -23,7 +23,7 @@
             :href="`mailto:${contact.email}`"
             class="contact--email"
           >
-            <i v-bind:class="{'fa fa-badge-check id-verified': contact['id'],  'fa fa-exclamation-circle id-unverified': !contact['id']}"></i>
+            <i v-bind:class="{'fa fa-badge-check id-verified': contact['identifier'],  'fa fa-exclamation-circle id-unverified': !contact['identifier']}"></i>
             <span>
               {{ contact.email }}
             </span>
@@ -172,6 +172,11 @@ export default {
     contact() {
       return this.$store.getters['contacts/getContact'](this.contactId);
     },
+
+contactIDverify() {
+  return this.$store.getters['contacts/getContact'](this.contactIdentifier);
+},
+
   },
   watch: {
     conversationId(newConversationId, prevConversationId) {
@@ -182,6 +187,11 @@ export default {
     contactId() {
       this.getContactDetails();
     },
+
+contactIdentifier() {
+  this.getContactDetails();
+},
+
   },
   mounted() {
     this.getContactDetails();
@@ -197,6 +207,11 @@ export default {
       if (this.contactId) {
         this.$store.dispatch('contacts/show', { id: this.contactId });
       }
+
+if (this.contactIdentifier) {
+  this.$store.dispatch('contacts/show', { identifier: this.contactIdentifier });
+}
+
     },
   },
 };
