@@ -24,7 +24,7 @@
             class="contact--email"
           >
             <i
-              v-bind:class="[{contact.identifier : fa fa-badge-check id-verified}, fa fa-exclamation-circle id-unverified"
+              v-bind:class="[{contact.identifier: fa fa-badge-check id-verified}, fa fa-exclamation-circle id-unverified"
               >
             </i>
             <span>
