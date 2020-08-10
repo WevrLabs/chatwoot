@@ -207,12 +207,14 @@ contactIdentifier() {
       if (this.contactId) {
         this.$store.dispatch('contacts/show', { id: this.contactId });
       }
+    },
 
+getContactDetails() {
 if (this.contactIdentifier) {
   this.$store.dispatch('contacts/show', { identifier: this.contactIdentifier });
 }
+},
 
-    },
   },
 };
 </script>
