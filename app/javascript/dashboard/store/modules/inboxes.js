@@ -11,7 +11,15 @@ const buildInboxData = inboxParams => {
   Object.keys(inboxProperties).forEach(key => {
     formData.append(key, inboxProperties[key]);
   });
-  Object.keys(channel).forEach(key => {
+  const { selectedFeatureFlags = [], ...channelParams } = channel;
+  if (selectedFeatureFlags.length) {
+    selectedFeatureFlags.forEach(featureFlag => {
+      formData.append(`channel[selected_feature_flags][]`, featureFlag);
+    });
+  } else {
+    formData.append('channel[selected_feature_flags][]', '');
+  }
+  Object.keys(channelParams).forEach(key => {
     formData.append(`channel[${key}]`, channel[key]);
   });
   return formData;
@@ -129,6 +137,14 @@ export const actions = {
     } catch (error) {
       commit(types.default.SET_INBOXES_UI_FLAG, { isDeleting: false });
       throw new Error(error);
+    }
+  },
+  reauthorizeFacebookPage: async ({ commit }, params) => {
+    try {
+      const response = await FBChannel.reauthorizeFacebookPage(params);
+      commit(types.default.EDIT_INBOXES, response.data);
+    } catch (error) {
+      throw new Error(error.message);
     }
   },
 };

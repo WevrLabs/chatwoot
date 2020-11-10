@@ -27,6 +27,10 @@
     </div>
 
     <div class="bottom-nav">
+      <availability-status />
+    </div>
+
+    <div class="bottom-nav app-context-menu">
       <transition name="menu-slide">
         <div
           v-if="showOptionsMenu"
@@ -55,18 +59,18 @@
           </ul>
         </div>
       </transition>
+
       <div class="current-user" @click.prevent="showOptions()">
         <thumbnail
           :src="currentUser.avatar_url"
-          :username="currentUser.name"
-          :status="currentUser.availability_status"
+          :username="currentUserAvailableName"
         />
         <div class="current-user--data">
           <h3 class="current-user--name">
-            {{ currentUser.name }}
+            {{ currentUserAvailableName }}
           </h3>
-          <h5 class="current-user--role">
-            {{ currentRole }}
+          <h5 v-if="currentRole" class="current-user--role">
+            {{ $t(`AGENT_MGMT.AGENT_TYPES.${currentRole.toUpperCase()}`) }}
           </h5>
         </div>
         <span class="current-user--options icon ion-android-more-vertical" />
@@ -157,17 +161,18 @@ import { mixin as clickaway } from 'vue-clickaway';
 import adminMixin from '../../mixins/isAdmin';
 import Auth from '../../api/auth';
 import SidebarItem from './SidebarItem';
+import AvailabilityStatus from './AvailabilityStatus';
 import { frontendURL } from '../../helper/URLHelper';
 import Thumbnail from '../widgets/Thumbnail';
 import { getSidebarItems } from '../../i18n/default-sidebar';
 import { required, minLength } from 'vuelidate/lib/validators';
 import alertMixin from 'shared/mixins/alertMixin';
-// import accountMixin from '../../../../../mixins/account';
 
 export default {
   components: {
     SidebarItem,
     Thumbnail,
+    AvailabilityStatus,
   },
   mixins: [clickaway, adminMixin, alertMixin],
   props: {
@@ -202,6 +207,9 @@ export default {
       uiFlags: 'agents/getUIFlags',
       accountLabels: 'labels/getLabelsOnSidebar',
     }),
+    currentUserAvailableName() {
+      return this.currentUser.name;
+    },
     showChangeAccountOption() {
       if (this.globalConfig.createNewAccountFromDashboard) {
         return true;
@@ -249,6 +257,7 @@ export default {
           label: inbox.name,
           toState: frontendURL(`accounts/${this.accountId}/inbox/${inbox.id}`),
           type: inbox.channel_type,
+          phoneNumber: inbox.phone_number,
         })),
       };
     },
@@ -265,6 +274,7 @@ export default {
           id: label.id,
           label: label.title,
           color: label.color,
+          truncateLabel: true,
           toState: frontendURL(
             `accounts/${this.accountId}/label/${label.title}`
           ),
@@ -394,5 +404,8 @@ export default {
       text-transform: capitalize;
     }
   }
+}
+.app-context-menu {
+  height: 6rem;
 }
 </style>

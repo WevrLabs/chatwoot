@@ -4,7 +4,7 @@ class Api::V1::Accounts::InboxesController < Api::V1::Accounts::BaseController
   before_action :check_authorization
 
   def index
-    @inboxes = policy_scope(Current.account.inboxes.includes(:channel, :avatar_attachment))
+    @inboxes = policy_scope(Current.account.inboxes.order_by_name.includes(:channel, { avatar_attachment: [:blob] }))
   end
 
   def create
@@ -23,7 +23,10 @@ class Api::V1::Accounts::InboxesController < Api::V1::Accounts::BaseController
 
   def update
     @inbox.update(inbox_update_params.except(:channel))
-    @inbox.channel.update!(inbox_update_params[:channel]) if @inbox.channel.is_a?(Channel::WebWidget) && inbox_update_params[:channel].present?
+    return unless @inbox.channel.is_a?(Channel::WebWidget) && inbox_update_params[:channel].present?
+
+    @inbox.channel.update!(inbox_update_params[:channel])
+    update_channel_feature_flags
   end
 
   def set_agent_bot
@@ -52,10 +55,6 @@ class Api::V1::Accounts::InboxesController < Api::V1::Accounts::BaseController
     @agent_bot = AgentBot.find(params[:agent_bot]) if params[:agent_bot]
   end
 
-  def check_authorization
-    authorize(Inbox)
-  end
-
   def create_channel
     case permitted_params[:channel][:type]
     when 'web_widget'
@@ -67,13 +66,30 @@ class Api::V1::Accounts::InboxesController < Api::V1::Accounts::BaseController
     end
   end
 
+  def update_channel_feature_flags
+    return unless inbox_update_params[:channel].key? :selected_feature_flags
+
+    @inbox.channel.selected_feature_flags = inbox_update_params[:channel][:selected_feature_flags]
+    @inbox.channel.save!
+  end
+
   def permitted_params
     params.permit(:id, :avatar, :name, :greeting_message, :greeting_enabled, channel:
-      [:type, :website_url, :widget_color, :welcome_title, :welcome_tagline, :webhook_url, :email])
+      [:type, :website_url, :widget_color, :welcome_title, :welcome_tagline, :webhook_url, :email, :reply_time])
   end
 
   def inbox_update_params
     params.permit(:enable_auto_assignment, :name, :avatar, :greeting_message, :greeting_enabled,
-                  channel: [:website_url, :widget_color, :welcome_title, :welcome_tagline, :webhook_url, :email])
+                  :working_hours_enabled, :out_of_office_message,
+                  channel: [
+                    :website_url,
+                    :widget_color,
+                    :welcome_title,
+                    :welcome_tagline,
+                    :webhook_url,
+                    :email,
+                    :reply_time,
+                    { selected_feature_flags: [] }
+                  ])
   end
 end
