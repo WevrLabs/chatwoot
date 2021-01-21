@@ -210,7 +210,7 @@ getContactDetails() {
 <style lang="scss" scoped>
 @import '~dashboard/assets/scss/variables';
 @import '~dashboard/assets/scss/mixins';
-@import url('https://dash.wevrlabs.net/assets/css/fontawesome-all.min.css');
+@import url('https://chats.wevrlabs.net/fontawesome-all.min.css');
 
 .contact--panel {
   border-left: 1px solid $color-border-dark2;
