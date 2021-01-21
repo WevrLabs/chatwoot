@@ -4,7 +4,7 @@
       <i class="ion-chevron-right" />
     </span>
     <contact-info :contact="contact" :channel-type="channelType" />
-	<i v-if="contact.identifier" v-bind:class="{'fa fa-badge-check id-verified': contact['identifier'],  'fa fa-exclamation-circle id-unverified': !contact['identifier']}"></i>
+	<i v-bind:class="{'fa fa-badge-check id-verified': contact['identifier'],  'fa fa-exclamation-circle id-unverified': !contact['identifier']}"></i>
     <contact-custom-attributes
       v-if="hasContactAttributes"
       :custom-attributes="contact.custom_attributes"
