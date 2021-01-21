@@ -194,9 +194,9 @@ contactIdentifier() {
     },
 
 getContactDetails() {
-if (this.contactIdentifier) {
-  this.$store.dispatch('contacts/show', { identifier: this.contactIdentifier });
-}
+	if (this.contactIdentifier) {
+	  this.$store.dispatch('contacts/show', { identifier: this.contactIdentifier });
+	}
 },
 
     openTranscriptModal() {
