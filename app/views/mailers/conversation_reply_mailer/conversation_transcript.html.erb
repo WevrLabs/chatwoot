@@ -1,0 +1,26 @@
+<% markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML, autolink: true, tables: true) %>
+<% @messages.each do |message| %>
+  <tr>
+    <td>
+      <b><%= message.sender&.try(:available_name) || message.sender&.name || '' %></b>
+    </td>
+  </tr>
+  <tr>
+    <td style="text-align: start; unicode-bidi: plaintext; padding: 10px 20px; margin: 5px 0 20px 0; background: #efefef; border-radius: 10px; display: inline-block;">
+
+      <style type="text/css">
+        p {text-align: start !important;unicode-bidi: plaintext;}
+      </style>
+
+      <% if message.content %>
+        <%= markdown.render(message.content).html_safe %>
+      <% end %>
+      <% if message.attachments %>
+        <% message.attachments.each do |attachment| %>
+          Attachment [<a href="<%= attachment.file_url %>" _target="blank">View</a>]
+        <% end %>
+      <% end %>
+      <br />
+    </td>
+  </tr>
+<% end %>

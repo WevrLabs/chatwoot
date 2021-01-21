@@ -1,5 +1,9 @@
 <template>
-  <file-upload :size="4096 * 2048" @input-file="onFileUpload">
+  <file-upload
+    :size="4096 * 2048"
+    accept="image/*, application/pdf, audio/mpeg, video/mp4, audio/ogg, text/csv, application/zip, application/x-zip, application/x-zip-compressed"
+    @input-file="onFileUpload"
+  >
     <span class="attachment-button ">
       <i v-if="!isUploading.image" class="ion-android-attach" />
       <spinner v-if="isUploading" size="small" />
@@ -10,7 +14,6 @@
 <script>
 import FileUpload from 'vue-upload-component';
 import Spinner from 'shared/components/Spinner.vue';
-
 export default {
   components: { FileUpload, Spinner },
   props: {
@@ -45,14 +48,12 @@ export default {
 </script>
 <style scoped lang="scss">
 @import '~widget/assets/scss/variables.scss';
-
 .attachment-button {
   background: transparent;
   border: 0;
   cursor: pointer;
   position: relative;
   width: 20px;
-
   i {
     font-size: $font-size-large;
     color: $color-gray;

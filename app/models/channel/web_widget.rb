@@ -4,6 +4,8 @@
 #
 #  id              :integer          not null, primary key
 #  feature_flags   :integer          default(3), not null
+#  hmac_token      :string
+#  reply_time      :integer          default("in_a_few_minutes")
 #  website_token   :string
 #  website_url     :string
 #  welcome_tagline :string
@@ -15,6 +17,7 @@
 #
 # Indexes
 #
+#  index_channel_web_widgets_on_hmac_token     (hmac_token) UNIQUE
 #  index_channel_web_widgets_on_website_token  (website_token) UNIQUE
 #
 
@@ -29,9 +32,16 @@ class Channel::WebWidget < ApplicationRecord
   belongs_to :account
   has_one :inbox, as: :channel, dependent: :destroy
   has_secure_token :website_token
+  has_secure_token :hmac_token
+
   has_flags 1 => :attachments,
             2 => :emoji_picker,
             :column => 'feature_flags'
+  enum reply_time: { in_a_few_minutes: 0, in_a_few_hours: 1, in_a_day: 2 }
+
+  def name
+    'Website'
+  end
 
   def has_24_hour_messaging_window?
     false
@@ -54,9 +64,12 @@ class Channel::WebWidget < ApplicationRecord
     </script>"
   end
 
-  def create_contact_inbox
+  def create_contact_inbox(additional_attributes = {})
     ActiveRecord::Base.transaction do
-      contact = inbox.account.contacts.create!(name: ::Haikunator.haikunate(1000))
+      contact = inbox.account.contacts.create!(
+        name: ::Haikunator.haikunate(1000),
+        additional_attributes: additional_attributes
+      )
       contact_inbox = ::ContactInbox.create!(
         contact_id: contact.id,
         inbox_id: inbox.id,

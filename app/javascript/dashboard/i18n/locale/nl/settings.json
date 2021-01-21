@@ -26,7 +26,8 @@
         "TITLE": "E-mail notificaties",
         "NOTE": "Update hier uw e-mailvoorkeuren",
         "CONVERSATION_ASSIGNMENT": "E-mailberichten verzenden wanneer een gesprek aan mij is toegewezen",
-        "CONVERSATION_CREATION": "E-mailberichten verzenden wanneer een nieuw gesprek is gemaakt"
+        "CONVERSATION_CREATION": "E-mailberichten verzenden wanneer een nieuw gesprek is gemaakt",
+        "ASSIGNED_CONVERSATION_NEW_MESSAGE": "Send email notifications when a new message is created in an assigned conversation"
       },
       "API": {
         "UPDATE_SUCCESS": "Uw notificatie-instellingen zijn succesvol bijgewerkt",
@@ -37,6 +38,7 @@
         "NOTE": "Werk je pushberichtvoorkeuren hier bij",
         "CONVERSATION_ASSIGNMENT": "Stuur pushberichten wanneer een gesprek aan mij is toegewezen",
         "CONVERSATION_CREATION": "Stuur pushberichten wanneer een nieuw gesprek is aangemaakt",
+        "ASSIGNED_CONVERSATION_NEW_MESSAGE": "Send push notifications when a new message is created in an assigned conversation",
         "HAS_ENABLED_PUSH": "Je hebt pushberichten voor deze browser ingeschakeld.",
         "REQUEST_PUSH": "Pushberichten inschakelen"
       },
@@ -44,25 +46,21 @@
         "LABEL": "Profiel afbeelding"
       },
       "NAME": {
-        "LABEL": "Uw naam",
-        "ERROR": "Voer een geldige naam in",
-        "PLACEHOLDER": "Voer je naam in, dit zou worden weergegeven in gesprekken"
+        "LABEL": "Your full name",
+        "ERROR": "Please enter a valid full name",
+        "PLACEHOLDER": "Please enter your full name"
+      },
+      "DISPLAY_NAME": {
+        "LABEL": "Display name",
+        "ERROR": "Please enter a valid display name",
+        "PLACEHOLDER": "Please enter a display name, this would be displayed in conversations"
       },
       "AVAILABILITY": {
         "LABEL": "Availability",
         "STATUSES_LIST": [
-          {
-            "value": "online",
-            "label": "Online"
-          },
-          {
-            "value": "busy",
-            "label": "Busy"
-          },
-          {
-            "value": "offline",
-            "label": "Offline"
-          }
+          "Online",
+          "Busy",
+          "Offline"
         ]
       },
       "EMAIL": {
@@ -83,6 +81,7 @@
     }
   },
   "SIDEBAR_ITEMS": {
+    "CHANGE_AVAILABILITY_STATUS": "Veranderen",
     "CHANGE_ACCOUNTS": "Switch Account",
     "SELECTOR_SUBTITLE": "Select an account from the following list",
     "PROFILE_SETTINGS": "Profiel instellingen",
@@ -114,6 +113,7 @@
   "SIDEBAR": {
     "CONVERSATIONS": "Gesprekken",
     "REPORTS": "Rapporten",
+    "CONTACTS": "Contacts",
     "SETTINGS": "Instellingen",
     "HOME": "Startpagina",
     "AGENTS": "Medewerkers",
@@ -122,5 +122,21 @@
     "INTEGRATIONS": "Integraties",
     "ACCOUNT_SETTINGS": "Accountinstellingen",
     "LABELS": "Labelen"
+  },
+  "CREATE_ACCOUNT": {
+    "NEW_ACCOUNT": "New Account",
+    "SELECTOR_SUBTITLE": "Create a new account",
+    "API": {
+      "SUCCESS_MESSAGE": "Account created successfully",
+      "EXIST_MESSAGE": "Account already exists",
+      "ERROR_MESSAGE": "Kan geen verbinding maken met Woot Server, probeer het later opnieuw"
+    },
+    "FORM": {
+      "NAME": {
+        "LABEL": "Klant naam",
+        "PLACEHOLDER": "Wayne Ondernemingen"
+      },
+      "SUBMIT": "Bevestigen"
+    }
   }
 }

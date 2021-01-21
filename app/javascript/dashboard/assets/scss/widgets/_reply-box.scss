@@ -1,54 +1,28 @@
 .reply-box {
-  @include light-shadow;
-  border-bottom: 0;
-  border-radius: $space-small;
-  margin: $space-normal;
-  margin-top: 0;
-  max-height: $space-mega * 3;
-  transition: box-shadow .35s $ease-in-out-cubic, height 2s $ease-in-out-cubic;
+  transition: box-shadow .35s $swift-ease-out-function,
+    height 2s $swift-ease-out-function;
+
 
   &.is-focused {
-    @include normal-shadow;
+    box-shadow: var(--shadow);
   }
 
   .reply-box__top {
-    @include flex;
-    @include flex-align($x: left, $y: middle);
-    @include padding($space-one $space-normal);
-    background: $color-background-dark1;
-    @include margin(0);
-    border-top-left-radius: $space-small;
-    border-top-right-radius: $space-small;
-    position: relative;
-
     .canned {
-      @include elegant-card;
-      background: $color-white;
-      border-bottom: $space-small solid $color-white;
-      border-top: $space-small solid $color-white;
+      background: var(--white);
+      border-bottom: var(--space-small) solid var(--white);
+      border-top: 1px solid var(--color-border);
       left: 0;
 
       max-height: 15rem;
       overflow: auto;
+      padding-top: var(--space-small);
       position: absolute;
       width: 100%;
       z-index: 100;
 
       .active a {
         background: $color-woot;
-      }
-    }
-
-    &.is-active {
-      border-bottom-left-radius: $space-small;
-      border-bottom-right-radius: $space-small;
-    }
-
-    &.is-private {
-      background: $color-background-dark1;
-
-      > input {
-        background: $color-background-dark1;
       }
     }
 
@@ -63,9 +37,6 @@
       }
     }
 
-    .file-uploads > label {
-      cursor: pointer;
-    }
 
     .attachment {
       cursor: pointer;
@@ -73,14 +44,15 @@
       padding: 0 $space-small;
     }
 
-    > textarea {
+    >textarea {
       @include ghost-input();
       @include margin(0);
       background: transparent;
       // Override min-height : 50px in foundation
       //
       max-height: $space-mega * 2.4;
-      min-height: 4rem;
+      min-height: 4.8rem;
+      padding: var(--space-normal) 0 0;
       resize: none;
       color: #f7f7f7;
       text-align: start;
@@ -88,82 +60,39 @@
     }
   }
 
-  .reply-box__bottom {
-    background: $color-background-dark2;
-    @include flex;
-    @include flex-align($x: justify, $y: middle);
-    border-top: 1px solid $color-border-dark2;
-    border-bottom-left-radius: $space-small;
-    border-bottom-right-radius: $space-small;
+  &.is-private {
+    background: $color-background-dark1;
 
-    .tabs {
-      border: 0;
-      flex: 1;
-      padding: 0;
+    .reply-box__top {
+      background: $color-background-dark1;
 
-      .tabs-title {
-        margin: 0;
-        transition: all .2s $ease-in-out-cubic;
-        transition-property: color, background;
-
-        a {
-          font-weight: $font-weight-medium;
-          padding: $space-one $space-two;
-        }
-
-        &.is-private.is-active {
-          background: $color-background-dark1;
-
-          a {
-            border-bottom-color: darken($warning-color, 15%);
-            color: darken($warning-color, 15%);
-          }
-        }
-      }
-
-      .tabs-title:first-child {
-        border-bottom-left-radius: $space-small;
-
-        &.is-active {
-          border-right: 1px solid $color-border-dark2;
-          border-left: 0;
-
-          a {
-            border-bottom-left-radius: $space-small;
-          }
-        }
-      }
-
-      .is-active {
+      >input {
         background: $color-background-dark1;
-        border-left: 1px solid $color-border-dark2;
-        border-right: 1px solid $color-border-dark2;
-        margin-top: -1px;
-      }
-
-      .message-length {
-        float: right;
-
-        a {
-          font-size: $font-size-mini;
-        }
-      }
-
-      .message-error {
-        color: $input-error-color;
       }
     }
+  }
 
-    .send-button {
-      border-bottom-right-radius: $space-small;
-      height: 3.6rem;
-      padding-left: $space-two;
-      padding-right: $space-two;
-      padding-top: $space-small;
+  .file-uploads>label {
+    cursor: pointer;
 
-      .icon {
-        margin-left: $space-small;
-      }
+    &:hover .button--emoji {
+      background: var(--b-200);
+    }
+  }
+
+  .bottom-box .button--emoji.button--upload {
+    height: var(--space-large);
+    padding: 0;
+    width: var(--space-large);
+
+    .file-uploads {
+      height: 100%;
+      line-height: var(--space-large);
+      width: 100%;
+    }
+
+    label {
+      padding: var(--space-small);
     }
   }
 }

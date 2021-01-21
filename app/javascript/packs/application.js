@@ -14,7 +14,7 @@ import WootWizard from 'components/ui/Wizard';
 import { sync } from 'vuex-router-sync';
 import Vuelidate from 'vuelidate';
 import VTooltip from 'v-tooltip';
-import VueHighlightJS from 'vue-highlight.js';
+//import VueHighlightJS from 'vue-highlight.js';
 import javascript from 'highlight.js/lib/languages/javascript';
 
 import WootUiKit from '../dashboard/components';
@@ -38,21 +38,21 @@ Vue.use(VueI18n);
 Vue.use(WootUiKit);
 Vue.use(Vuelidate);
 Vue.use(VTooltip);
-Vue.use(VueHighlightJS, {
-  languages: {
-    javascript,
-  },
-});
+//Vue.use(VueHighlightJS, {
+//  languages: {
+//    javascript,
+//  },
+//});
 
 Vue.component('multiselect', Multiselect);
 Vue.component('woot-switch', WootSwitch);
 Vue.component('woot-wizard', WootWizard);
 
-Object.keys(i18n).forEach(lang => {
-  Vue.locale(lang, i18n[lang]);
+const i18nConfig = new VueI18n({
+  locale: 'en',
+  messages: i18n,
 });
 
-Vue.config.lang = 'en';
 sync(store, router);
 // load common helpers into js
 commonHelpers();
@@ -64,6 +64,7 @@ window.onload = () => {
   window.WOOT = new Vue({
     router,
     store,
+    i18n: i18nConfig,
     components: { App },
     template: '<App/>',
   }).$mount('#app');

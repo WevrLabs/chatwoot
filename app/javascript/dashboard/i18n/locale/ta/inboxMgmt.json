@@ -73,6 +73,13 @@
           "ENABLED": "இயக்கப்பட்டது",
           "DISABLED": "முடக்கப்பட்டது"
         },
+        "REPLY_TIME": {
+          "TITLE": "Set Reply time",
+          "IN_A_FEW_MINUTES": "In a few minutes",
+          "IN_A_FEW_HOURS": "In a few hours",
+          "IN_A_DAY": "In a day",
+          "HELP_TEXT": "This reply time will be displayed on the live chat widget"
+        },
         "WIDGET_COLOR": {
           "LABEL": "விட்ஜெட் நிறம்",
           "PLACEHOLDER": "விட்ஜெட்டில் பயன்படுத்தப்படும் விட்ஜெட் நிறத்தைப் புதுப்பிக்கவும்"
@@ -115,13 +122,52 @@
           "ERROR_MESSAGE": "ட்விலியோ கிரேடின்டியல்செய் எங்களால் அங்கீகரிக்க முடியவில்லை, தயவுசெய்து மீண்டும் முயற்சிக்கவும்"
         }
       },
+      "API_CHANNEL": {
+        "TITLE": "API Channel",
+        "DESC": "Integrate with API channel and start supporting your customers.",
+        "CHANNEL_NAME": {
+          "LABEL": "சேனலின் பெயர்",
+          "PLACEHOLDER": "சேனலின் பெயரை உள்ளிடவும்",
+          "ERROR": "இந்த புலம் தேவை"
+        },
+        "WEBHOOK_URL": {
+          "LABEL": "வெப்ஹூக் URL",
+          "SUBTITLE": "Configure the URL where you want to recieve callbacks on events.",
+          "PLACEHOLDER": "வெப்ஹூக் URL"
+        },
+        "SUBMIT_BUTTON": "Create API Channel",
+        "API": {
+          "ERROR_MESSAGE": "We were not able to save the api channel"
+        }
+      },
+      "EMAIL_CHANNEL": {
+        "TITLE": "Email Channel",
+        "DESC": "Integrate you email inbox.",
+        "CHANNEL_NAME": {
+          "LABEL": "சேனலின் பெயர்",
+          "PLACEHOLDER": "சேனலின் பெயரை உள்ளிடவும்",
+          "ERROR": "இந்த புலம் தேவை"
+        },
+        "EMAIL": {
+          "LABEL": "இமெயில்",
+          "SUBTITLE": "Email where your customers sends you support tickets",
+          "PLACEHOLDER": "இமெயில்"
+        },
+        "SUBMIT_BUTTON": "Create Email Channel",
+        "API": {
+          "ERROR_MESSAGE": "We were not able to save the email channel"
+        },
+        "FINISH_MESSAGE": "Start forwarding your emails to the following email address."
+      },
       "AUTH": {
         "TITLE": "சேனல்கள்",
         "DESC": "தற்போது வலைத்தள நேரடி சாட் விட்ஜெட்டுகள், பேஸ்புக் பக்கங்கள் மற்றும் ட்விட்டர் சுயவிவரங்களை தளங்களாக ஆதரிக்கிறோம். விரைவில் வாட்ஸ்அப், ஈ-மெயில், டெலிகிராம் மற்றும் லைன் போன்ற பல தளங்களிலும் வர இருக்கிறது."
       },
       "AGENTS": {
         "TITLE": "ஏஜென்ட்கள்",
-        "DESC": "புதிதாக உருவாக்கப்பட்ட இன்பாக்ஸை நிர்வகிக்க ஏஜெண்டுகளை இங்கே சேர்க்கலாம். தேர்ந்தெடுக்கப்பட்ட ஏஜெண்டுகளுக்கு மட்டுமே உங்கள் இன்பாக்ஸிற்கான அணுகல் இருக்கும். இந்த இன்பாக்ஸின் பகுதியாக இல்லாத ஏஜெண்டுகள் உள்நுழையும்போது இந்த இன்பாக்ஸில் உள்ள செய்திகளைக் காணவோ அல்லது பதிலளிக்கவோ முடியாது. <br> <b> கவனத்திற்கு: </b> ஒரு நிர்வாகியாக, உங்களுக்கு எல்லா இன்பாக்ஸுக்கும் அணுகல் தேவைப்பட்டால், நீங்கள் உருவாக்கும் அனைத்து இன்பாக்ஸுக்கும் உங்களை ஏஜெண்டாக சேர்க்க வேண்டும்."
+        "DESC": "புதிதாக உருவாக்கப்பட்ட இன்பாக்ஸை நிர்வகிக்க ஏஜெண்டுகளை இங்கே சேர்க்கலாம். தேர்ந்தெடுக்கப்பட்ட ஏஜெண்டுகளுக்கு மட்டுமே உங்கள் இன்பாக்ஸிற்கான அணுகல் இருக்கும். இந்த இன்பாக்ஸின் பகுதியாக இல்லாத ஏஜெண்டுகள் உள்நுழையும்போது இந்த இன்பாக்ஸில் உள்ள செய்திகளைக் காணவோ அல்லது பதிலளிக்கவோ முடியாது. <br> <b> கவனத்திற்கு: </b> ஒரு நிர்வாகியாக, உங்களுக்கு எல்லா இன்பாக்ஸுக்கும் அணுகல் தேவைப்பட்டால், நீங்கள் உருவாக்கும் அனைத்து இன்பாக்ஸுக்கும் உங்களை ஏஜெண்டாக சேர்க்க வேண்டும்.",
+        "VALIDATION_ERROR": "Add atleast one agent to your new Inbox",
+        "PICK_AGENTS": "Pick agents for the inbox"
       },
       "DETAILS": {
         "TITLE": "இன்பாக்ஸ் விவரங்கள்",
@@ -175,7 +221,17 @@
         "ERROR_MESSAGE": "இன்பாக்ஸை நீக்க முடியவில்லை. மீண்டும் முயற்சிக்கவும்."
       }
     },
+    "TABS": {
+      "SETTINGS": "அமைப்புகள்",
+      "COLLABORATORS": "Collaborators",
+      "CONFIGURATION": "Configuration"
+    },
     "SETTINGS": "அமைப்புகள்",
+    "FEATURES": {
+      "LABEL": "Features",
+      "DISPLAY_FILE_PICKER": "Display file picker on the widget",
+      "DISPLAY_EMOJI_PICKER": "Display emoji picker on the widget"
+    },
     "SETTINGS_POPUP": {
       "MESSENGER_HEADING": "மெசஞ்சர் ஸ்கிரிப்ட்",
       "MESSENGER_SUB_HEAD": "இந்த பொத்தானை உங்கள் பாடி டேகுக்குள் வைக்கவும்",
@@ -185,7 +241,15 @@
       "AUTO_ASSIGNMENT": "தானாக ஒதுக்கீட்டை இயக்கு",
       "INBOX_UPDATE_TITLE": "இன்பாக்ஸ் அமைப்புகள்",
       "INBOX_UPDATE_SUB_TEXT": "உங்கள் இன்பாக்ஸ் அமைப்புகளைப் புதுப்பிக்கவும்",
-      "AUTO_ASSIGNMENT_SUB_TEXT": "இந்த இன்பாக்ஸில் சேர்க்கப்பட்ட ஏஜென்ட்களுக்கு புதிய உரையாடல்களின் தானியங்கி ஒதுக்கீட்டை இயக்கவும் அல்லது முடக்கவும்."
+      "AUTO_ASSIGNMENT_SUB_TEXT": "இந்த இன்பாக்ஸில் சேர்க்கப்பட்ட ஏஜென்ட்களுக்கு புதிய உரையாடல்களின் தானியங்கி ஒதுக்கீட்டை இயக்கவும் அல்லது முடக்கவும்.",
+      "HMAC_VERIFICATION": "User Identity Validation",
+      "HMAC_DESCRIPTION": "Inorder validate the users identity, the SDK allows you to pass an `identity_hash` for each user. You can generate HMAC using 'sha256' with the key shown here."
+    },
+    "FACEBOOK_REAUTHORIZE": {
+      "TITLE": "மறு அங்கீகாரம்",
+      "SUBTITLE": "Your Facebook connection has expired, please reconnect your Facebook page to continue services",
+      "MESSAGE_SUCCESS": "Reconnection successful",
+      "MESSAGE_ERROR": "There was an error, please try again"
     }
   }
 }

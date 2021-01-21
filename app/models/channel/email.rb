@@ -26,6 +26,10 @@ class Channel::Email < ApplicationRecord
   has_one :inbox, as: :channel, dependent: :destroy
   before_validation :ensure_forward_to_address, on: :create
 
+  def name
+    'Email'
+  end
+
   def has_24_hour_messaging_window?
     false
   end
@@ -33,7 +37,7 @@ class Channel::Email < ApplicationRecord
   private
 
   def ensure_forward_to_address
-    # TODO : implement better logic here
-    self.forward_to_address ||= "#{SecureRandom.hex}@sandboxa54b342eefc74ea497ae292bdb78ca21.mailgun.org"
+    email_domain = InstallationConfig.find_by(name: 'MAILER_INBOUND_EMAIL_DOMAIN')&.value
+    self.forward_to_address ||= "#{SecureRandom.hex}@#{email_domain}"
   end
 end

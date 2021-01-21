@@ -1,101 +1,59 @@
 <template>
   <div class="medium-3 bg-white contact--panel">
-    <div class="contact--profile">
-      <span class="close-button" @click="onPanelToggle">
-        <i class="ion-chevron-right" />
-      </span>
-      <div class="contact--info">
-        <thumbnail
-          :src="contact.thumbnail"
-          size="64px"
-          :badge="channelType"
-          :username="contact.name"
-          :status="contact.availability_status"
-        />
-        <div class="contact--details">
-          <div class="contact--name">
-            <span>
-              {{ contact.name }}
-            </span>
-          </div>
-          <a
-            v-if="contact.email"
-            :href="`mailto:${contact.email}`"
-            class="contact--email"
-          >
-            <i v-if="contact.identifier" v-bind:class="{'fa fa-badge-check id-verified': contact['identifier'],  'fa fa-exclamation-circle id-unverified': !contact['identifier']}"></i>
-            <span>
-              {{ contact.email }}
-            </span>
-          </a>
-          <a
-            v-if="contact.phone_number"
-            :href="`tel:${contact.phone_number}`"
-            class="contact--email"
-          >
-            {{ contact.phone_number }}
-          </a>
-
-          <div
-            v-if="
-              contact.additional_attributes &&
-                contact.additional_attributes.screen_name
-            "
-            class="contact--location"
-          >
-            {{ `@${contact.additional_attributes.screen_name}` }}
-          </div>
-          <div class="contact--location">
-            {{ contact.location }}
-          </div>
-        </div>
-      </div>
-      <div v-if="contact.bio" class="contact--bio">
-        {{ contact.bio }}
-      </div>
-      <div
-        v-if="
-          contact.additional_attributes &&
-            contact.additional_attributes.description
-        "
-        class="contact--bio"
-      >
-        {{ contact.additional_attributes.description }}
-      </div>
-      <div class="contact--actions">
-        <button
-          v-if="!currentChat.muted"
-          class="button small clear contact--mute small-6"
-          @click="mute"
-        >
-          {{ $t('CONTACT_PANEL.MUTE_CONTACT') }}
-        </button>
-      </div>
-    </div>
+    <span class="close-button" @click="onPanelToggle">
+      <i class="ion-chevron-right" />
+    </span>
+    <contact-info :contact="contact" :channel-type="channelType" />
+    <contact-custom-attributes
+      v-if="hasContactAttributes"
+      :custom-attributes="contact.custom_attributes"
+    />
     <div v-if="browser.browser_name" class="conversation--details">
+      <contact-details-item
+        v-if="location"
+        :title="$t('EDIT_CONTACT.FORM.LOCATION.LABEL')"
+        :value="location"
+        icon="ion-map"
+        emoji="📍"
+      />
+      <contact-details-item
+        v-if="ipAddress"
+        :title="$t('CONTACT_PANEL.IP_ADDRESS')"
+        :value="ipAddress"
+        icon="ion-android-locate"
+        emoji="🧭"
+      />
       <contact-details-item
         v-if="browser.browser_name"
         :title="$t('CONTACT_PANEL.BROWSER')"
         :value="browserName"
         icon="ion-ios-world-outline"
+        emoji="🌐"
       />
       <contact-details-item
         v-if="browser.platform_name"
         :title="$t('CONTACT_PANEL.OS')"
         :value="platformName"
         icon="ion-laptop"
+        emoji="💻"
       />
       <contact-details-item
         v-if="referer"
         :title="$t('CONTACT_PANEL.INITIATED_FROM')"
         :value="referer"
         icon="ion-link"
-      />
+        emoji="🔗"
+      >
+        <a :href="referer" rel="noopener noreferrer nofollow" target="_blank">
+          {{ referer }}
+        </a>
+      </contact-details-item>
       <contact-details-item
         v-if="initiatedAt"
         :title="$t('CONTACT_PANEL.INITIATED_AT')"
         :value="initiatedAt.timestamp"
         icon="ion-clock"
+        emoji="🕰"
       />
     </div>
     <conversation-labels :conversation-id="conversationId" />
@@ -109,17 +67,21 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import Thumbnail from 'dashboard/components/widgets/Thumbnail.vue';
+
 import ContactConversations from './ContactConversations.vue';
 import ContactDetailsItem from './ContactDetailsItem.vue';
+import ContactInfo from './contact/ContactInfo';
 import ConversationLabels from './labels/LabelBox.vue';
+import ContactCustomAttributes from './ContactCustomAttributes';
+import flag from 'country-code-emoji';
 
 export default {
   components: {
+    ContactCustomAttributes,
     ContactConversations,
     ContactDetailsItem,
+    ContactInfo,
     ConversationLabels,
-    Thumbnail,
   },
   props: {
     conversationId: {
@@ -143,6 +105,10 @@ export default {
     additionalAttributes() {
       return this.currentConversationMetaData.additional_attributes || {};
     },
+    hasContactAttributes() {
+      const { custom_attributes: customAttributes } = this.contact;
+      return customAttributes && Object.keys(customAttributes).length;
+    },
     browser() {
       return this.additionalAttributes.browser || {};
     },
@@ -155,6 +121,27 @@ export default {
     browserName() {
       return `${this.browser.browser_name || ''} ${this.browser
         .browser_version || ''}`;
+    },
+    contactAdditionalAttributes() {
+      return this.contact.additional_attributes || {};
+    },
+    ipAddress() {
+      const { created_at_ip: createdAtIp } = this.contactAdditionalAttributes;
+      return createdAtIp;
+    },
+    location() {
+      const {
+        country = '',
+        city = '',
+        country_code: countryCode,
+      } = this.contactAdditionalAttributes;
+      const cityAndCountry = [city, country].filter(item => !!item).join(', ');
+
+      if (!cityAndCountry) {
+        return '';
+      }
+      const countryFlag = countryCode ? flag(countryCode) : '🌎';
+      return `${countryFlag} ${cityAndCountry}`;
     },
     platformName() {
       const {
@@ -200,9 +187,6 @@ contactIdentifier() {
     onPanelToggle() {
       this.onToggle();
     },
-    mute() {
-      this.$store.dispatch('muteConversation', this.conversationId);
-    },
     getContactDetails() {
       if (this.contactId) {
         this.$store.dispatch('contacts/show', { id: this.contactId });
@@ -215,6 +199,9 @@ if (this.contactIdentifier) {
 }
 },
 
+    openTranscriptModal() {
+      this.showTranscriptModal = true;
+    },
   },
 };
 </script>
@@ -232,7 +219,11 @@ if (this.contactIdentifier) {
   overflow-y: auto;
   overflow: auto;
   position: relative;
-  padding: $space-normal;
+  padding: $space-one;
+
+  i {
+    margin-right: $space-smaller;
+  }
 }
 
 .close-button {
@@ -273,6 +264,16 @@ if (this.contactIdentifier) {
   display: flex;
   flex-direction: column;
   text-align: center;
+
+    .user-thumbnail-box {
+      height: 78px !important;
+      width: 78px !important;
+
+        .badge {
+          width: 26px !important;
+          height: 26px !important;
+        }
+    }
 }
 
 .contact--name {
@@ -318,8 +319,7 @@ if (this.contactIdentifier) {
 }
 
 .conversation--details {
-  border-top: 1px solid $color-border-dark2;
-  padding: $space-large $space-normal;
+  padding: 0 var(--space-slab);
 }
 
 .conversation--labels {
@@ -337,18 +337,15 @@ if (this.contactIdentifier) {
   }
 }
 
-.contact-conversation--panel {
-  border-top: 1px solid $color-border-dark2;
-}
-
 .contact--mute {
   color: $alert-color;
   display: block;
-  text-align: center;
+  text-align: left;
 }
 
 .contact--actions {
   display: flex;
+  flex-direction: column;
   justify-content: center;
 }
 </style>

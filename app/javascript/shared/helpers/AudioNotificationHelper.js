@@ -1,4 +1,4 @@
-const notificationAudio = require('shared/assets/audio/ding.mp3');
+const notificationAudio = require('shared/assets/audio/ding.mp3').default;
 
 export const playNotificationAudio = () => {
   try {

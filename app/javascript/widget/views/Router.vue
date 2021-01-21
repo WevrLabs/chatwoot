@@ -2,7 +2,11 @@
   <div
     id="app"
     class="woot-widget-wrap"
-    :class="{ 'is-mobile': isMobile, 'is-widget-right': !isLeftAligned }"
+    :class="{
+      'is-mobile': isMobile,
+      'is-widget-right': !isLeftAligned,
+      'is-bubble-hidden': hideMessageBubble,
+    }"
   >
     <home
       v-if="!showUnreadView"
@@ -12,6 +16,7 @@
       :has-fetched="hasFetched"
       :conversation-attributes="conversationAttributes"
       :unread-message-count="unreadMessageCount"
+      :show-popout-button="showPopoutButton"
     />
     <unread
       v-else
@@ -80,6 +85,10 @@ export default {
     unreadMessageCount: {
       type: Number,
       default: 0,
+    },
+    showPopoutButton: {
+      type: Boolean,
+      default: false,
     },
   },
 };

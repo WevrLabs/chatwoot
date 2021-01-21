@@ -34,6 +34,13 @@ code {
 
   &.hljs {
     background: $color-background;
+    border-radius: var(--border-radius-large);
     padding: $space-two;
   }
+}
+
+.text-truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }

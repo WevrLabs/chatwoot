@@ -26,7 +26,8 @@
         "TITLE": "Notificações por e-mail",
         "NOTE": "Atualize suas preferências de notificação por e-mail aqui",
         "CONVERSATION_ASSIGNMENT": "Enviar notificações por email quando uma conversa for atribuída a mim",
-        "CONVERSATION_CREATION": "Enviar notificações por email quando uma nova conversa for criada"
+        "CONVERSATION_CREATION": "Enviar notificações por email quando uma nova conversa for criada",
+        "ASSIGNED_CONVERSATION_NEW_MESSAGE": "Envie notificações por e-mail quando uma nova mensagem for criada numa conversa já atribuída"
       },
       "API": {
         "UPDATE_SUCCESS": "Suas preferências de notificação foram atualizadas com sucesso",
@@ -37,6 +38,7 @@
         "NOTE": "Atualize suas preferências de notificação Push aqui",
         "CONVERSATION_ASSIGNMENT": "Enviar notificações push quando uma conversa é atribuída a mim",
         "CONVERSATION_CREATION": "Enviar notificações push quando uma nova conversa é criada",
+        "ASSIGNED_CONVERSATION_NEW_MESSAGE": "Envie notificações quando uma nova mensagem for criada numa conversa já atribuída",
         "HAS_ENABLED_PUSH": "Você ativou push para este navegador.",
         "REQUEST_PUSH": "Habilitar notificações push"
       },
@@ -44,25 +46,21 @@
         "LABEL": "Imagem do Perfil"
       },
       "NAME": {
-        "LABEL": "Seu Nome",
-        "ERROR": "Por favor, insira um nome válido",
-        "PLACEHOLDER": "Por favor, insira seu nome, isto seria exibido em conversas"
+        "LABEL": "Seu nome completo",
+        "ERROR": "Por favor, insira um nome completo válido",
+        "PLACEHOLDER": "Por favor, digite seu nome completo"
+      },
+      "DISPLAY_NAME": {
+        "LABEL": "Nome para exibição",
+        "ERROR": "Por favor, insira um nome de exibição válido",
+        "PLACEHOLDER": "Por favor, insira um nome de exibição para ser exibido em conversas"
       },
       "AVAILABILITY": {
-        "LABEL": "Availability",
+        "LABEL": "Disponibilidade",
         "STATUSES_LIST": [
-          {
-            "value": "online",
-            "label": "Online"
-          },
-          {
-            "value": "busy",
-            "label": "Busy"
-          },
-          {
-            "value": "offline",
-            "label": "Offline"
-          }
+          "Disponível",
+          "Ocupado",
+          "Desconectado"
         ]
       },
       "EMAIL": {
@@ -83,6 +81,7 @@
     }
   },
   "SIDEBAR_ITEMS": {
+    "CHANGE_AVAILABILITY_STATUS": "Trocar",
     "CHANGE_ACCOUNTS": "Trocar Conta",
     "SELECTOR_SUBTITLE": "Selecione uma conta da lista a seguir",
     "PROFILE_SETTINGS": "Configurações do Perfil",
@@ -114,13 +113,30 @@
   "SIDEBAR": {
     "CONVERSATIONS": "Conversas",
     "REPORTS": "Relatórios",
-    "SETTINGS": "Confirgurações",
+    "CONTACTS": "Contato",
+    "SETTINGS": "Configurações",
     "HOME": "Principal",
     "AGENTS": "Agentes",
     "INBOXES": "Caixas de Entrada",
     "CANNED_RESPONSES": "Atalhos",
     "INTEGRATIONS": "Integrações",
     "ACCOUNT_SETTINGS": "Configurações da conta",
-    "LABELS": "Labels"
+    "LABELS": "Marcadores"
+  },
+  "CREATE_ACCOUNT": {
+    "NEW_ACCOUNT": "Nova conta",
+    "SELECTOR_SUBTITLE": "Criar nova conta",
+    "API": {
+      "SUCCESS_MESSAGE": "Conta criada com sucesso",
+      "EXIST_MESSAGE": "Esta conta já existe",
+      "ERROR_MESSAGE": "Não foi possível conectar ao servidor Woot, por favor tente novamente mais tarde"
+    },
+    "FORM": {
+      "NAME": {
+        "LABEL": "Nome do Cliente",
+        "PLACEHOLDER": "Informe o nome da conta"
+      },
+      "SUBMIT": "Enviar"
+    }
   }
 }

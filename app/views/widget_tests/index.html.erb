@@ -1,11 +1,23 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
 
+
+<%
+  user_id = 1
+  user_hash = OpenSSL::HMAC.hexdigest(
+    'sha256',
+    @web_widget.hmac_token,
+    user_id.to_s
+  )
+
+%>
 <script>
 
 window.chatwootSettings = {
   hideMessageBubble: false,
   position: 'left',
   locale: 'en',
+  type: 'expanded_bubble',
+  showPopoutButton: true,
 };
 
 (function(d,t) {
@@ -22,6 +34,11 @@ window.chatwootSettings = {
 })(document,"script");
 
 window.addEventListener('chatwoot:ready', function() {
-  console.log(window.$chatwoot)
+  console.log(window.$chatwoot);
+  window.$chatwoot.setUser('<%= user_id %>', {
+    identifier_hash: '<%= user_hash %>',
+    email: 'jane@acme.inc',
+    name: 'Jane Doe'
+  });
 })
 </script>

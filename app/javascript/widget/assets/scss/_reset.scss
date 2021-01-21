@@ -22,6 +22,7 @@ time, mark, audio, video {
   border: 0;
   font-size: 100%;
   vertical-align: baseline;
+  unicode-bidi: plaintext;
 }
 
 /* HTML5 display-role reset for older browsers */
@@ -32,22 +33,32 @@ footer, header, hgroup, menu, nav, section {
 
 body {
   line-height: 1;
+  text-align: start !important;
+  unicode-bidi: plaintext;
 }
 
 ol, ul {
   list-style: none;
+  text-align: start !important;
+  unicode-bidi: plaintext;
 }
 
 blockquote, q {
   quotes: none;
+  text-align: start !important;
+  unicode-bidi: plaintext;
 }
 
 blockquote:before, blockquote:after,
 q:before, q:after {
   content: none;
+  text-align: start !important;
+  unicode-bidi: plaintext;
 }
 
 table {
   border-collapse: collapse;
   border-spacing: 0;
+  text-align: start !important;
+  unicode-bidi: plaintext;
 }

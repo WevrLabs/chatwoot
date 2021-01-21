@@ -26,7 +26,8 @@
         "TITLE": "إشعارات البريد الإلكتروني",
         "NOTE": "قم بتحديث تفضيلات إشعار البريد الإلكتروني الخاص بك من هنا",
         "CONVERSATION_ASSIGNMENT": "إرسال إشعارات البريد الإلكتروني عند إسناد محادثة لي",
-        "CONVERSATION_CREATION": "إرسال إشعارات للبريد الإلكتروني عند ورود محادثة جديدة"
+        "CONVERSATION_CREATION": "إرسال إشعارات للبريد الإلكتروني عند ورود محادثة جديدة",
+        "ASSIGNED_CONVERSATION_NEW_MESSAGE": "Send email notifications when a new message is created in an assigned conversation"
       },
       "API": {
         "UPDATE_SUCCESS": "يتم تحديث إعدادات الإشعارات بنجاح",
@@ -37,6 +38,7 @@
         "NOTE": "قم بتحديث تفضيلات إشعارات المتصفح من هنا",
         "CONVERSATION_ASSIGNMENT": "إرسال إشعارات على المتصفح عند إسناد محادثة لي",
         "CONVERSATION_CREATION": "إرسال إشعارات المتصفح عند ورود محادثة جديدة",
+        "ASSIGNED_CONVERSATION_NEW_MESSAGE": "Send push notifications when a new message is created in an assigned conversation",
         "HAS_ENABLED_PUSH": "لقد قمت بتمكين الإشعارات لهذا المتصفح.",
         "REQUEST_PUSH": "تفعيل إشعارات المتصفح"
       },
@@ -44,25 +46,21 @@
         "LABEL": "صورة الملف الشخصي"
       },
       "NAME": {
-        "LABEL": "الاسم الخاص بك",
+        "LABEL": "اسمك الكامل",
         "ERROR": "الرجاء إدخال اسم صالح",
-        "PLACEHOLDER": "الرجاء إدخال اسمك، سيتم عرض هذا في المحادثات"
+        "PLACEHOLDER": "الرجاء إدخال اسمك الكامل"
+      },
+      "DISPLAY_NAME": {
+        "LABEL": "اسم العرض",
+        "ERROR": "الرجاء إدخال اسم عرض صالح",
+        "PLACEHOLDER": "الرجاء إدخال اسم العرض، سيتم عرض هذا في المحادثات"
       },
       "AVAILABILITY": {
-        "LABEL": "Availability",
+        "LABEL": "التوفر",
         "STATUSES_LIST": [
-          {
-            "value": "online",
-            "label": "Online"
-          },
-          {
-            "value": "busy",
-            "label": "Busy"
-          },
-          {
-            "value": "offline",
-            "label": "Offline"
-          }
+          "متصل",
+          "مشغول",
+          "غير متصل"
         ]
       },
       "EMAIL": {
@@ -83,6 +81,7 @@
     }
   },
   "SIDEBAR_ITEMS": {
+    "CHANGE_AVAILABILITY_STATUS": "يتغيرون",
     "CHANGE_ACCOUNTS": "تبديل الحساب",
     "SELECTOR_SUBTITLE": "اختر حساباً من القائمة التالية",
     "PROFILE_SETTINGS": "إعدادات الملف الشخصي",
@@ -114,6 +113,7 @@
   "SIDEBAR": {
     "CONVERSATIONS": "المحادثات",
     "REPORTS": "التقارير",
+    "CONTACTS": "Contacts",
     "SETTINGS": "الإعدادات",
     "HOME": "الرئيسية",
     "AGENTS": "موظف الدعم",
@@ -122,5 +122,21 @@
     "INTEGRATIONS": "خيارات الربط",
     "ACCOUNT_SETTINGS": "إعدادات الحساب",
     "LABELS": "الوسوم"
+  },
+  "CREATE_ACCOUNT": {
+    "NEW_ACCOUNT": "حساب جديد",
+    "SELECTOR_SUBTITLE": "إنشاء حساب جديد",
+    "API": {
+      "SUCCESS_MESSAGE": "تم إنشاء الحساب بنجاح",
+      "EXIST_MESSAGE": "الحساب موجود بالفعل",
+      "ERROR_MESSAGE": "تعذر الاتصال بالخادم، الرجاء المحاولة مرة أخرى لاحقاً"
+    },
+    "FORM": {
+      "NAME": {
+        "LABEL": "اسم الحساب",
+        "PLACEHOLDER": "مؤسسة Wayne"
+      },
+      "SUBMIT": "إرسال"
+    }
   }
 }

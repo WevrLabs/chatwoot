@@ -26,7 +26,8 @@
         "TITLE": "Notificări prin e-mail",
         "NOTE": "Actualizați preferințele de notificare prin e-mail aici",
         "CONVERSATION_ASSIGNMENT": "Trimite notificări prin e-mail atunci când o conversație îmi este atribuită",
-        "CONVERSATION_CREATION": "Trimite notificări prin e-mail atunci când o conversație nouă este creată"
+        "CONVERSATION_CREATION": "Trimite notificări prin e-mail atunci când o conversație nouă este creată",
+        "ASSIGNED_CONVERSATION_NEW_MESSAGE": "Send email notifications when a new message is created in an assigned conversation"
       },
       "API": {
         "UPDATE_SUCCESS": "Preferințele de notificare sunt actualizate cu succes",
@@ -37,6 +38,7 @@
         "NOTE": "Actualizați preferințele de notificare push aici",
         "CONVERSATION_ASSIGNMENT": "Trimite notificări push atunci când o conversație îmi este atribuită",
         "CONVERSATION_CREATION": "Trimite notificări push atunci când o conversație nouă este creată",
+        "ASSIGNED_CONVERSATION_NEW_MESSAGE": "Send push notifications when a new message is created in an assigned conversation",
         "HAS_ENABLED_PUSH": "Ați activat apăsarea pentru acest browser.",
         "REQUEST_PUSH": "Activează notificările push"
       },
@@ -44,25 +46,21 @@
         "LABEL": "Imagine de profil"
       },
       "NAME": {
-        "LABEL": "Numele tau",
+        "LABEL": "Numele tău complet",
+        "ERROR": "Te rugăm să introduci un nume valid",
+        "PLACEHOLDER": "Te rugăm să introduci un nume valid"
+      },
+      "DISPLAY_NAME": {
+        "LABEL": "Nume afişat",
         "ERROR": "Te rugăm să introduci un nume valid",
         "PLACEHOLDER": "Te rugăm să introduci numele tău, care va fi folosit în conversații"
       },
       "AVAILABILITY": {
-        "LABEL": "Availability",
+        "LABEL": "Disponibilitate",
         "STATUSES_LIST": [
-          {
-            "value": "online",
-            "label": "Online"
-          },
-          {
-            "value": "busy",
-            "label": "Busy"
-          },
-          {
-            "value": "offline",
-            "label": "Offline"
-          }
+          "Online",
+          "Ocupat",
+          "Deconectat"
         ]
       },
       "EMAIL": {
@@ -83,6 +81,7 @@
     }
   },
   "SIDEBAR_ITEMS": {
+    "CHANGE_AVAILABILITY_STATUS": "Schimba",
     "CHANGE_ACCOUNTS": "Comută contul",
     "SELECTOR_SUBTITLE": "Selectaţi un cont din următoarea listă",
     "PROFILE_SETTINGS": "Setări profil",
@@ -114,6 +113,7 @@
   "SIDEBAR": {
     "CONVERSATIONS": "Conversații",
     "REPORTS": "Rapoarte",
+    "CONTACTS": "Contacts",
     "SETTINGS": "Setări",
     "HOME": "Acasa",
     "AGENTS": "Agenți",
@@ -122,5 +122,21 @@
     "INTEGRATIONS": "Integrări",
     "ACCOUNT_SETTINGS": "Setările contului",
     "LABELS": "Etichete"
+  },
+  "CREATE_ACCOUNT": {
+    "NEW_ACCOUNT": "Cont Nou",
+    "SELECTOR_SUBTITLE": "Creează un cont nou",
+    "API": {
+      "SUCCESS_MESSAGE": "Agent actualizat cu succes",
+      "EXIST_MESSAGE": "Contul există deja",
+      "ERROR_MESSAGE": "Nu s-a putut conecta la Woot Server, încercați din nou mai târziu"
+    },
+    "FORM": {
+      "NAME": {
+        "LABEL": "Nume cont",
+        "PLACEHOLDER": "Wayne Enterprises"
+      },
+      "SUBMIT": "Trimite"
+    }
   }
 }

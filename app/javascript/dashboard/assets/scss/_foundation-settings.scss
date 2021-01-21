@@ -51,7 +51,7 @@ $global-lineheight: 1.5;
 $foundation-palette: (primary: $color-woot,
   secondary: #35c5ff,
   success: #44ce4b,
-  warning: #ffc532,
+  warning: #a97c09,
   alert: #ff382d);
 $light-gray: #c0ccda;
 $medium-gray: #8492a6;
@@ -236,18 +236,18 @@ $breadcrumbs-item-slash: true;
 // 11. Button
 // ----------
 
-$button-padding: $space-one $space-two;
+$button-padding: var(--space-one) var(--space-slab);
 $button-margin: 0 0 $global-margin 0;
 $button-fill: solid;
 $button-background: $primary-color;
 $button-background-hover: scale-color($button-background, $lightness: -15%);
 $button-color: $white;
 $button-color-alt: $white;
-$button-radius: $global-radius;
-$button-sizes: (tiny: $font-size-micro,
-  small: $font-size-mini,
-  default: $font-size-default,
-  large: $font-size-large);
+$button-radius: var(--border-radius-normal);
+$button-sizes: (tiny: var(--font-size-nano),
+  small: var(--font-size-mini),
+  default: var(--font-size-small),
+  large: var(--font-size-medium));
 $button-palette: $foundation-palette;
 $button-opacity-disabled: 0.25;
 $button-background-hover-lightness: -20%;
@@ -347,7 +347,7 @@ $helptext-color: $header-color;
 $helptext-font-size: $font-size-small;
 $helptext-font-style: italic;
 $input-prefix-color: $header-color;
-$input-prefix-background: $light-gray;
+$input-prefix-background: var(--b-100);
 $input-prefix-border: 1px solid $color-border;
 $input-prefix-padding: 1rem;
 $form-label-color: $header-color;

@@ -48,11 +48,14 @@ class Api::V1::Widget::MessagesController < Api::V1::Widget::BaseController
       sender: @contact,
       content: permitted_params[:message][:content],
       inbox_id: conversation.inbox_id,
+      echo_id: permitted_params[:message][:echo_id],
       message_type: :incoming
     }
   end
 
   def conversation_params
+    # FIXME: typo referrer in additional attributes
+    # will probably require a migration.
     {
       account_id: inbox.account_id,
       inbox_id: inbox.id,
@@ -88,10 +91,10 @@ class Api::V1::Widget::MessagesController < Api::V1::Widget::BaseController
   end
 
   def update_contact(email)
-    contact_with_email = @account.contacts.find_by(email: email)
+    contact_with_email = @current_account.contacts.find_by(email: email)
     if contact_with_email
       @contact = ::ContactMergeAction.new(
-        account: @account,
+        account: @current_account,
         base_contact: contact_with_email,
         mergee_contact: @contact
       ).perform
@@ -112,11 +115,11 @@ class Api::V1::Widget::MessagesController < Api::V1::Widget::BaseController
   end
 
   def message_update_params
-    params.permit(message: [submitted_values: [:name, :title, :value]])
+    params.permit(message: [{ submitted_values: [:name, :title, :value] }])
   end
 
   def permitted_params
-    params.permit(:id, :before, :website_token, contact: [:email], message: [:content, :referer_url, :timestamp])
+    params.permit(:id, :before, :website_token, contact: [:email], message: [:content, :referer_url, :timestamp, :echo_id])
   end
 
   def set_message

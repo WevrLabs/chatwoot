@@ -64,14 +64,21 @@
           "PLACEHOLDER": "C'est simple de rentrer en contact avec nous. Demandez-nous quoi que ce soit ou partagez vos commentaires."
         },
         "CHANNEL_GREETING_MESSAGE": {
-          "LABEL": "Channel greeting message",
+          "LABEL": "Message d'accueil du canal",
           "PLACEHOLDER": "Acme Inc répond en général en quelques heures."
         },
         "CHANNEL_GREETING_TOGGLE": {
-          "LABEL": "Enable channel greeting",
-          "HELP_TEXT": "Send a greeting message to the user when he starts the conversation.",
+          "LABEL": "Activer l'accueil du canal",
+          "HELP_TEXT": "Envoyer un message de bienvenue à l'utilisateur lorsqu'il démarre la conversation.",
           "ENABLED": "Activé",
           "DISABLED": "Désactivé"
+        },
+        "REPLY_TIME": {
+          "TITLE": "Définir le temps de réponse",
+          "IN_A_FEW_MINUTES": "En quelques minutes",
+          "IN_A_FEW_HOURS": "En quelques heures",
+          "IN_A_DAY": "En une journée",
+          "HELP_TEXT": "Ce temps de réponse sera affichée sur le widget de chat en direct"
         },
         "WIDGET_COLOR": {
           "LABEL": "Couleur du Widget",
@@ -115,13 +122,52 @@
           "ERROR_MESSAGE": "Nous n'avons pas pu authentifier les identifiants Twilio, veuillez réessayer"
         }
       },
+      "API_CHANNEL": {
+        "TITLE": "Canal API",
+        "DESC": "Intégrez le canal API et commencez à aider vos clients.",
+        "CHANNEL_NAME": {
+          "LABEL": "Nom du canal",
+          "PLACEHOLDER": "Veuillez entrer un nom de canal",
+          "ERROR": "Ce champ est requis"
+        },
+        "WEBHOOK_URL": {
+          "LABEL": "URL du Webhook",
+          "SUBTITLE": "Configurez l'URL où vous souhaitez recevoir des callbacks sur les événements.",
+          "PLACEHOLDER": "URL du Webhook"
+        },
+        "SUBMIT_BUTTON": "Créer un canal API",
+        "API": {
+          "ERROR_MESSAGE": "Nous n'avons pas pu enregistrer le canal API"
+        }
+      },
+      "EMAIL_CHANNEL": {
+        "TITLE": "Canal Courriel",
+        "DESC": "Intégrez votre boîte de réception de courriel.",
+        "CHANNEL_NAME": {
+          "LABEL": "Nom du canal",
+          "PLACEHOLDER": "Veuillez entrer un nom de canal",
+          "ERROR": "Ce champ est requis"
+        },
+        "EMAIL": {
+          "LABEL": "Courriel",
+          "SUBTITLE": "Adresse de courriel où vos clients vous envoient des demandes d'assistance",
+          "PLACEHOLDER": "Courriel"
+        },
+        "SUBMIT_BUTTON": "Créer le canal Courriel",
+        "API": {
+          "ERROR_MESSAGE": "Nous n'avons pas pu enregistrer le canal courriel"
+        },
+        "FINISH_MESSAGE": "Commencez à transférer vos courriels à l'adresse suivante."
+      },
       "AUTH": {
         "TITLE": "Canaux",
         "DESC": "Actuellement, nous prenons en charge les widgets de chat en direct, les pages Facebook et les profils Twitter en tant que plateformes. Plus de plateformes telles que Whatsapp, Courriels, Telegram et Line sont en cours de développement et seront prochainement disponibles."
       },
       "AGENTS": {
         "TITLE": "Agents",
-        "DESC": "Ici vous pouvez ajouter des agents pour gérer votre boîte de réception nouvellement créée. Seuls ces agents sélectionnés auront accès à votre boîte de réception. Les agents qui ne font pas partie de cette boîte de réception ne seront pas en mesure de voir ou de répondre aux messages de cette boîte de réception lorsqu'ils se connectent. <br> <b>PS :</b> En tant qu'administrateur, si vous avez besoin d'accéder à toutes les boîtes de réception, vous devriez vous ajouter en tant qu'agent à toutes les boîtes de réception que vous créez."
+        "DESC": "Ici vous pouvez ajouter des agents pour gérer votre boîte de réception nouvellement créée. Seuls ces agents sélectionnés auront accès à votre boîte de réception. Les agents qui ne font pas partie de cette boîte de réception ne seront pas en mesure de voir ou de répondre aux messages de cette boîte de réception lorsqu'ils se connectent. <br> <b>PS :</b> En tant qu'administrateur, si vous avez besoin d'accéder à toutes les boîtes de réception, vous devriez vous ajouter en tant qu'agent à toutes les boîtes de réception que vous créez.",
+        "VALIDATION_ERROR": "Add atleast one agent to your new Inbox",
+        "PICK_AGENTS": "Pick agents for the inbox"
       },
       "DETAILS": {
         "TITLE": "Détails de la boîte de réception",
@@ -175,7 +221,17 @@
         "ERROR_MESSAGE": "Impossible de supprimer la boîte de réception. Veuillez réessayer plus tard."
       }
     },
+    "TABS": {
+      "SETTINGS": "Paramètres",
+      "COLLABORATORS": "Collaborateurs",
+      "CONFIGURATION": "Configuration"
+    },
     "SETTINGS": "Paramètres",
+    "FEATURES": {
+      "LABEL": "Fonctionnalités",
+      "DISPLAY_FILE_PICKER": "Afficher le sélecteur de fichiers sur le widget",
+      "DISPLAY_EMOJI_PICKER": "Afficher le sélecteur d'émoticônes sur le widget"
+    },
     "SETTINGS_POPUP": {
       "MESSENGER_HEADING": "Script du Widget Web",
       "MESSENGER_SUB_HEAD": "Placez ce code avant la fermeture de votre balise body",
@@ -185,7 +241,15 @@
       "AUTO_ASSIGNMENT": "Activer l'assignation automatique",
       "INBOX_UPDATE_TITLE": "Paramètres de boîtes de réception",
       "INBOX_UPDATE_SUB_TEXT": "Mettre à jour les paramètres de votre boîte de réception",
-      "AUTO_ASSIGNMENT_SUB_TEXT": "Activer ou désactiver l'affectation automatique de nouvelles conversations aux agents ajoutés à cette boîte de réception."
+      "AUTO_ASSIGNMENT_SUB_TEXT": "Activer ou désactiver l'affectation automatique de nouvelles conversations aux agents ajoutés à cette boîte de réception.",
+      "HMAC_VERIFICATION": "User Identity Validation",
+      "HMAC_DESCRIPTION": "Inorder validate the users identity, the SDK allows you to pass an `identity_hash` for each user. You can generate HMAC using 'sha256' with the key shown here."
+    },
+    "FACEBOOK_REAUTHORIZE": {
+      "TITLE": "Réautoriser",
+      "SUBTITLE": "Votre connexion Facebook a expiré, veuillez reconnecter votre page Facebook pour continuer les services",
+      "MESSAGE_SUCCESS": "Reconnexion réussie",
+      "MESSAGE_ERROR": "Une erreur est survenue, veuillez réessayer"
     }
   }
 }

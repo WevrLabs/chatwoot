@@ -1,13 +1,16 @@
-import moment from 'moment';
+import fromUnixTime from 'date-fns/fromUnixTime';
+import format from 'date-fns/format';
+import isToday from 'date-fns/isToday';
+import isYesterday from 'date-fns/isYesterday';
 
-class DateHelper {
-  constructor(date) {
-    this.date = moment(date * 1000);
-  }
+export const formatUnixDate = (date, dateFormat = 'MMM dd, yyyy') => {
+  const unixDate = fromUnixTime(date);
+  return format(unixDate, dateFormat);
+};
 
-  format(dateFormat = 'MMM DD, YYYY') {
-    return this.date.format(dateFormat);
-  }
-}
-
-export default DateHelper;
+export const formatDate = ({ date, todayText, yesterdayText }) => {
+  const dateValue = new Date(date);
+  if (isToday(dateValue)) return todayText;
+  if (isYesterday(dateValue)) return yesterdayText;
+  return date;
+};

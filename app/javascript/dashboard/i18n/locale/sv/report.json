@@ -1,40 +1,35 @@
 {
   "REPORT": {
     "HEADER": "Rapporter",
-    "LOADING_CHART": "Laddar sjökortsdata...",
-    "NO_ENOUGH_DATA": "Vi har inte fått tillräckligt många datapunkter för att generera rapport, försök igen senare.",
-    "METRICS": [
-      {
+    "LOADING_CHART": "Laddar diagramdata...",
+    "NO_ENOUGH_DATA": "Vi har inte fått tillräckligt många datapunkter för att generera en rapport, försök igen senare.",
+    "DOWNLOAD_AGENT_REPORTS": "Ladda ner agentrapporter",
+    "METRICS": {
+      "CONVERSATIONS": {
         "NAME": "Konversationer",
-        "KEY": "conversations_count",
         "DESC": "( Totalt )"
       },
-      {
+      "INCOMING_MESSAGES": {
         "NAME": "Inkommande meddelanden",
-        "KEY": "incoming_messages_count",
         "DESC": "( Totalt )"
       },
-      {
+      "OUTGOING_MESSAGES": {
         "NAME": "Utgående meddelanden",
-        "KEY": "outgoing_messages_count",
         "DESC": "( Totalt )"
       },
-      {
+      "FIRST_RESPONSE_TIME": {
         "NAME": "Första svarstiden",
-        "KEY": "avg_first_response_time",
-        "DESC": "( Genomsnitt)"
+        "DESC": "( Genomsnitt )"
       },
-      {
-        "NAME": "Lösning Tid",
-        "KEY": "avg_resolution_time",
-        "DESC": "( Genomsnitt)"
+      "RESOLUTION_TIME": {
+        "NAME": "Lösningstid",
+        "DESC": "( Genomsnitt )"
       },
-      {
-        "NAME": "Antal upplösningar",
-        "KEY": "resolutions_count",
+      "RESOLUTION_COUNT": {
+        "NAME": "Antal lösta",
         "DESC": "( Totalt )"
       }
-    ],
+    },
     "DATE_RANGE": [
       {
         "id": 0,

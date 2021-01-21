@@ -1,3 +1,15 @@
+@keyframes left-shift-animation {
+
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+
+  50% {
+    transform: translateX(1px);
+  }
+}
+
 .conversation {
   @include flex;
   @include flex-shrink;
@@ -20,7 +32,8 @@
   &.active {
     background: $color-background-dark4;
     border-bottom-color: $color-border-dark2;
-    border-left-color: $color-woot;
+    animation: left-shift-animation .25s $swift-ease-out-function;
+    //border-left-color: $color-woot;
     // border-top-color: $color-border-dark2;
 
     .conversation--details {
@@ -38,7 +51,7 @@
     }
   }
 
-  &:nth-last-child(2) {
+  &:last-child {
     .conversation--details {
       border-bottom-color: $color-border-dark2;
     }

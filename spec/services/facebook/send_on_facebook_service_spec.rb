@@ -5,7 +5,7 @@ describe Facebook::SendOnFacebookService do
 
   before do
     allow(Facebook::Messenger::Subscriptions).to receive(:subscribe).and_return(true)
-    allow(bot).to receive(:deliver)
+    allow(bot).to receive(:deliver).and_return({ recipient_id: '1008372609250235', message_id: 'mid.1456970487936:c34767dfe57ee6e339' }.to_json)
     create(:message, message_type: :incoming, inbox: facebook_inbox, account: account, conversation: conversation)
   end
 
@@ -58,7 +58,21 @@ describe Facebook::SendOnFacebookService do
         attachment.file.attach(io: File.open(Rails.root.join('spec/assets/avatar.png')), filename: 'avatar.png', content_type: 'image/png')
         message.save!
         ::Facebook::SendOnFacebookService.new(message: message).perform
-        expect(bot).to have_received(:deliver)
+        expect(bot).to have_received(:deliver).with({
+                                                      recipient: { id: contact_inbox.source_id },
+                                                      message: { text: message.content }
+                                                    }, { access_token: facebook_channel.page_access_token })
+        expect(bot).to have_received(:deliver).with({
+                                                      recipient: { id: contact_inbox.source_id },
+                                                      message: {
+                                                        attachment: {
+                                                          type: 'image',
+                                                          payload: {
+                                                            url: attachment.file_url
+                                                          }
+                                                        }
+                                                      }
+                                                    }, { access_token: facebook_channel.page_access_token })
       end
     end
   end

@@ -2,9 +2,13 @@ import MessageFormatter from '../helpers/MessageFormatter';
 
 export default {
   methods: {
-    formatMessage(message) {
-      const messageFormatter = new MessageFormatter(message);
+    formatMessage(message, isATweet) {
+      const messageFormatter = new MessageFormatter(message, isATweet);
       return messageFormatter.formattedMessage;
+    },
+    getPlainText(message, isATweet) {
+      const messageFormatter = new MessageFormatter(message, isATweet);
+      return messageFormatter.plainText;
     },
     truncateMessage(description = '') {
       if (description.length < 100) {

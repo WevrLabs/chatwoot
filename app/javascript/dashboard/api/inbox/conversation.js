@@ -18,6 +18,15 @@ class ConversationApi extends ApiClient {
     });
   }
 
+  search({ q }) {
+    return axios.get(`${this.url}/search`, {
+      params: {
+        q,
+        page: 1,
+      },
+    });
+  }
+
   toggleStatus(conversationId) {
     return axios.post(`${this.url}/${conversationId}/toggle_status`, {});
   }
@@ -43,6 +52,10 @@ class ConversationApi extends ApiClient {
     return axios.post(`${this.url}/${conversationId}/mute`);
   }
 
+  unmute(conversationId) {
+    return axios.post(`${this.url}/${conversationId}/unmute`);
+  }
+
   meta({ inboxId, status, assigneeType, labels }) {
     return axios.get(`${this.url}/meta`, {
       params: {
@@ -52,6 +65,10 @@ class ConversationApi extends ApiClient {
         labels,
       },
     });
+  }
+
+  sendEmailTranscript({ conversationId, email }) {
+    return axios.post(`${this.url}/${conversationId}/transcript`, { email });
   }
 }
 

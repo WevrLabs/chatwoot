@@ -4,7 +4,7 @@
     "LOAD_MORE_CONVERSATIONS": "Ladda fler konversationer",
     "EOF": "Alla konversationer laddade 🎉",
     "LIST": {
-      "404": "Det finns inga aktiva samtal i denna grupp."
+      "404": "Det finns inga aktiva konversationer i denna grupp."
     },
     "TAB_HEADING": "Konversationer",
     "SEARCH": {
@@ -22,12 +22,12 @@
     ],
     "ASSIGNEE_TYPE_TABS": [
       {
-        "NAME": "Gruva",
+        "NAME": "Mina",
         "KEY": "me",
         "COUNT_KEY": "mineCount"
       },
       {
-        "NAME": "Otilldelad",
+        "NAME": "Otilldelade",
         "KEY": "unassigned",
         "COUNT_KEY": "unAssignedCount"
       },
@@ -43,18 +43,22 @@
         "VALUE": "open"
       },
       {
-        "TEXT": "Löst",
+        "TEXT": "Lösta",
         "VALUE": "resolved"
+      },
+      {
+        "TEXT": "Bot",
+        "VALUE": "bot"
       }
     ],
     "ATTACHMENTS": {
       "image": {
         "ICON": "ion-image",
-        "CONTENT": "Meddelande om bild"
+        "CONTENT": "Bildmeddelande"
       },
       "audio": {
         "ICON": "ion-volume-high",
-        "CONTENT": "Ljud meddelande"
+        "CONTENT": "Ljudmeddelande"
       },
       "video": {
         "ICON": "ion-ios-videocam",
@@ -72,6 +76,9 @@
         "ICON": "ion-link",
         "CONTENT": "har delat en webbadress"
       }
-    }
+    },
+    "RECEIVED_VIA_EMAIL": "Mottaget via e-post",
+    "VIEW_TWEET_IN_TWITTER": "Visa tweet i Twitter",
+    "REPLY_TO_TWEET": "Svara på detta tweet"
   }
 }

@@ -1,3 +1,5 @@
+$resolve-button-width: 13.2rem;
+
 // Conversation header - Light BG
 .conv-header {
   @include padding($space-small $space-normal);
@@ -18,7 +20,7 @@
     @include margin(0 $space-small);
     border: 1px solid $color-border-dark2;
     border-radius: $space-smaller;
-    margin-right: $space-normal;
+    margin-right: var(--space-small);
 
     &::before {
       color: $medium-gray;
@@ -42,6 +44,10 @@
   .user {
     @include flex;
     @include flex-align($x: center, $y: middle);
+
+    &.hide {
+      visibility: hidden;
+    }
 
     .user--name {
       @include margin(0);
@@ -68,8 +74,8 @@
 
 .button.resolve--button {
   @include flex-align($x: center, $y: middle);
-
-  width: 13.2rem;
+  font-size: var(--font-size-default);
+  width: $resolve-button-width;
 
   >.icon {
     font-size: $font-size-default;
@@ -83,5 +89,17 @@
     &::before {
       border-top-color: $color-white;
     }
+  }
+}
+
+
+.header-actions-wrap {
+  display: flex;
+  flex-direction: row;
+  flex-grow: 1;
+  justify-content: flex-end;
+
+  &.has-open-sidebar {
+    justify-content: flex-end;
   }
 }

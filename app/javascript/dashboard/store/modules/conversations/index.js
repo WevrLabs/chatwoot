@@ -4,6 +4,7 @@ import Vue from 'vue';
 import * as types from '../../mutation-types';
 import getters, { getSelectedChatConversation } from './getters';
 import actions from './actions';
+import { findPendingMessageIndex } from './helpers';
 import wootConstants from '../../../constants';
 
 const state = {
@@ -73,30 +74,28 @@ export const mutations = {
     chat.muted = true;
   },
 
-  [types.default.SEND_MESSAGE](_state, currentMessage) {
+  [types.default.UNMUTE_CONVERSATION](_state) {
     const [chat] = getSelectedChatConversation(_state);
-    const allMessagesExceptCurrent = (chat.messages || []).filter(
-      message => message.id !== currentMessage.id
-    );
-    allMessagesExceptCurrent.push(currentMessage);
-    chat.messages = allMessagesExceptCurrent;
+    chat.muted = false;
   },
 
-  [types.default.ADD_MESSAGE](_state, message) {
-    const [chat] = _state.allConversations.filter(
-      c => c.id === message.conversation_id
-    );
+  [types.default.ADD_MESSAGE]({ allConversations, selectedChatId }, message) {
+    const { conversation_id: conversationId } = message;
+    const [chat] = getSelectedChatConversation({
+      allConversations,
+      selectedChatId: conversationId,
+    });
     if (!chat) return;
-    const previousMessageIndex = chat.messages.findIndex(
-      m => m.id === message.id
-    );
-    if (previousMessageIndex === -1) {
+
+    const pendingMessageIndex = findPendingMessageIndex(chat, message);
+    if (pendingMessageIndex !== -1) {
+      Vue.set(chat.messages, pendingMessageIndex, message);
+    } else {
       chat.messages.push(message);
-      if (_state.selectedChatId === message.conversation_id) {
+      chat.timestamp = message.created_at;
+      if (selectedChatId === conversationId) {
         window.bus.$emit('scrollToMessage');
       }
-    } else {
-      chat.messages[previousMessageIndex] = message;
     }
   },
 

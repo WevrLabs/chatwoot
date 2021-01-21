@@ -1,29 +1,115 @@
 {
   "CONTACT_PANEL": {
-    "CONVERSATION_TITLE": "Conversation Details",
-    "BROWSER": "Browser",
-    "OS": "Operating System",
-    "INITIATED_FROM": "Initiated from",
-    "INITIATED_AT": "Initiated at",
+    "NOT_AVAILABLE": "Ei saatavilla",
+    "EMAIL_ADDRESS": "Sähköpostiosoite",
+    "PHONE_NUMBER": "Puhelinnumero",
+    "COPY_SUCCESSFUL": "Kopioitu leikepöydälle onnistuneesti",
+    "COMPANY": "Yritys",
+    "LOCATION": "Sijainti",
+    "CONVERSATION_TITLE": "Keskustelutiedot",
+    "BROWSER": "Selain",
+    "OS": "Käyttöjärjestelmä",
+    "INITIATED_FROM": "Aloitettu lähteestä",
+    "INITIATED_AT": "Aloitettu lähteestä",
+    "IP_ADDRESS": "IP-osoite",
     "CONVERSATIONS": {
-      "NO_RECORDS_FOUND": "There are no previous conversations associated to this contact.",
-      "TITLE": "Previous Conversations"
+      "NO_RECORDS_FOUND": "Tähän yhteystietoon ei liity aikaisempia keskusteluja.",
+      "TITLE": "Edelliset keskustelut"
+    },
+    "CUSTOM_ATTRIBUTES": {
+      "TITLE": "Mukautetut attribuutit"
     },
     "LABELS": {
-      "TITLE": "Conversation Labels",
+      "TITLE": "Keskustelutunnisteet",
       "MODAL": {
-        "TITLE": "Labels for",
-        "ACTIVE_LABELS": "Labels added to the conversation",
-        "INACTIVE_LABELS": "Labels available in the account",
-        "REMOVE": "Click on X icon to remove the label",
-        "ADD": "Click on + icon to add the label",
-        "UPDATE_BUTTON": "Update labels",
-        "UPDATE_ERROR": "Couldn't update labels, try again."
+        "TITLE": "Tunnisteet kohteelle",
+        "ACTIVE_LABELS": "Keskusteluun lisätyt tunnisteet",
+        "INACTIVE_LABELS": "Tilissä saatavilla olevat tunnisteet",
+        "REMOVE": "Napsauta X-kuvaketta poistaaksesi tunnisteen",
+        "ADD": "Napsauta + kuvaketta lisätäksesi tunnisteen",
+        "UPDATE_BUTTON": "Päivitä tunnisteet",
+        "UPDATE_ERROR": "Tunnisteita ei voitu päivittää, yritä uudelleen."
       },
-      "NO_LABELS_TO_ADD": "There are no more labels defined in the account.",
-      "NO_AVAILABLE_LABELS": "There are no labels added to this conversation."
+      "NO_LABELS_TO_ADD": "Tällä tilillä ei ole enempää tunnisteita.",
+      "NO_AVAILABLE_LABELS": "Tälle keskustelulle ei ole lisätty tunnisteita."
     },
-    "MUTE_CONTACT": "Mute Contact",
-    "EDIT_LABEL": "Edit"
+    "MUTE_CONTACT": "Mykistä Keskustelu",
+    "UNMUTE_CONTACT": "Poista keskustelun mykistys",
+    "MUTED_SUCCESS": "Tämä keskustelu on mykistetty 6 tunniksi",
+    "UNMUTED_SUCCESS": "Tätä keskustelua ei ole hiljennetty",
+    "SEND_TRANSCRIPT": "Lähetä keskustelu",
+    "EDIT_LABEL": "Muokkaa"
+  },
+  "EDIT_CONTACT": {
+    "BUTTON_LABEL": "Muokkaa yhteystietoa",
+    "TITLE": "Muokkaa yhteystietoa",
+    "DESC": "Muokkaa yhteystietoja",
+    "FORM": {
+      "SUBMIT": "Lähetä",
+      "CANCEL": "Peruuta",
+      "AVATAR": {
+        "LABEL": "Yhteystiedon profiilikuva"
+      },
+      "NAME": {
+        "PLACEHOLDER": "Syötä yhteystiedon koko nimi",
+        "LABEL": "Koko nimi"
+      },
+      "BIO": {
+        "PLACEHOLDER": "Kirjoita yhteystiedon kuvaus",
+        "LABEL": "Kuvaus"
+      },
+      "EMAIL_ADDRESS": {
+        "PLACEHOLDER": "Anna yhteyshenkilön sähköpostiosoite",
+        "LABEL": "Sähköpostiosoite"
+      },
+      "PHONE_NUMBER": {
+        "PLACEHOLDER": "Anna yhteystiedon puhelinnumero",
+        "LABEL": "Puhelinnumero"
+      },
+      "LOCATION": {
+        "PLACEHOLDER": "Anna yhteystiedon sijainti",
+        "LABEL": "Sijainti"
+      },
+      "COMPANY_NAME": {
+        "PLACEHOLDER": "Anna yrityksen nimi",
+        "LABEL": "Yrityksen nimi"
+      },
+      "SOCIAL_PROFILES": {
+        "FACEBOOK": {
+          "PLACEHOLDER": "Syötä Facebookin käyttäjätunnus",
+          "LABEL": "Facebook"
+        },
+        "TWITTER": {
+          "PLACEHOLDER": "Syötä Twitterin käyttäjätunnus",
+          "LABEL": "Twitter"
+        },
+        "LINKEDIN": {
+          "PLACEHOLDER": "Syötä LinkedIn-käyttäjänimi",
+          "LABEL": "LinkedIn"
+        },
+        "GITHUB": {
+          "PLACEHOLDER": "Syötä Github-käyttäjänimi",
+          "LABEL": "Github"
+        }
+      }
+    },
+    "SUCCESS_MESSAGE": "Yhteystiedon päivitys onnistui",
+    "CONTACT_ALREADY_EXIST": "Tämä sähköpostiosoite on käytössä toiselle yhteyshenkilölle.",
+    "ERROR_MESSAGE": "Yhteystiedon päivityksessä tapahtui virhe. Ole hyvä ja yritä uudelleen"
+  },
+  "CONTACTS_PAGE": {
+    "HEADER": "Yhteystiedot",
+    "SEARCH_BUTTON": "Etsi",
+    "SEARCH_INPUT_PLACEHOLDER": "Etsi yhteystietoja",
+    "LIST": {
+      "LOADING_MESSAGE": "Ladataan yhteystietoja...",
+      "404": "Ei hakua vastaavia yhteystietoja 🔍",
+      "TABLE_HEADER": [
+        "Nimi",
+        "Puhelinnumero",
+        "Keskustelut",
+        "Viimeksi otettu yhteyttä"
+      ]
+    }
   }
 }

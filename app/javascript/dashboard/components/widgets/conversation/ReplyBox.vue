@@ -1,6 +1,12 @@
 <template>
   <div class="reply-box" :class="replyBoxClass">
-    <div class="reply-box__top" :class="{ 'is-private': isPrivate }">
+    <reply-top-panel
+      :mode="replyType"
+      :set-reply-mode="setReplyMode"
+      :is-message-length-reaching-threshold="isMessageLengthReachingThreshold"
+      :characters-remaining="charactersRemaining"
+    />
+    <div class="reply-box__top">
       <canned-response
         v-if="showCannedResponsesList"
         v-on-clickaway="hideCannedResponse"
@@ -14,82 +20,67 @@
         :on-click="emojiOnClick"
       />
       <resizable-text-area
+        v-if="!isFormatMode"
         ref="messageInput"
         v-model="message"
         class="input"
         :placeholder="messagePlaceHolder"
         :min-height="4"
+        @typing-off="onTypingOff"
+        @typing-on="onTypingOn"
         @focus="onFocus"
         @blur="onBlur"
       />
-      <file-upload
-        v-if="showFileUpload"
-        :size="4096 * 4096"
-        accept="image/*, application/pdf, audio/mpeg, video/mp4, audio/ogg"
-        @input-file="onFileUpload"
-      >
-        <i v-if="!isUploading" class="icon ion-android-attach attachment" />
-        <woot-spinner v-if="isUploading" />
-      </file-upload>
-      <i
-        class="icon ion-happy-outline"
-        :class="{ active: showEmojiPicker }"
-        @click="toggleEmojiPicker"
+      <woot-message-editor
+        v-else
+        v-model="message"
+        class="input"
+        :placeholder="messagePlaceHolder"
+        :min-height="4"
+        @typing-off="onTypingOff"
+        @typing-on="onTypingOn"
+        @focus="onFocus"
+        @blur="onBlur"
+      />
+    </div>
+    <div v-if="hasAttachments" class="attachment-preview-box">
+      <attachment-preview
+        :attachments="attachedFiles"
+        :remove-attachment="removeAttachment"
       />
     </div>
 
-    <div class="reply-box__bottom">
-      <ul class="tabs">
-        <li class="tabs-title" :class="{ 'is-active': !isPrivate }">
-          <a href="#" @click="setReplyMode">{{
-            $t('CONVERSATION.REPLYBOX.REPLY')
-          }}</a>
-        </li>
-        <li class="tabs-title is-private" :class="{ 'is-active': isPrivate }">
-          <a href="#" @click="setPrivateReplyMode">{{
-            $t('CONVERSATION.REPLYBOX.PRIVATE_NOTE')
-          }}</a>
-        </li>
-        <li v-if="message.length" class="tabs-title message-length">
-          <a :class="{ 'message-error': isMessageLengthReachingThreshold }">{{
-            characterCountIndicator
-          }}</a>
-        </li>
-      </ul>
-      <button
-        type="button"
-        class="button send-button"
-        :disabled="isReplyButtonDisabled"
-        :class="{
-          disabled: isReplyButtonDisabled,
-          warning: isPrivate,
-        }"
-        @click="sendMessage"
-      >
-        {{ replyButtonLabel }}
-        <i
-          class="icon"
-          :class="{
-            'ion-android-send': !isPrivate,
-            'ion-android-lock': isPrivate,
-          }"
-        />
-      </button>
-    </div>
+    <reply-bottom-panel
+      :mode="replyType"
+      :send-button-text="replyButtonLabel"
+      :on-file-upload="onFileUpload"
+      :show-file-upload="showFileUpload"
+      :toggle-emoji-picker="toggleEmojiPicker"
+      :show-emoji-picker="showEmojiPicker"
+      :on-send="sendMessage"
+      :is-send-disabled="isReplyButtonDisabled"
+      :set-format-mode="setFormatMode"
+      :is-format-mode="isFormatMode"
+      :enable-rich-editor="isRichEditorEnabled"
+      :enter-to-send-enabled="enterToSendEnabled"
+      @toggleEnterToSend="toggleEnterToSend"
+    />
+
   </div>
 </template>
 
 <script>
-/* eslint no-console: 0 */
-
 import { mapGetters } from 'vuex';
-import emojione from 'emojione';
 import { mixin as clickaway } from 'vue-clickaway';
-import FileUpload from 'vue-upload-component';
 
-import EmojiInput from '../emoji/EmojiInput';
+import EmojiInput from 'shared/components/emoji/EmojiInput';
 import CannedResponse from './CannedResponse';
 import ResizableTextArea from 'shared/components/ResizableTextArea';
+import AttachmentPreview from 'dashboard/components/widgets/AttachmentsPreview';
+import ReplyTopPanel from 'dashboard/components/widgets/WootWriter/ReplyTopPanel';
+import ReplyBottomPanel from 'dashboard/components/widgets/WootWriter/ReplyBottomPanel';
+import { REPLY_EDITOR_MODES } from 'dashboard/components/widgets/WootWriter/constants';
+import WootMessageEditor from 'dashboard/components/widgets/WootWriter/Editor';
 import {
   isEscape,
   isEnter,
@@ -102,25 +93,42 @@ export default {
   components: {
     EmojiInput,
     CannedResponse,
-    FileUpload,
     ResizableTextArea,
+    AttachmentPreview,
+    ReplyTopPanel,
+    ReplyBottomPanel,
+    WootMessageEditor,
   },
   mixins: [clickaway, inboxMixin],
+  props: {
+    inReplyTo: {
+      type: [String, Number],
+      default: '',
+    },
+  },
   data() {
     return {
       message: '',
-      isPrivateTabActive: false,
       isFocused: false,
       showEmojiPicker: false,
       showCannedResponsesList: false,
+      attachedFiles: [],
       isUploading: false,
+      replyType: REPLY_EDITOR_MODES.REPLY,
+      isFormatMode: false,
     };
   },
   computed: {
-    ...mapGetters({ currentChat: 'getSelectedChat' }),
+    ...mapGetters({
+      currentChat: 'getSelectedChat',
+      uiSettings: 'getUISettings',
+    }),
+    enterToSendEnabled() {
+      return !!this.uiSettings.enter_to_send_enabled;
+    },
     isPrivate() {
       if (this.currentChat.can_reply) {
-        return this.isPrivateTabActive;
+        return this.replyType === REPLY_EDITOR_MODES.NOTE;
       }
       return true;
     },
@@ -136,13 +144,15 @@ export default {
         : this.$t('CONVERSATION.FOOTER.MSG_INPUT');
     },
     isMessageLengthReachingThreshold() {
-      return this.message.length > this.maxLength - 40;
+      return this.message.length > this.maxLength - 50;
     },
-    characterCountIndicator() {
-      return `${this.message.length} / ${this.maxLength}`;
+    charactersRemaining() {
+      return this.maxLength - this.message.length;
     },
     isReplyButtonDisabled() {
       const isMessageEmpty = !this.message.trim().replace(/\n/g, '').length;
+
+      if (this.hasAttachments) return false;
       return (
         isMessageEmpty ||
         this.message.length === 0 ||
@@ -176,7 +186,8 @@ export default {
       return (
         this.isAWebWidgetInbox ||
         this.isAFacebookInbox ||
-        this.isATwilioWhatsappChannel
+        this.isATwilioWhatsappChannel ||
+        this.isAPIInbox
       );
     },
     replyButtonLabel() {
@@ -190,22 +201,37 @@ export default {
     },
     replyBoxClass() {
       return {
-        'is-focused': this.isFocused,
+        'is-private': this.isPrivate,
+        'is-focused': this.isFocused || this.hasAttachments,
       };
+    },
+    hasAttachments() {
+      return this.attachedFiles.length;
+    },
+    isRichEditorEnabled() {
+      return (
+        this.isAWebWidgetInbox ||
+        this.isAnEmailChannel ||
+        this.replyType === REPLY_EDITOR_MODES.NOTE
+      );
     },
   },
   watch: {
     currentChat(conversation) {
-      if (conversation.can_reply) {
-        this.isPrivateTabActive = false;
+      const { can_reply: canReply } = conversation;
+      const isUserReplyingOnPrivate =
+        this.replyType === REPLY_EDITOR_MODES.NOTE;
+      if (isUserReplyingOnPrivate) {
+        return;
+      }
+
+      if (canReply) {
+        this.replyType = REPLY_EDITOR_MODES.REPLY;
       } else {
-        this.isPrivateTabActive = true;
+        this.replyType = REPLY_EDITOR_MODES.NOTE;
       }
     },
     message(updatedMessage) {
-      if (this.isPrivate) {
-        return;
-      }
       const isSlashCommand = updatedMessage[0] === '/';
       const hasNextWord = updatedMessage.includes(' ');
       const isShortCodeActive = isSlashCommand && !hasNextWord;
@@ -234,25 +260,34 @@ export default {
         this.hideEmojiPicker();
         this.hideCannedResponse();
       } else if (isEnter(e)) {
-        if (!hasPressedShift(e)) {
+        const hasSendOnEnterEnabled =
+          (this.isFormatMode && this.enterToSendEnabled) || !this.isFormatMode;
+        const shouldSendMessage =
+          hasSendOnEnterEnabled && !hasPressedShift(e) && this.isFocused;
+        if (shouldSendMessage) {
           e.preventDefault();
           this.sendMessage();
         }
       }
     },
+    toggleEnterToSend(enterToSendEnabled) {
+      this.$store.dispatch('updateUISettings', {
+        uiSettings: {
+          ...this.uiSettings,
+          enter_to_send_enabled: enterToSendEnabled,
+        },
+      });
+    },
     async sendMessage() {
       if (this.isReplyButtonDisabled) {
         return;
       }
-      const newMessage = this.message;
       if (!this.showCannedResponsesList) {
+        const newMessage = this.message;
+        const messagePayload = this.getMessagePayload(newMessage);
         this.clearMessage();
         try {
-          await this.$store.dispatch('sendMessage', {
-            conversationId: this.currentChat.id,
-            message: newMessage,
-            private: this.isPrivate,
-          });
+          await this.$store.dispatch('sendMessage', messagePayload);
           this.$emit('scrollToMessage');
         } catch (error) {
           // Error
@@ -265,21 +300,18 @@ export default {
         this.message = message;
       }, 100);
     },
-    setPrivateReplyMode() {
-      this.isPrivateTabActive = true;
-      this.$refs.messageInput.focus();
-    },
-    setReplyMode() {
-      this.isPrivateTabActive = false;
+    setReplyMode(mode = REPLY_EDITOR_MODES.REPLY) {
+      const { can_reply: canReply } = this.currentChat;
+
+      if (canReply) this.replyType = mode;
       this.$refs.messageInput.focus();
     },
     emojiOnClick(emoji) {
-      this.message = emojione.shortnameToUnicode(
-        `${this.message}${emoji.shortname} `
-      );
+      this.message = `${this.message}${emoji} `;
     },
     clearMessage() {
       this.message = '';
+      this.attachedFiles = [];
     },
     toggleEmojiPicker() {
       this.showEmojiPicker = !this.showEmojiPicker;
@@ -292,13 +324,17 @@ export default {
     hideCannedResponse() {
       this.showCannedResponsesList = false;
     },
+    onTypingOn() {
+      this.toggleTyping('on');
+    },
+    onTypingOff() {
+      this.toggleTyping('off');
+    },
     onBlur() {
       this.isFocused = false;
-      this.toggleTyping('off');
     },
     onFocus() {
       this.isFocused = true;
-      this.toggleTyping('on');
     },
     toggleTyping(status) {
       if (this.isAWebWidgetInbox && !this.isPrivate) {
@@ -310,30 +346,91 @@ export default {
       }
     },
     onFileUpload(file) {
+      this.attachedFiles = [];
       if (!file) {
         return;
       }
-      this.isUploading = true;
-      this.$store
-        .dispatch('sendAttachment', [
-          this.currentChat.id,
-          { file: file.file, isPrivate: this.isPrivate },
-        ])
-        .then(() => {
-          this.isUploading = false;
-          this.$emit('scrollToMessage');
-        })
-        .catch(() => {
-          this.isUploading = false;
-          this.$emit('scrollToMessage');
+      const reader = new FileReader();
+      reader.readAsDataURL(file.file);
+
+      reader.onloadend = () => {
+        this.attachedFiles.push({
+          currentChatId: this.currentChat.id,
+          resource: file,
+          isPrivate: this.isPrivate,
+          thumb: reader.result,
         });
+      };
+    },
+    removeAttachment(itemIndex) {
+      this.attachedFiles = this.attachedFiles.filter(
+        (item, index) => itemIndex !== index
+      );
+    },
+    getMessagePayload(message) {
+      const [attachment] = this.attachedFiles;
+      const messagePayload = {
+        conversationId: this.currentChat.id,
+        message,
+        private: this.isPrivate,
+      };
+
+      if (this.inReplyTo) {
+        messagePayload.contentAttributes = { in_reply_to: this.inReplyTo };
+      }
+
+      if (attachment) {
+        messagePayload.file = attachment.resource.file;
+      }
+
+      return messagePayload;
+    },
+    setFormatMode(value) {
+      this.isFormatMode = value;
     },
   },
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .send-button {
   margin-bottom: 0;
+}
+
+.attachment-preview-box {
+  padding: 0 var(--space-normal);
+  background: transparent;
+}
+
+.reply-box {
+  border-top: 1px solid #3a3a3a;
+  background: #1f2123;
+
+  &.is-private {
+    background: #1f2123;
+  }
+}
+.send-button {
+  margin-bottom: 0;
+}
+
+.reply-box__top {
+  padding: 0 var(--space-normal);
+  border-top: 1px solid #3a3a3a;
+  margin-top: -1px;
+}
+
+.emoji-dialog {
+  top: unset;
+  bottom: 12px;
+  left: -320px;
+  right: unset;
+
+  &::before {
+    right: -16px;
+    bottom: 10px;
+    transform: rotate(270deg);
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.08));
+  }
 }
 </style>

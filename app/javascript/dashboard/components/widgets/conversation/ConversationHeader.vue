@@ -1,6 +1,6 @@
 <template>
   <div class="conv-header">
-    <div class="user">
+    <div class="user" :class="{ hide: isContactPanelOpen }">
       <Thumbnail
         :src="currentContact.thumbnail"
         size="40px"
@@ -14,23 +14,30 @@
         </h3>
         <button
           class="user--profile__button clear button small"
-          @click="$emit('contactPanelToggle')"
+          @click="$emit('contact-panel-toggle')"
         >
-          {{ viewProfileButtonLabel }}
+          {{
+            `${$t('CONVERSATION.HEADER.OPEN')} ${$t(
+              'CONVERSATION.HEADER.DETAILS'
+            )}`
+          }}
         </button>
       </div>
     </div>
-    <div class="flex-container">
+    <div
+      class="header-actions-wrap"
+      :class="{ 'has-open-sidebar': isContactPanelOpen }"
+    >
       <div class="multiselect-box ion-headphone">
         <multiselect
           v-model="currentChat.meta.assignee"
-          :options="agentList"
-          label="available_name"
           :allow-empty="true"
-          deselect-label="Remove"
-          placeholder="Select Agent"
+          :deselect-label="$t('CONVERSATION.ASSIGNMENT.REMOVE')"
+          :options="agentList"
+          :placeholder="$t('CONVERSATION.ASSIGNMENT.SELECT_AGENT')"
+          :select-label="$t('CONVERSATION.ASSIGNMENT.ASSIGN')"
+          label="name"
           selected-label
-          select-label="Assign"
           track-by="id"
           @select="assignAgent"
           @remove="removeAgent"
@@ -38,24 +45,19 @@
           <span slot="noResult">{{ $t('AGENT_MGMT.SEARCH.NO_RESULTS') }}</span>
         </multiselect>
       </div>
-      <ResolveButton />
+      <more-actions :conversation-id="currentChat.id" />
     </div>
   </div>
 </template>
 <script>
-/* eslint no-console: 0 */
-/* eslint no-param-reassign: 0 */
-/* eslint no-shadow: 0 */
-/* global bus */
-
 import { mapGetters } from 'vuex';
+import MoreActions from './MoreActions';
 import Thumbnail from '../Thumbnail';
-import ResolveButton from '../../buttons/ResolveButton';
 
 export default {
   components: {
+    MoreActions,
     Thumbnail,
-    ResolveButton,
   },
 
   props: {
@@ -95,7 +97,7 @@ export default {
       return [
         {
           confirmed: true,
-          available_name: 'None',
+          name: 'None',
           id: 0,
           role: 'agent',
           account_id: 0,
@@ -103,13 +105,6 @@ export default {
         },
         ...this.agents,
       ];
-    },
-    viewProfileButtonLabel() {
-      return `${
-        this.isContactPanelOpen
-          ? this.$t('CONVERSATION.HEADER.CLOSE')
-          : this.$t('CONVERSATION.HEADER.OPEN')
-      } ${this.$t('CONVERSATION.HEADER.DETAILS')}`;
     },
   },
 

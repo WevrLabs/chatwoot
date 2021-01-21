@@ -30,7 +30,7 @@ export default {
     },
     size: {
       type: Number,
-      default: 40,
+      default: 78,
     },
     src: {
       type: String,

@@ -6,10 +6,25 @@
     "NO_INBOX_1": "Hola! Parece que você não adicionou nenhuma caixa de entrada ainda.",
     "NO_INBOX_2": " para começar",
     "NO_INBOX_AGENT": "Uh Oh! Parece que você não faz parte de nenhuma caixa de entrada. Por favor, contate seu administrador",
+    "SEARCH_MESSAGES": "Procurar por mensagens nas conversas",
+    "SEARCH": {
+      "TITLE": "Procurar mensagens",
+      "LOADING_MESSAGE": "Preparando dados...",
+      "PLACEHOLDER": "Digite qualquer texto para pesquisar mensagens",
+      "NO_MATCHING_RESULTS": "Não há mensagens que correspondam aos parâmetros de pesquisa."
+    },
+    "UNREAD_MESSAGES": "Mensagens não lidas",
+    "UNREAD_MESSAGE": "Mensagem não lida",
     "CLICK_HERE": "Clique aqui",
     "LOADING_INBOXES": "Carregando caixas de entrada",
     "LOADING_CONVERSATIONS": "Carregando conversas",
+    "CANNOT_REPLY": "Você não pode responder porque",
+    "24_HOURS_WINDOW": "Restrições de janela de mensagem de 24 horas",
+    "LAST_INCOMING_TWEET": "Você está respondendo ao último tweet recebido",
+    "REPLYING_TO": "Você está respondendo a:",
+    "REMOVE_SELECTION": "Remover Seleção",
     "DOWNLOAD": "Baixar",
+    "UPLOADING_ATTACHMENTS": "Enviando anexos...",
     "HEADER": {
       "RESOLVE_ACTION": "Resolver",
       "REOPEN_ACTION": "Reabrir",
@@ -26,10 +41,36 @@
       "PRIVATE_NOTE": "Mensagem Privada",
       "SEND": "Enviar",
       "CREATE": "Enviar",
-      "TWEET": "Tweet"
+      "TWEET": "Tweet",
+      "TIP_FORMAT_ICON": "Show rich text editor",
+      "TIP_EMOJI_ICON": "Show emoji selector",
+      "TIP_ATTACH_ICON": "Attach files"
     },
     "VISIBLE_TO_AGENTS": "Mensagem Privada: Apenas visível para você e sua equipe",
     "CHANGE_STATUS": "Estado da conversa mudou",
-    "CHANGE_AGENT": "Responsável da conversa alterado"
+    "CHANGE_AGENT": "Responsável da conversa alterado",
+    "SENT_BY": "Enviado por:",
+    "ASSIGNMENT": {
+      "SELECT_AGENT": "Selecione Agente",
+      "REMOVE": "Excluir",
+      "ASSIGN": "Atribua"
+    }
+  },
+  "EMAIL_TRANSCRIPT": {
+    "TITLE": "Enviar transcrição de conversa",
+    "DESC": "Enviar uma cópia da transcrição da conversa para o endereço de e-mail especificado",
+    "SUBMIT": "Enviar",
+    "CANCEL": "Cancelar",
+    "SEND_EMAIL_SUCCESS": "A transcrição do chat foi enviada com sucesso",
+    "SEND_EMAIL_ERROR": "Ocorreu um erro, por favor tente novamente",
+    "FORM": {
+      "SEND_TO_CONTACT": "Envie a transcrição para o cliente",
+      "SEND_TO_AGENT": "Envie a transcrição para o agente designado",
+      "SEND_TO_OTHER_EMAIL_ADDRESS": "Enviar a transcrição para outro endereço de e-mail",
+      "EMAIL": {
+        "PLACEHOLDER": "Digite um endereço de e-mail",
+        "ERROR": "Por favor, insira um endereço de e-mail válido"
+      }
+    }
   }
 }

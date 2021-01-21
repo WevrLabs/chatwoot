@@ -1,5 +1,6 @@
 class Api::V1::Accounts::ConversationsController < Api::V1::Accounts::BaseController
   include Events::Types
+
   before_action :conversation, except: [:index]
   before_action :contact_inbox, only: [:create]
 
@@ -14,6 +15,12 @@ class Api::V1::Accounts::ConversationsController < Api::V1::Accounts::BaseContro
     @conversations_count = result[:count]
   end
 
+  def search
+    result = conversation_finder.perform
+    @conversations = result[:conversations]
+    @conversations_count = result[:count]
+  end
+
   def create
     @conversation = ::Conversation.create!(conversation_params)
   end
@@ -22,6 +29,16 @@ class Api::V1::Accounts::ConversationsController < Api::V1::Accounts::BaseContro
 
   def mute
     @conversation.mute!
+    head :ok
+  end
+
+  def unmute
+    @conversation.unmute!
+    head :ok
+  end
+
+  def transcript
+    ConversationReplyMailer.conversation_transcript(@conversation, params[:email])&.deliver_later if params[:email].present?
     head :ok
   end
 
@@ -35,9 +52,10 @@ class Api::V1::Accounts::ConversationsController < Api::V1::Accounts::BaseContro
   end
 
   def toggle_typing_status
-    if params[:typing_status] == 'on'
+    case params[:typing_status]
+    when 'on'
       trigger_typing_event(CONVERSATION_TYPING_ON)
-    elsif params[:typing_status] == 'off'
+    when 'off'
       trigger_typing_event(CONVERSATION_TYPING_OFF)
     end
     head :ok
@@ -68,7 +86,8 @@ class Api::V1::Accounts::ConversationsController < Api::V1::Accounts::BaseContro
       account_id: Current.account.id,
       inbox_id: @contact_inbox.inbox_id,
       contact_id: @contact_inbox.contact_id,
-      contact_inbox_id: @contact_inbox.id
+      contact_inbox_id: @contact_inbox.id,
+      additional_attributes: params[:additional_attributes]
     }
   end
 

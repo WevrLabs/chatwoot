@@ -1,9 +1,11 @@
+# if you dont specify locked attribute, the default value will be true
+# which means the particular config will be locked
+- name: INSTALLATION_NAME
+  value: 'WevrLabs Communication Center'
 - name: LOGO_THUMBNAIL
   value: '/brand-assets/logo_thumbnail.svg'
 - name: LOGO
   value: '/brand-assets/logo.svg'
-- name: INSTALLATION_NAME
-  value: 'WevrLabs Hosting'
 - name: BRAND_URL
   value: 'https://wevrlabs.net'
 - name: WIDGET_BRAND_URL
@@ -16,9 +18,14 @@
   value: true
 - name: MAILER_INBOUND_EMAIL_DOMAIN
   value: 'sandboxa54b342eefc74ea497ae292bdb78ca21.mailgun.org'
-- name: MAILER_SUPPORT_EMAIL
-  value: 'care@wevrlabs.net'
-- name: CREATE_NEW_ACCOUNT_FROM_DASHBOARD
-  value: true
 - name: BRAND_NAME
-  value: 'WevrLabs'
+  value: 'WevrLabs Communication Center'
+- name: MAILER_SUPPORT_EMAIL
+  value:
+  locked: false
+- name: CREATE_NEW_ACCOUNT_FROM_DASHBOARD
+  value: false
+  locked: false
+- name: INSTALLATION_EVENTS_WEBHOOK_URL
+  value: 
+  locked: false
