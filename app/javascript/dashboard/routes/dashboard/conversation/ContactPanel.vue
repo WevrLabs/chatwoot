@@ -225,6 +225,24 @@ getContactDetails() {
   i {
     margin-right: $space-smaller;
   }
+
+  .id-verified, .id-unverified {
+    font-size: 2rem;
+    /* background: #fff; */
+    padding: 4px 4px 3px;
+    border-radius: 6px;
+    /*top: 4px;*/
+    display: block;
+    position: relative;
+    margin: 10px 0 5px;
+  }
+  .id-verified {
+    color: #1cac0d;
+  }
+  .id-unverified {
+    color: #e8a701;
+  }
+
 }
 
 .close-button {
@@ -297,22 +315,6 @@ getContactDetails() {
     color: $color-woot;
   }
 
-  .id-verified, .id-unverified {
-    font-size: 2rem;
-    /* background: #fff; */
-    padding: 4px 4px 3px;
-    border-radius: 6px;
-    /*top: 4px;*/
-    display: block;
-    position: relative;
-    margin: 10px 0 5px;
-  }
-  .id-verified {
-    color: #1cac0d;
-  }
-  .id-unverified {
-    color: #e8a701;
-  }
 }
 
 .contact--bio {
