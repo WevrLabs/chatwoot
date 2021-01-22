@@ -4,7 +4,12 @@
       <i class="ion-chevron-right" />
     </span>
     <contact-info :contact="contact" :channel-type="channelType" />
-	<i v-bind:class="{'fa fa-badge-check id-verified': contact['identifier'],  'fa fa-exclamation-circle id-unverified': !contact['identifier']}"></i>
+	<div class=verify-status>
+		<span v-if="">
+		<i v-bind:class="{'fa fa-badge-check id-verified': contact['identifier'],  'fa fa-exclamation-circle id-unverified': !contact['identifier']}"></i>
+    		${Session Verified: contact['identifier'], Session Unverified: !contact['identifier']}
+    	</span>
+    </div>
     <contact-custom-attributes
       v-if="hasContactAttributes"
       :custom-attributes="contact.custom_attributes"
