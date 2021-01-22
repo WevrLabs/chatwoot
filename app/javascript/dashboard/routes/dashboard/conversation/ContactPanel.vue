@@ -5,7 +5,7 @@
     </span>
     <contact-info :contact="contact" :channel-type="channelType" />
 	<div class="verify-status">
-		<span v-if="ContactInbox.hmac_verified">
+		<span v-if="contact.identifier">
 		<i class="fa fa-badge-check id-verified"></i>
     		Session Verified
     	</span>
