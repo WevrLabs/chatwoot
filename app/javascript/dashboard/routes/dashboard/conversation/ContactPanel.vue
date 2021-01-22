@@ -5,7 +5,7 @@
     </span>
     <contact-info :contact="contact" :channel-type="channelType" />
 	<div class="verify-status">
-		<span v-if="contact.identifier">
+		<span v-if="contact.id">
 		<i class="fa fa-badge-check id-verified"></i>
     		Session Verified
     	</span>
@@ -235,7 +235,7 @@ getContactDetails() {
     margin-right: $space-smaller;
   }
 
-  .verify-status {
+  .verify-status span {
     display: inline-flex;
     /*align-items: center;*/
     margin: 0 0 10px;
