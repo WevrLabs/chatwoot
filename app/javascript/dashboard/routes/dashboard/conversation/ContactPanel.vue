@@ -5,9 +5,13 @@
     </span>
     <contact-info :contact="contact" :channel-type="channelType" />
 	<div class="verify-status">
-		<span>
-		<i v-bind:class="{'fa fa-badge-check id-verified': contact['identifier'],  'fa fa-exclamation-circle id-unverified': !contact['identifier']}"></i>
-    		`${contact.identifier ? 'Session Unverified' : 'Session Verified'}`
+		<span v-if="contact.identifier">
+		<i class="fa fa-badge-check id-verified"></i>
+    		Session Verified
+    	</span>
+    	<span v-else>
+		<i class="fa fa-exclamation-circle id-unverified"></i>
+    		Session Unverified
     	</span>
     </div>
     <contact-custom-attributes
