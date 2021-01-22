@@ -7,7 +7,7 @@
 	<div class="verify-status">
 		<span>
 		<i v-bind:class="{'fa fa-badge-check id-verified': contact['identifier'],  'fa fa-exclamation-circle id-unverified': !contact['identifier']}"></i>
-    		${Session Verified: contact['identifier'], Session Unverified: !contact['identifier']}
+    		`${contact.identifier ? 'Session Unverified' : 'Session Verified'}`
     	</span>
     </div>
     <contact-custom-attributes
