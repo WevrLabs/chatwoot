@@ -233,11 +233,11 @@ getContactDetails() {
 
   .verify-status {
     display: inline-flex;
-    align-items: center;
+    /*align-items: center;*/
     margin: 0 0 10px;
 
 	  .id-verified, .id-unverified {
-	    font-size: 2rem;
+	    font-size: 1.8rem;
 	    /* background: #fff; */
 	    /*padding: 4px 4px 3px;*/
 	    border-radius: 6px;
@@ -250,7 +250,7 @@ getContactDetails() {
 	    color: #1cac0d;
 	  }
 	  .id-unverified {
-	    color: #e8a701;
+	    color: #e23d3d;
 	  }
   }
 
