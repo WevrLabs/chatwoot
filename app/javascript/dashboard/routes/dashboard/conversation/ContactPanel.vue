@@ -4,8 +4,8 @@
       <i class="ion-chevron-right" />
     </span>
     <contact-info :contact="contact" :channel-type="channelType" />
-	<div class=verify-status>
-		<span v-if="">
+	<div class="verify-status">
+		<span>
 		<i v-bind:class="{'fa fa-badge-check id-verified': contact['identifier'],  'fa fa-exclamation-circle id-unverified': !contact['identifier']}"></i>
     		${Session Verified: contact['identifier'], Session Unverified: !contact['identifier']}
     	</span>
@@ -231,21 +231,27 @@ getContactDetails() {
     margin-right: $space-smaller;
   }
 
-  .id-verified, .id-unverified {
-    font-size: 2rem;
-    /* background: #fff; */
-    padding: 4px 4px 3px;
-    border-radius: 6px;
-    /*top: 4px;*/
-    display: block;
-    position: relative;
-    margin: 10px 0 5px;
-  }
-  .id-verified {
-    color: #1cac0d;
-  }
-  .id-unverified {
-    color: #e8a701;
+  .verify-status {
+    display: inline-flex;
+    align-items: center;
+    margin: 0 0 10px;
+
+	  .id-verified, .id-unverified {
+	    font-size: 2rem;
+	    /* background: #fff; */
+	    /*padding: 4px 4px 3px;*/
+	    border-radius: 6px;
+	    /*top: 4px;*/
+	    display: block;
+	    position: relative;
+	    margin: 0 5px 0 0;
+	  }
+	  .id-verified {
+	    color: #1cac0d;
+	  }
+	  .id-unverified {
+	    color: #e8a701;
+	  }
   }
 
 }
