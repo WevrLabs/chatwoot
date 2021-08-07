@@ -8,8 +8,7 @@ class ActionCableConnector extends BaseActionCableConnector {
       'message.updated': this.onMessageUpdated,
       'conversation.typing_on': this.onTypingOn,
       'conversation.typing_off': this.onTypingOff,
-      'conversation.resolved': this.onStatusChange,
-      'conversation.opened': this.onStatusChange,
+      'conversation.status_changed': this.onStatusChange,
       'presence.update': this.onPresenceUpdate,
     };
   }
@@ -19,13 +18,15 @@ class ActionCableConnector extends BaseActionCableConnector {
   };
 
   onMessageCreated = data => {
-    this.app.$store.dispatch('conversation/addMessage', data).then(() => {
-      window.bus.$emit('on-agent-message-recieved');
-    });
+    this.app.$store
+      .dispatch('conversation/addOrUpdateMessage', data)
+      .then(() => {
+        window.bus.$emit('on-agent-message-recieved');
+      });
   };
 
   onMessageUpdated = data => {
-    this.app.$store.dispatch('conversation/updateMessage', data);
+    this.app.$store.dispatch('conversation/addOrUpdateMessage', data);
   };
 
   onPresenceUpdate = data => {

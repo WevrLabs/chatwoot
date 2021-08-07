@@ -1,7 +1,11 @@
 <template>
   <div
     class="conversation"
-    :class="{ active: isActiveChat, 'unread-chat': hasUnread }"
+    :class="{
+      active: isActiveChat,
+      'unread-chat': hasUnread,
+      'has-inbox-name': showInboxName,
+    }"
     @click="cardClick(chat)"
   >
     <Thumbnail
@@ -14,32 +18,42 @@
       size="40px"
     />
     <div class="conversation--details columns">
+      <span v-if="showInboxName" class="label">
+        <i :class="computedInboxClass" />
+        {{ inboxName }}
+      </span>
       <h4 class="conversation--user">
         {{ currentContact.name }}
-        <span
-          v-if="!hideInboxName && isInboxNameVisible"
-          v-tooltip.bottom="inboxName(chat.inbox_id)"
-          class="label"
-        >
-          {{ inboxName(chat.inbox_id) }}
-        </span>
       </h4>
       <p v-if="lastMessageInChat" class="conversation--message">
-        <i v-if="messageByAgent" class="ion-ios-undo message-from-agent"></i>
+        <i v-if="isMessagePrivate" class="ion-locked last-message-icon" />
+        <i v-else-if="messageByAgent" class="ion-ios-undo last-message-icon" />
+        <i
+          v-else-if="isMessageAnActivity"
+          class="ion-information-circled last-message-icon"
+        />
         <span v-if="lastMessageInChat.content">
-          {{ lastMessageInChat.content }}
+          {{ parsedLastMessage }}
         </span>
-        <span v-else-if="!lastMessageInChat.attachments">{{ ` ` }}</span>
-        <span v-else>
+        <span v-else-if="lastMessageInChat.attachments">
           <i :class="`small-icon ${this.$t(`${attachmentIconKey}.ICON`)}`"></i>
           {{ this.$t(`${attachmentIconKey}.CONTENT`) }}
+        </span>
+        <span v-else>
+          {{ $t('CHAT_LIST.NO_CONTENT') }}
+        </span>
+      </p>
+      <p v-else class="conversation--message">
+        <i class="ion-android-alert"></i>
+        <span>
+          {{ this.$t(`CHAT_LIST.NO_MESSAGES`) }}
         </span>
       </p>
       <div class="conversation--meta">
         <span class="timestamp">
           {{ dynamicTime(chat.timestamp) }}
         </span>
-        <span class="unread">{{ getUnreadCount }}</span>
+        <span class="unread">{{ unreadCount > 9 ? '9+' : unreadCount }}</span>
       </div>
     </div>
   </div>
@@ -47,7 +61,8 @@
 <script>
 import { mapGetters } from 'vuex';
 import { MESSAGE_TYPE } from 'widget/helpers/constants';
-
+import messageFormatterMixin from 'shared/mixins/messageFormatterMixin';
+import { getInboxClassByType } from 'dashboard/helper/inbox';
 import Thumbnail from '../Thumbnail';
 import conversationMixin from '../../../mixins/conversations';
 import timeMixin from '../../../mixins/time';
@@ -59,7 +74,7 @@ export default {
     Thumbnail,
   },
 
-  mixins: [timeMixin, conversationMixin],
+  mixins: [timeMixin, conversationMixin, messageFormatterMixin],
   props: {
     activeLabel: {
       type: String,
@@ -76,6 +91,10 @@ export default {
     hideThumbnail: {
       type: Boolean,
       default: false,
+    },
+    teamId: {
+      type: [String, Number],
+      default: 0,
     },
   },
 
@@ -108,12 +127,12 @@ export default {
       return this.currentChat.id === this.chat.id;
     },
 
-    getUnreadCount() {
+    unreadCount() {
       return this.unreadMessagesCount(this.chat);
     },
 
     hasUnread() {
-      return this.getUnreadCount > 0;
+      return this.unreadCount > 0;
     },
 
     isInboxNameVisible() {
@@ -129,6 +148,48 @@ export default {
       const { message_type: messageType } = lastMessage;
       return messageType === MESSAGE_TYPE.OUTGOING;
     },
+
+    isMessageAnActivity() {
+      const lastMessage = this.lastMessageInChat;
+      const { message_type: messageType } = lastMessage;
+      return messageType === MESSAGE_TYPE.ACTIVITY;
+    },
+
+    isMessagePrivate() {
+      const lastMessage = this.lastMessageInChat;
+      const { private: isPrivate } = lastMessage;
+      return isPrivate;
+    },
+
+    parsedLastMessage() {
+      const { content_attributes: contentAttributes } = this.lastMessageInChat;
+      const { email: { subject } = {} } = contentAttributes || {};
+      return this.getPlainText(subject || this.lastMessageInChat.content);
+    },
+
+    chatInbox() {
+      const { inbox_id: inboxId } = this.chat;
+      const stateInbox = this.$store.getters['inboxes/getInbox'](inboxId);
+      return stateInbox;
+    },
+
+    computedInboxClass() {
+      const { phone_number: phoneNumber, channel_type: type } = this.chatInbox;
+      const classByType = getInboxClassByType(type, phoneNumber);
+      return classByType;
+    },
+
+    showInboxName() {
+      return (
+        !this.hideInboxName &&
+        this.isInboxNameVisible &&
+        this.inboxesList.length > 1
+      );
+    },
+    inboxName() {
+      const stateInbox = this.chatInbox;
+      return stateInbox.name || '';
+    },
   },
 
   methods: {
@@ -139,13 +200,56 @@ export default {
         activeInbox,
         id: chat.id,
         label: this.activeLabel,
+        teamId: this.teamId,
       });
       router.push({ path: frontendURL(path) });
-    },
-    inboxName(inboxId) {
-      const stateInbox = this.$store.getters['inboxes/getInbox'](inboxId);
-      return stateInbox.name || '';
     },
   },
 };
 </script>
+<style lang="scss" scoped>
+.conversation {
+  align-items: center;
+
+  &:hover {
+    background: var(--color-background-light);
+  }
+}
+
+.has-inbox-name {
+  &::v-deep .user-thumbnail-box {
+    margin-top: var(--space-normal);
+    align-items: flex-start;
+  }
+  .conversation--meta {
+    margin-top: var(--space-normal);
+  }
+}
+
+.conversation--details .label {
+  padding: var(--space-micro) 0 var(--space-micro) 0;
+  line-height: var(--space-slab);
+  font-weight: var(--font-weight-medium);
+  background: none;
+  color: var(--s-500);
+  font-size: var(--font-size-mini);
+}
+
+.conversation--details {
+  .conversation--user {
+    padding-top: var(--space-micro);
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    width: 60%;
+  }
+  .ion-earth {
+    font-size: var(--font-size-mini);
+  }
+}
+
+.last-message-icon {
+  color: var(--s-600);
+  font-size: var(--font-size-mini);
+}
+</style>

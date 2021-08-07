@@ -3,6 +3,8 @@
     "LINK": "Impostazioni profilo",
     "TITLE": "Impostazioni profilo",
     "BTN_TEXT": "Aggiorna Profilo",
+    "UPDATE_SUCCESS": "Your profile has been updated successfully",
+    "PASSWORD_UPDATE_SUCCESS": "Your password has been changed successfully",
     "AFTER_EMAIL_CHANGED": "Il tuo profilo è stato aggiornato correttamente, effettua nuovamente il login quando le tue credenziali di accesso sono state modificate",
     "FORM": {
       "AVATAR": "Immagine del profilo",
@@ -16,17 +18,27 @@
       },
       "PASSWORD_SECTION": {
         "TITLE": "password",
-        "NOTE": "Aggiornare la tua password reimposterà i tuoi login in più dispositivi."
+        "NOTE": "Aggiornare la tua password reimposterà i tuoi login in più dispositivi.",
+        "BTN_TEXT": "Change password"
       },
       "ACCESS_TOKEN": {
         "TITLE": "Token di accesso",
         "NOTE": "Questo token può essere usato se stai costruendo un'integrazione basata su API"
       },
+      "AUDIO_NOTIFICATIONS_SECTION": {
+        "TITLE": "Audio Notifications",
+        "NOTE": "Enable audio notifications in dashboard for new messages and conversations.",
+        "NONE": "None",
+        "ASSIGNED": "Assigned Conversations",
+        "ALL_CONVERSATIONS": "All Conversations"
+      },
       "EMAIL_NOTIFICATIONS_SECTION": {
         "TITLE": "Notifiche email",
         "NOTE": "Aggiorna qui le tue preferenze di notifica email",
         "CONVERSATION_ASSIGNMENT": "Invia notifiche via email quando viene assegnata una conversazione a me",
-        "CONVERSATION_CREATION": "Invia notifiche via email quando viene creata una nuova conversazione"
+        "CONVERSATION_CREATION": "Invia notifiche via email quando viene creata una nuova conversazione",
+        "CONVERSATION_MENTION": "Send email notifications when you are mentioned in a conversation",
+        "ASSIGNED_CONVERSATION_NEW_MESSAGE": "Send email notifications when a new message is created in an assigned conversation"
       },
       "API": {
         "UPDATE_SUCCESS": "Le preferenze per le notifiche sono state aggiornate con successo",
@@ -37,6 +49,8 @@
         "NOTE": "Aggiorna qui le tue preferenze di notifiche push",
         "CONVERSATION_ASSIGNMENT": "Invia notifiche push quando una conversazione mi viene assegnata",
         "CONVERSATION_CREATION": "Invia notifiche push quando una conversazione mi viene assegnata",
+        "CONVERSATION_MENTION": "Send push notifications when you are mentioned in a conversation",
+        "ASSIGNED_CONVERSATION_NEW_MESSAGE": "Send push notifications when a new message is created in an assigned conversation",
         "HAS_ENABLED_PUSH": "Hai abilitato notifiche push per questo browser.",
         "REQUEST_PUSH": "Abilita notifiche push"
       },
@@ -56,24 +70,20 @@
       "AVAILABILITY": {
         "LABEL": "Availability",
         "STATUSES_LIST": [
-          {
-            "value": "online",
-            "label": "Online"
-          },
-          {
-            "value": "busy",
-            "label": "Busy"
-          },
-          {
-            "value": "offline",
-            "label": "Offline"
-          }
+          "Online",
+          "Busy",
+          "Offline"
         ]
       },
       "EMAIL": {
         "LABEL": "Il tuo indirizzo email",
         "ERROR": "Inserisci un indirizzo email valido",
         "PLACEHOLDER": "Inserisci il tuo indirizzo email, che verrà visualizzato nelle conversazioni"
+      },
+      "CURRENT_PASSWORD": {
+        "LABEL": "Current password",
+        "ERROR": "Please enter the current password",
+        "PLACEHOLDER": "Please enter the current password"
       },
       "PASSWORD": {
         "LABEL": "password",
@@ -120,14 +130,22 @@
   "SIDEBAR": {
     "CONVERSATIONS": "Conversazioni",
     "REPORTS": "Segnalazioni",
+    "CONTACTS": "Contacts",
     "SETTINGS": "Impostazioni",
     "HOME": "Home",
     "AGENTS": "Agenti",
     "INBOXES": "Posta",
+    "NOTIFICATIONS": "Notifications",
     "CANNED_RESPONSES": "Risposte predefinite",
     "INTEGRATIONS": "Integrazioni",
     "ACCOUNT_SETTINGS": "Impostazioni Account",
-    "LABELS": "Labels"
+    "APPLICATIONS": "Applications",
+    "LABELS": "Labels",
+    "TEAMS": "Teams",
+    "ALL_CONTACTS": "All Contacts",
+    "TAGGED_WITH": "Tagged with",
+    "REPORTS_OVERVIEW": "Overview",
+    "CSAT": "CSAT"
   },
   "CREATE_ACCOUNT": {
     "NEW_ACCOUNT": "New Account",

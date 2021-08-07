@@ -3,6 +3,8 @@
     "LINK": "Налаштування облікового запису",
     "TITLE": "Налаштування облікового запису",
     "BTN_TEXT": "Оновити обліковий запис",
+    "UPDATE_SUCCESS": "Your profile has been updated successfully",
+    "PASSWORD_UPDATE_SUCCESS": "Your password has been changed successfully",
     "AFTER_EMAIL_CHANGED": "Ваш обліковий запис було успішно оновлено. Будь ласка, увійдіть знову, оскільки ваші дані були змінені",
     "FORM": {
       "AVATAR": "Зображення облікового запису",
@@ -16,17 +18,27 @@
       },
       "PASSWORD_SECTION": {
         "TITLE": "Пароль",
-        "NOTE": "Оновлення вашого пароля призведе до скидання ваших записів про вхід на інших пристроях."
+        "NOTE": "Оновлення вашого пароля призведе до скидання ваших записів про вхід на інших пристроях.",
+        "BTN_TEXT": "Change password"
       },
       "ACCESS_TOKEN": {
         "TITLE": "Ключ доступу",
         "NOTE": "Цей ключ можна використовувати, якщо ви створюєте API-інтеграцію"
       },
+      "AUDIO_NOTIFICATIONS_SECTION": {
+        "TITLE": "Audio Notifications",
+        "NOTE": "Enable audio notifications in dashboard for new messages and conversations.",
+        "NONE": "None",
+        "ASSIGNED": "Assigned Conversations",
+        "ALL_CONVERSATIONS": "All Conversations"
+      },
       "EMAIL_NOTIFICATIONS_SECTION": {
         "TITLE": "Сповіщення електронною поштою",
         "NOTE": "Тут оновлюються налаштування повідомлень електронною поштою",
         "CONVERSATION_ASSIGNMENT": "Надсилати сповіщення коли бесіду призначають мені",
-        "CONVERSATION_CREATION": "Надсилати сповіщення при створенні нової бесіди"
+        "CONVERSATION_CREATION": "Надсилати сповіщення при створенні нової бесіди",
+        "CONVERSATION_MENTION": "Send email notifications when you are mentioned in a conversation",
+        "ASSIGNED_CONVERSATION_NEW_MESSAGE": "Send email notifications when a new message is created in an assigned conversation"
       },
       "API": {
         "UPDATE_SUCCESS": "Налаштування сповіщень для вашого акаунту оновлено успішно",
@@ -37,6 +49,8 @@
         "NOTE": "Update your push notification preferences here",
         "CONVERSATION_ASSIGNMENT": "Send push notifications when a conversation is assigned to me",
         "CONVERSATION_CREATION": "Send push notifications when a new conversation is created",
+        "CONVERSATION_MENTION": "Send push notifications when you are mentioned in a conversation",
+        "ASSIGNED_CONVERSATION_NEW_MESSAGE": "Send push notifications when a new message is created in an assigned conversation",
         "HAS_ENABLED_PUSH": "You have enabled push for this browser.",
         "REQUEST_PUSH": "Enable push notifications"
       },
@@ -56,24 +70,20 @@
       "AVAILABILITY": {
         "LABEL": "Availability",
         "STATUSES_LIST": [
-          {
-            "value": "online",
-            "label": "Online"
-          },
-          {
-            "value": "busy",
-            "label": "Busy"
-          },
-          {
-            "value": "offline",
-            "label": "Offline"
-          }
+          "Online",
+          "Busy",
+          "Offline"
         ]
       },
       "EMAIL": {
         "LABEL": "Ваша адреса електронної пошти",
         "ERROR": "Будь ласка, введіть коректну адресу електронної пошти",
         "PLACEHOLDER": "Введіть адресу електронної пошти, її буде видно в бесідах"
+      },
+      "CURRENT_PASSWORD": {
+        "LABEL": "Current password",
+        "ERROR": "Please enter the current password",
+        "PLACEHOLDER": "Please enter the current password"
       },
       "PASSWORD": {
         "LABEL": "Пароль",
@@ -120,14 +130,22 @@
   "SIDEBAR": {
     "CONVERSATIONS": "Бесіди",
     "REPORTS": "Звіти",
+    "CONTACTS": "Contacts",
     "SETTINGS": "Налаштування",
     "HOME": "Головна",
     "AGENTS": "Агенти",
     "INBOXES": "Вхідні",
+    "NOTIFICATIONS": "Notifications",
     "CANNED_RESPONSES": "Швидкі відповіді",
     "INTEGRATIONS": "Інтеграції",
     "ACCOUNT_SETTINGS": "Налаштування акаунту",
-    "LABELS": "Labels"
+    "APPLICATIONS": "Applications",
+    "LABELS": "Labels",
+    "TEAMS": "Teams",
+    "ALL_CONTACTS": "All Contacts",
+    "TAGGED_WITH": "Tagged with",
+    "REPORTS_OVERVIEW": "Overview",
+    "CSAT": "CSAT"
   },
   "CREATE_ACCOUNT": {
     "NEW_ACCOUNT": "New Account",

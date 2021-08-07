@@ -1,19 +1,27 @@
 const {
+  API_CHANNEL_NAME: apiChannelName,
+  API_CHANNEL_THUMBNAIL: apiChannelThumbnail,
   APP_VERSION: appVersion,
-  CREATE_NEW_ACCOUNT_FROM_DASHBOARD: createNewAccountFromDashboard,
   BRAND_NAME: brandName,
+  CHATWOOT_INBOX_TOKEN: chatwootInboxToken,
+  CREATE_NEW_ACCOUNT_FROM_DASHBOARD: createNewAccountFromDashboard,
+  DISPLAY_MANIFEST: displayManifest,
   INSTALLATION_NAME: installationName,
   LOGO_THUMBNAIL: logoThumbnail,
   LOGO: logo,
   PRIVACY_URL: privacyURL,
   TERMS_URL: termsURL,
   WIDGET_BRAND_URL: widgetBrandURL,
-} = window.globalConfig;
+} = window.globalConfig || {};
 
 const state = {
+  apiChannelName,
+  apiChannelThumbnail,
   appVersion,
-  createNewAccountFromDashboard,
   brandName,
+  chatwootInboxToken,
+  createNewAccountFromDashboard,
+  displayManifest,
   installationName,
   logo,
   logoThumbnail,

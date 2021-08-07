@@ -22,6 +22,7 @@ select {
   display: block;
   font-family: $base-font-family;
   font-size: $base-font-size;
+  background-color: $color-background-dark1 !important;
 }
 
 input,
@@ -30,6 +31,7 @@ textarea {
   display: block;
   font-family: $base-font-family;
   font-size: 16px;
+  background-color: unset !important;
 }
 
 [type="color"],
@@ -48,8 +50,10 @@ textarea {
 input:not([type]),
 textarea {
   appearance: none;
-  background-color: $white;
-  border: $base-border;
+  // background-color: $white;
+  background-color: unset;
+  // border: $base-border;
+  border: 1px solid #b7b7b7;
   border-radius: $base-border-radius;
   padding: 0.5em;
   transition: border-color $base-duration $base-timing;
@@ -69,7 +73,8 @@ textarea {
     cursor: not-allowed;
 
     &:hover {
-      border: $base-border;
+      // border: $base-border;
+      border: 1px solid #b7b7b7;
     }
   }
 }

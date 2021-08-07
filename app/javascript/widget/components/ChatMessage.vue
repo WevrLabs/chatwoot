@@ -33,5 +33,7 @@ export default {
   flex-direction: row;
   align-items: flex-end;
   max-width: 90%;
+  text-align: start !important;
+  unicode-bidi: plaintext;
 }
 </style>

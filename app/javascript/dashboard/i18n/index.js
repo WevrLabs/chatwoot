@@ -11,11 +11,13 @@ import fi from './locale/fi';
 import fr from './locale/fr';
 import hi from './locale/hi';
 import hu from './locale/hu';
+import id from './locale/id';
 import it from './locale/it';
 import ja from './locale/ja';
 import ko from './locale/ko';
 import ml from './locale/ml';
 import nl from './locale/nl';
+import no from './locale/no';
 import pl from './locale/pl';
 import pt from './locale/pt';
 import pt_BR from './locale/pt_BR';
@@ -27,7 +29,7 @@ import ta from './locale/ta';
 import tr from './locale/tr';
 import uk from './locale/uk';
 import vi from './locale/vi';
-import zh from './locale/zh';
+import zh_CN from './locale/zh_CN';
 import zh_TW from './locale/zh_TW';
 
 export default {
@@ -44,11 +46,13 @@ export default {
   fr,
   hi,
   hu,
+  id,
   it,
   ja,
   ko,
   ml,
   nl,
+  no,
   pl,
   pt,
   pt_BR,
@@ -60,6 +64,6 @@ export default {
   tr,
   uk,
   vi,
-  zh,
+  zh_CN,
   zh_TW,
 };

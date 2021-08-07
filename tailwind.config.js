@@ -4,6 +4,7 @@ module.exports = {
   purge: [
     './app/javascript/widget/**/*.vue',
     './app/javascript/shared/**/*.vue',
+    './app/javascript/survey/**/*.vue',
   ],
   future: {
     removeDeprecatedGapUtilities: true,
@@ -55,9 +56,9 @@ module.exports = {
         400: '#7489A4',
         500: '#5D7592',
         600: '#506781',
-        700: '#40546B',
+        700: '#55677c',
         800: '#314155',
-        900: '#1F2D3D',
+        900: '#657b95',
       },
       black: {
         50: '#F8F9FE',
@@ -67,7 +68,7 @@ module.exports = {
         400: '#B6B7BB',
         500: '#96979C',
         600: '#6E6F73',
-        700: '#3C4858',
+        700: '#657b95',
         800: '#3C3D40',
         900: '#1B1C1F',
       },

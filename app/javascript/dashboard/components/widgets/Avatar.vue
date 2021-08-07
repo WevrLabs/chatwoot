@@ -30,7 +30,7 @@ export default {
     },
     size: {
       type: Number,
-      default: 40,
+      default: 78,
     },
     src: {
       type: String,
@@ -81,6 +81,7 @@ export default {
   align-items: center;
   justify-content: center;
   text-align: center;
-  background-image: linear-gradient(to top, #4481eb 0%, #04befe 100%);
+  // background-image: linear-gradient(to top, #4481eb 0%, #04befe 100%);
+  background-image: linear-gradient(0deg,#343e50 0,#14799c);
 }
 </style>

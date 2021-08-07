@@ -8,37 +8,51 @@
 #  contact_last_seen_at  :datetime
 #  identifier            :string
 #  last_activity_at      :datetime         not null
-#  locked                :boolean          default(FALSE)
+#  snoozed_until         :datetime
 #  status                :integer          default("open"), not null
 #  uuid                  :uuid             not null
 #  created_at            :datetime         not null
 #  updated_at            :datetime         not null
 #  account_id            :integer          not null
 #  assignee_id           :integer
+#  campaign_id           :bigint
 #  contact_id            :bigint
 #  contact_inbox_id      :bigint
 #  display_id            :integer          not null
 #  inbox_id              :integer          not null
+#  team_id               :bigint
 #
 # Indexes
 #
-#  index_conversations_on_account_id                 (account_id)
-#  index_conversations_on_account_id_and_display_id  (account_id,display_id) UNIQUE
-#  index_conversations_on_contact_inbox_id           (contact_inbox_id)
+#  index_conversations_on_account_id                  (account_id)
+#  index_conversations_on_account_id_and_display_id   (account_id,display_id) UNIQUE
+#  index_conversations_on_assignee_id_and_account_id  (assignee_id,account_id)
+#  index_conversations_on_campaign_id                 (campaign_id)
+#  index_conversations_on_contact_inbox_id            (contact_inbox_id)
+#  index_conversations_on_status_and_account_id       (status,account_id)
+#  index_conversations_on_team_id                     (team_id)
 #
 # Foreign Keys
 #
+#  fk_rails_...  (campaign_id => campaigns.id)
 #  fk_rails_...  (contact_inbox_id => contact_inboxes.id)
+#  fk_rails_...  (team_id => teams.id)
 #
 
 class Conversation < ApplicationRecord
+  include Labelable
+  include AssignmentHandler
+  include RoundRobinHandler
+
   validates :account_id, presence: true
   validates :inbox_id, presence: true
+  before_validation :validate_additional_attributes
 
-  enum status: { open: 0, resolved: 1, bot: 2 }
+  enum status: { open: 0, resolved: 1, pending: 2, snoozed: 3 }
 
   scope :latest, -> { order(last_activity_at: :desc) }
   scope :unassigned, -> { where(assignee_id: nil) }
+  scope :assigned, -> { where.not(assignee_id: nil) }
   scope :assigned_to, ->(agent) { where(assignee_id: agent.id) }
 
   belongs_to :account
@@ -46,18 +60,21 @@ class Conversation < ApplicationRecord
   belongs_to :assignee, class_name: 'User', optional: true
   belongs_to :contact
   belongs_to :contact_inbox
+  belongs_to :team, optional: true
+  belongs_to :campaign, optional: true
 
   has_many :messages, dependent: :destroy, autosave: true
+  has_one :csat_survey_response, dependent: :destroy
+  has_many :notifications, as: :primary_actor, dependent: :destroy
 
-  before_create :set_bot_conversation
-  before_create :set_display_id, unless: :display_id?
+  before_save :ensure_snooze_until_reset
+  before_create :mark_conversation_pending_if_bot
+
   # wanted to change this to after_update commit. But it ended up creating a loop
   # reinvestigate in future and identity the implications
   after_update :notify_status_change, :create_activity
   after_create_commit :notify_conversation_creation, :queue_conversation_auto_resolution_job
-  after_save :run_round_robin
-
-  acts_as_taggable_on :labels
+  after_commit :set_display_id, unless: :display_id?
 
   delegate :auto_resolve_duration, to: :account
 
@@ -75,14 +92,10 @@ class Conversation < ApplicationRecord
     update!(assignee: agent)
   end
 
-  def update_labels(labels = nil)
-    update!(label_list: labels)
-  end
-
   def toggle_status
     # FIXME: implement state machine with aasm
     self.status = open? ? :resolved : :open
-    self.status = :open if bot?
+    self.status = :open if pending? || snoozed?
     save
   end
 
@@ -98,15 +111,7 @@ class Conversation < ApplicationRecord
   end
 
   def muted?
-    !Redis::Alfred.get(mute_key).nil?
-  end
-
-  def lock!
-    update!(locked: true)
-  end
-
-  def unlock!
-    update!(locked: false)
+    Redis::Alfred.get(mute_key).present?
   end
 
   def unread_messages
@@ -139,8 +144,17 @@ class Conversation < ApplicationRecord
 
   private
 
-  def set_bot_conversation
-    self.status = :bot if inbox.agent_bot_inbox&.active?
+  def ensure_snooze_until_reset
+    self.snoozed_until = nil unless snoozed?
+  end
+
+  def validate_additional_attributes
+    self.additional_attributes = {} unless additional_attributes.is_a?(Hash)
+  end
+
+  def mark_conversation_pending_if_bot
+    # TODO: make this an inbox config instead of assuming bot conversations should start as pending
+    self.status = :pending if inbox.agent_bot_inbox&.active? || inbox.hooks.pluck(:app_id).include?('dialogflow')
   end
 
   def notify_conversation_creation
@@ -158,16 +172,12 @@ class Conversation < ApplicationRecord
   end
 
   def set_display_id
-    self.display_id = loop do
-      next_display_id = account.conversations.maximum('display_id').to_i + 1
-      break next_display_id unless account.conversations.exists?(display_id: next_display_id)
-    end
+    reload
   end
 
   def create_activity
     user_name = Current.user.name if Current.user.present?
     status_change_activity(user_name) if saved_change_to_status?
-    create_assignee_change(user_name) if saved_change_to_assignee_id?
     create_label_change(user_name) if saved_change_to_label_list?
   end
 
@@ -184,9 +194,8 @@ class Conversation < ApplicationRecord
     {
       CONVERSATION_OPENED => -> { saved_change_to_status? && open? },
       CONVERSATION_RESOLVED => -> { saved_change_to_status? && resolved? },
+      CONVERSATION_STATUS_CHANGED => -> { saved_change_to_status? },
       CONVERSATION_READ => -> { saved_change_to_contact_last_seen_at? },
-      CONVERSATION_LOCK_TOGGLE => -> { saved_change_to_locked? },
-      ASSIGNEE_CHANGED => -> { saved_change_to_assignee_id? },
       CONVERSATION_CONTACT_CHANGED => -> { saved_change_to_contact_id? }
     }.each do |event, condition|
       condition.call && dispatcher_dispatch(event)
@@ -197,26 +206,10 @@ class Conversation < ApplicationRecord
     Rails.configuration.dispatcher.dispatch(event_name, Time.zone.now, conversation: self)
   end
 
-  def should_round_robin?
-    return false unless inbox.enable_auto_assignment?
-
-    # run only if assignee is blank or doesn't have access to inbox
-    assignee.blank? || inbox.members.exclude?(assignee)
-  end
-
   def conversation_status_changed_to_open?
     return false unless open?
     # saved_change_to_status? method only works in case of update
     return true if previous_changes.key?(:id) || saved_change_to_status?
-  end
-
-  def run_round_robin
-    # Round robin kicks in on conversation create & update
-    # run it only when conversation status changes to open
-    return unless conversation_status_changed_to_open?
-    return unless should_round_robin?
-
-    ::RoundRobin::AssignmentService.new(conversation: self).perform
   end
 
   def create_status_change_message(user_name)
@@ -227,17 +220,6 @@ class Conversation < ApplicationRecord
               end
 
     messages.create(activity_message_params(content)) if content
-  end
-
-  def create_assignee_change(user_name)
-    return unless user_name
-
-    params = { assignee_name: assignee.name, user_name: user_name }.compact
-    key = assignee_id ? 'assigned' : 'removed'
-    key = 'self_assigned' if self_assign? assignee_id
-    content = I18n.t("conversations.activity.assignee.#{key}", **params)
-
-    messages.create(activity_message_params(content))
   end
 
   def create_label_change(user_name)
@@ -287,10 +269,15 @@ class Conversation < ApplicationRecord
   end
 
   def mute_key
-    format('CONVERSATION::%<id>d::MUTED', id: id)
+    format(Redis::RedisKeys::CONVERSATION_MUTE_KEY, id: id)
   end
 
   def mute_period
     6.hours
+  end
+
+  # creating db triggers
+  trigger.before(:insert).for_each(:row) do
+    "NEW.display_id := nextval('conv_dpid_seq_' || NEW.account_id);"
   end
 end

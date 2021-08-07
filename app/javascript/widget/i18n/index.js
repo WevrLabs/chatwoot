@@ -11,11 +11,13 @@ import { default as fi } from './locale/fi.json';
 import { default as fr } from './locale/fr.json';
 import { default as hi } from './locale/hi.json';
 import { default as hu } from './locale/hu.json';
+import { default as id } from './locale/id.json';
 import { default as it } from './locale/it.json';
 import { default as ja } from './locale/ja.json';
 import { default as ko } from './locale/ko.json';
 import { default as ml } from './locale/ml.json';
 import { default as nl } from './locale/nl.json';
+import { default as no } from './locale/no.json';
 import { default as pl } from './locale/pl.json';
 import { default as pt } from './locale/pt.json';
 import { default as pt_BR } from './locale/pt_BR.json';
@@ -27,7 +29,8 @@ import { default as ta } from './locale/ta.json';
 import { default as tr } from './locale/tr.json';
 import { default as uk } from './locale/uk.json';
 import { default as vi } from './locale/vi.json';
-import { default as zh } from './locale/zh.json';
+import { default as zh_CN } from './locale/zh_CN.json';
+import { default as zh_TW } from './locale/zh_TW.json';
 
 export default {
   ar,
@@ -43,11 +46,13 @@ export default {
   fr,
   hi,
   hu,
+  id,
   it,
   ja,
   ko,
   ml,
   nl,
+  no,
   pl,
   pt,
   pt_BR,
@@ -59,5 +64,6 @@ export default {
   tr,
   uk,
   vi,
-  zh,
+  zh_CN,
+  zh_TW,
 };

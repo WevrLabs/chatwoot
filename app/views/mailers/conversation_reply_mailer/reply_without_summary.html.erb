@@ -1,12 +1,21 @@
 <% @messages.each do |message| %>
-  <p style="font-family: Roboto,"Helvetica Neue",Tahoma,Arial,sans-serif; text-align: start; unicode-bidi: plaintext;">
+  <div class="message-container" style="font-family: 'Helvetica Neue', Helvetica, Tahoma, Arial, sans-serif;text-align: center; unicode-bidi: plaintext;background: #efefef;border-radius: 10px;display:table;padding: 10px 20px;margin-top: 5px;margin-bottom: 20px;margin-right:auto;margin-left:auto;">
     <% if message.content %>
-      <%= message.content.gsub("\n", "<br/>").html_safe %>
+      <%= CommonMarker.render_html(message.content).html_safe %>
     <% end %>
     <% if message.attachments %>
       <% message.attachments.each do |attachment| %>
         attachment [<a href="<%= attachment.file_url %>" _target="blank">click here to view</a>]
       <% end %>
     <% end %>
-  </p>
+  </div>
 <% end %>
+
+<table width="100%" cellpadding="0" cellspacing="0" style="font-family: 'Helvetica Neue',Helvetica,Tahoma,Arial,sans-serif; text-align: center; box-sizing: border-box; font-size: 14px; margin: 0;">
+      <tr style="font-family: 'Helvetica Neue',Helvetica,Tahoma,Arial,sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;">
+          <td class="content-block" style="font-family: 'Helvetica Neue',Helvetica,Tahoma,Arial,sans-serif; box-sizing: border-box; font-size: 14px; vertical-align: top; margin: 0; padding: 0 0 20px;" valign="top">
+              &mdash; WevrLabs Communication Center &mdash; <br/>
+              <a href="https://wevrlabs.net" style="font-family: 'Helvetica Neue',Helvetica,Tahoma,Arial,sans-serif; box-sizing: border-box; font-size: 12px; vertical-align: top; color: #999; text-align: center; margin: 0; padding: 0 0 20px;" align="center" valign="top">https://wevrlabs.net</a>
+          </td>
+      </tr>
+</table>

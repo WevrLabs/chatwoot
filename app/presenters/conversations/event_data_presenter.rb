@@ -1,8 +1,4 @@
 class Conversations::EventDataPresenter < SimpleDelegator
-  def lock_data
-    { id: display_id, locked: locked? }
-  end
-
   def push_data
     {
       additional_attributes: additional_attributes,
@@ -10,6 +6,7 @@ class Conversations::EventDataPresenter < SimpleDelegator
       channel: inbox.try(:channel_type),
       id: display_id,
       inbox_id: inbox_id,
+      contact_inbox: contact_inbox,
       messages: push_messages,
       meta: push_meta,
       status: status,

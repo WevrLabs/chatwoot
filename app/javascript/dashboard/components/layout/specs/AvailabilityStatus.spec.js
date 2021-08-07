@@ -3,12 +3,18 @@ import { createLocalVue, mount } from '@vue/test-utils';
 import Vuex from 'vuex';
 import VueI18n from 'vue-i18n';
 
+import WootButton from 'dashboard/components/ui/WootButton';
 import i18n from 'dashboard/i18n';
 
 const localVue = createLocalVue();
 localVue.use(Vuex);
 localVue.use(VueI18n);
-localVue.locale('en', i18n.en);
+localVue.component('woot-button', WootButton);
+
+const i18nConfig = new VueI18n({
+  locale: 'en',
+  messages: i18n,
+});
 
 describe('AvailabilityStatus', () => {
   const currentUser = { availability_status: 'online' };
@@ -40,13 +46,14 @@ describe('AvailabilityStatus', () => {
     availabilityStatus = mount(AvailabilityStatus, {
       store,
       localVue,
+      i18n: i18nConfig,
     });
   });
 
   it('shows current user status', () => {
     const statusViewTitle = availabilityStatus.find('.status-view--title');
 
-    expect(statusViewTitle.text()).toBe(currentUser.availability_status);
+    expect(statusViewTitle.text()).toBe('Online');
   });
 
   it('opens the menu when user clicks "change"', async () => {

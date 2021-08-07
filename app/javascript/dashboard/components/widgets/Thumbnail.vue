@@ -35,6 +35,13 @@
       :style="badgeStyle"
       src="~dashboard/assets/images/channels/whatsapp.png"
     />
+    <img
+      v-if="badge === 'Channel::WebWidget'"
+      id="badge"
+      class="source-badge"
+      :style="badgeStyle"
+      src="~dashboard/assets/images/channels/wevrlabs.png"
+    />
     <div
       v-if="showStatusIndicator"
       :class="`source-badge user-online-status user-online-status--${status}`"
@@ -150,11 +157,20 @@ export default {
     position: absolute;
     right: $zero;
     width: $space-slab;
+    
+    background: #e6e6e6;
+    border-radius: 50%;
+    padding: 3px;
+    // width: 18px !important;
+    // height: auto !important;
   }
 
   .user-online-status {
     border-radius: 50%;
     bottom: $space-micro;
+    box-shadow: 0 1px 1px 0 rgba(0, 0, 0, .2);
+    //border: .15rem solid #fff;
+    transform: scale(1.5);
 
     &:after {
       content: ' ';
@@ -163,10 +179,31 @@ export default {
 
   .user-online-status--online {
     background: $success-color;
+    background-image: linear-gradient(-180deg,#31ef25,#0e9005);
+    top: 0;
+    animation: pulse-badge-g 1s infinite;
   }
 
   .user-online-status--busy {
     background: $warning-color;
   }
 }
+
+@keyframes pulse-badge-g {
+  0% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 #08bb13;
+  }
+
+  70% {
+    transform: scale(1);
+    box-shadow: 0 0 0 10px transparent;
+  }
+
+  100% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 transparent;
+  }
+}
+
 </style>

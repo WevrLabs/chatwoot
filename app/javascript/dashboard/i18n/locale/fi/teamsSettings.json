@@ -1,0 +1,125 @@
+{
+  "TEAMS_SETTINGS": {
+    "NEW_TEAM": "Luo uusi tiimi",
+    "HEADER": "Tiimi",
+    "SIDEBAR_TXT": "<p><b>Tiimit</b></p> <p>Tiimit antavat tavan jakaa edustajat eri osa-alueisiin. <br /> Yksi edustaja voi olla monessa ryhmässä. Keskustelun voi määrätä ryhmälle. </p>",
+    "LIST": {
+      "404": "Tällä tilillä ei ole tiimejä.",
+      "EDIT_TEAM": "Muokkaa tiimi'"
+    },
+    "CREATE_FLOW": {
+      "CREATE": {
+        "TITLE": "Luo uusi tiimi",
+        "DESC": "Lisää otsikko ja kuvaus tiimille."
+      },
+      "AGENTS": {
+        "BUTTON_TEXT": "Lisää edustajia tiimiin",
+        "TITLE": "Lisää edustajia tiimille - %{tiimiName}",
+        "DESC": "Lisää edustajia juuri luotuun tiimiin. Kaikki edustajat saavat ilmoitukset mikäli tiimi määrätään keskusteluun."
+      },
+      "WIZARD": [
+        {
+          "title": "Luo",
+          "route": "settings_tiimis_new",
+          "body": "Luo uusi tiimi."
+        },
+        {
+          "title": "Lisää edustaja",
+          "route": "settings_tiimis_add_agents",
+          "body": "Lisää edustajia tiimiin."
+        },
+        {
+          "title": "Valmista",
+          "route": "settings_tiimis_finish",
+          "body": "Kaikki valmiina!"
+        }
+      ]
+    },
+    "EDIT_FLOW": {
+      "CREATE": {
+        "TITLE": "Edit your tiimi details",
+        "DESC": "Edit title and description to your tiimi.",
+        "BUTTON_TEXT": "Update tiimi"
+      },
+      "AGENTS": {
+        "BUTTON_TEXT": "Päivitä edustajat",
+        "TITLE": "Lisää agentteja tiimiin - %{tiimiName}",
+        "DESC": "Lisää edustajia juuri luotuun tiimiin. Kaikki edustajat saavat ilmoitukset mikäli tiimi määrätään keskusteluun."
+      },
+      "WIZARD": [
+        {
+          "title": "Tiimin tiedot",
+          "route": "settings_tiimis_edit",
+          "body": "Muuta nimeä, kuvausta ja muuta."
+        },
+        {
+          "title": "Muuta edustajia",
+          "route": "settings_tiimis_edit_members",
+          "body": "Muuta tiimin edustajia."
+        },
+        {
+          "title": "Valmista",
+          "route": "settings_tiimis_edit_finish",
+          "body": "Kaikki valmiina!"
+        }
+      ]
+    },
+    "TEAM_FORM": {
+      "ERROR_MESSAGE": "Tiimin tallentaminen epäonnistui. Yritä uudelleen."
+    },
+    "AGENTS": {
+      "AGENT": "AGENT",
+      "EMAIL": "Sähköposti",
+      "BUTTON_TEXT": "Lisää edustaja",
+      "ADD_AGENTS": "Lisätään edustajia tiimiin...",
+      "SELECT": "valitse",
+      "SELECT_ALL": "valitse kaikki edustajat",
+      "SELECTED_COUNT": "%{selected}/%{total} edustajaa valittu."
+    },
+    "ADD": {
+      "TITLE": "Lisää edustaja tiimiin - %{tiimiName}",
+      "DESC": "Lisää edustajia juuri luotuun tiimiin. Kaikki edustajat saavat ilmoitukset mikäli tiimi määrätään keskusteluun.",
+      "SELECT": "valitse",
+      "SELECT_ALL": "valitse kaikki edustajat",
+      "SELECTED_COUNT": "%{selected}/%{total} edustajaa valittu.",
+      "BUTTON_TEXT": "Lisää edustaja",
+      "AGENT_VALIDATION_ERROR": "Valitse vähintään yksi edustaja."
+    },
+    "FINISH": {
+      "TITLE": "Tiimi on valmis!",
+      "MESSAGE": "Voitte nyt työskennellä yhdessä keskusteluissa. ",
+      "BUTTON_TEXT": "Valmis"
+    },
+    "DELETE": {
+      "BUTTON_TEXT": "Poista",
+      "API": {
+        "SUCCESS_MESSAGE": "Tiimi poistettu onnistuneesti.",
+        "ERROR_MESSAGE": "Hö! Virhe tiimiä poistaessa."
+      },
+      "CONFIRM": {
+        "TITLE": "Haluatko varmasti poistaa - %{tiimiName}",
+        "PLACE_HOLDER": "Kirjoita {tiimiName} varmistaaksesi",
+        "MESSAGE": "Tiimin poistaminen poistaa tiimin määrätyistä keskusteluista",
+        "YES": "Poista ",
+        "NO": "Peruuta"
+      }
+    },
+    "SETTINGS": "Asetukset",
+    "FORM": {
+      "UPDATE": "Päivitä tiimi",
+      "CREATE": "Luo tiimi",
+      "NAME": {
+        "LABEL": "Tiimin nimi",
+        "PLACEHOLDER": "Esim: Myynti, Tuki"
+      },
+      "DESCRIPTION": {
+        "LABEL": "Tiimin kuvaus",
+        "PLACEHOLDER": "Lyhyt kuvaus tiimist'."
+      },
+      "AUTO_ASSIGN": {
+        "LABEL": "Salli automaattinen määräys tiimiin."
+      },
+      "SUBMIT_CREATE": "Luo tiimi"
+    }
+  }
+}

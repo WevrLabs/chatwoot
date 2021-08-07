@@ -28,6 +28,14 @@
       }
     ],
     "ADD": {
+      "CHANNEL_NAME": {
+        "LABEL": "عنوان صندوق ورودی",
+        "PLACEHOLDER": "Enter your inbox name (eg: Acme Inc)"
+      },
+      "WEBSITE_NAME": {
+        "LABEL": "عنوان سایت",
+        "PLACEHOLDER": "عنوان سایت خود را وارد کنید (به عنوان مثال: Acme Inc)"
+      },
       "FB": {
         "HELP": "پانویس: با وارد شدن ما فقط به پیام‌های صفحه دسترسی پیدا می‌کنیم. پیام‌های خصوصی شما را هرگز نخواهیم دید",
         "CHOOSE_PAGE": "انتخاب صفحه",
@@ -38,7 +46,8 @@
         "PICK_A_VALUE": "یک مقدار انتخاب کنید"
       },
       "TWITTER": {
-        "HELP": "برای اضافه کردن امکان گفتگو از صفحه پروفایل توییترتان، لازم است با زدن دکمه `ورود با توییتر` پروفایل توییتر خود را شناسایی کنید' "
+        "HELP": "برای اضافه کردن امکان گفتگو از صفحه پروفایل توییترتان، لازم است با زدن دکمه `ورود با توییتر` پروفایل توییتر خود را شناسایی کنید' ",
+        "ERROR_MESSAGE": "There was an error connecting to Twitter, please try again"
       },
       "WEBSITE_CHANNEL": {
         "TITLE": "کانال وب سایت",
@@ -46,10 +55,6 @@
         "LOADING_MESSAGE": "در حال ساخت کانال پشتیبانی آنلاین سایت",
         "CHANNEL_AVATAR": {
           "LABEL": "آواتار کانال"
-        },
-        "CHANNEL_NAME": {
-          "LABEL": "عنوان سایت",
-          "PLACEHOLDER": "عنوان سایت خود را وارد کنید (به عنوان مثال: Acme Inc)"
         },
         "CHANNEL_DOMAIN": {
           "LABEL": "دامنه سایت",
@@ -72,6 +77,13 @@
           "HELP_TEXT": "به محض اینکه کاربر گفتگویی را شروع کرد، پیام مشخصی در جواب او ارسال می‌شود",
           "ENABLED": "فعال",
           "DISABLED": "غیرفعال"
+        },
+        "REPLY_TIME": {
+          "TITLE": "تنظیم زمان پاسخ",
+          "IN_A_FEW_MINUTES": "در چند دقیقه",
+          "IN_A_FEW_HOURS": "در چند ساعت",
+          "IN_A_DAY": "در یک روز",
+          "HELP_TEXT": "این زمان پاسخ در ویجت چت زنده نمایش داده می شود"
         },
         "WIDGET_COLOR": {
           "LABEL": "رنگ ویجت",
@@ -115,9 +127,17 @@
           "ERROR_MESSAGE": "متاسفانه Twilio اطلاعات ارائه شده را تایید نمی کند، لطفا اصلاح و مجددا تلاش کنید"
         }
       },
+      "SMS": {
+        "TITLE": "SMS Channel via Twilio",
+        "DESC": "Start supporting your customers via SMS with Twilio integration."
+      },
+      "WHATSAPP": {
+        "TITLE": "Whatsapp Channel via Twilio",
+        "DESC": "Start supporting your customers via Whatsapp with Twilio integration."
+      },
       "API_CHANNEL": {
-        "TITLE": "API Channel",
-        "DESC": "Integrate with API channel and start supporting your customers.",
+        "TITLE": "کانال API",
+        "DESC": "با کانال API ادغام شده و از مشتریان خود پشتیبانی کنید.",
         "CHANNEL_NAME": {
           "LABEL": "عنوان کانال",
           "PLACEHOLDER": "لطفا اسم یک کانال را وارد کنید",
@@ -125,17 +145,17 @@
         },
         "WEBHOOK_URL": {
           "LABEL": "آدرس URL وب هوک",
-          "SUBTITLE": "Configure the URL where you want to recieve callbacks on events.",
+          "SUBTITLE": "آدرس کال بک خود را جهت دریافت اطلاعات رویداد های وارد کنید.",
           "PLACEHOLDER": "آدرس URL وب هوک"
         },
-        "SUBMIT_BUTTON": "Create API Channel",
+        "SUBMIT_BUTTON": "ایجاد کانال API",
         "API": {
-          "ERROR_MESSAGE": "We were not able to save the api channel"
+          "ERROR_MESSAGE": "کانال API ذخیره نشد"
         }
       },
       "EMAIL_CHANNEL": {
-        "TITLE": "Email Channel",
-        "DESC": "Integrate you email inbox.",
+        "TITLE": "کانال ایمیل",
+        "DESC": "صندوق ورودی ایمیل خود را ادغام کنید.",
         "CHANNEL_NAME": {
           "LABEL": "عنوان کانال",
           "PLACEHOLDER": "لطفا اسم یک کانال را وارد کنید",
@@ -143,22 +163,24 @@
         },
         "EMAIL": {
           "LABEL": "ایمیل",
-          "SUBTITLE": "Email where your customers sends you support tickets",
+          "SUBTITLE": "آدرس ایمیلی که مشتریان درخواست پشتیبانی را برای شما ارسال کنند",
           "PLACEHOLDER": "ایمیل"
         },
-        "SUBMIT_BUTTON": "Create Email Channel",
+        "SUBMIT_BUTTON": "ایجاد کانال ایمیل",
         "API": {
-          "ERROR_MESSAGE": "We were not able to save the email channel"
+          "ERROR_MESSAGE": "کانال ایمیل ذخیره نشد"
         },
-        "FINISH_MESSAGE": "Start forwarding your emails to the following email address."
+        "FINISH_MESSAGE": "ایمیل های خود را به این آدرس ها فوروارد کنید."
       },
       "AUTH": {
-        "TITLE": "کانال‌ها",
-        "DESC": "در حال حاضر ما ویجت‌های پشتیبانی آنلاین سایت‌ها، صفحات فیس بوک و پروفایل‌های توییتر را پشتیبانی می‌کنیم. پلتفرم‌های دیگری مثل واتساپ، ایمیل، تلگرام و لاین در برنامه کاری ما قرار دارد و به زودی آماده خواهند شد."
+        "TITLE": "Choose a channel",
+        "DESC": "Chatwoot supports live-chat widget, Facebook page, Twitter profile, Whatsapp, Email etc., as channels. If you want to build a custom channel, you can create it using the API channel. Select one channel from the options below to proceed."
       },
       "AGENTS": {
         "TITLE": "اپراتورها",
-        "DESC": "در اینجا می‌توانید اپراتورها را به صندوق‌ ورودی خود اختصاص دهید. توجه داشته باشید که فقط اپراتورهایی که در اینجا معرفی شده باشند می‌توانند به پیام‌های این صندوق پاسخ بدهند.دیگر اپراتورها نخواهند توانست پیام‌های این صندوق را ببینید یا به آن‌ها پاسخی بدهند. <br> <b>پانویس:</b>به عنوان مدیر اگر می‌خواهید به همه صندوق‌های ورودی دسترسی داشته باشید می‌بایست خود را به عنوان اپراتور به همه صندوق‌ها اضافه کنید."
+        "DESC": "در اینجا می‌توانید اپراتورها را به صندوق‌ ورودی خود اختصاص دهید. توجه داشته باشید که فقط اپراتورهایی که در اینجا معرفی شده باشند می‌توانند به پیام‌های این صندوق پاسخ بدهند.دیگر اپراتورها نخواهند توانست پیام‌های این صندوق را ببینید یا به آن‌ها پاسخی بدهند. <br> <b>پانویس:</b>به عنوان مدیر اگر می‌خواهید به همه صندوق‌های ورودی دسترسی داشته باشید می‌بایست خود را به عنوان اپراتور به همه صندوق‌ها اضافه کنید.",
+        "VALIDATION_ERROR": "حداقل یک ایجنت به اینباکس جدید اضافه کنید",
+        "PICK_AGENTS": "انتخاب ایجنت ها برای این صندوق ورودی"
       },
       "DETAILS": {
         "TITLE": "جزئیات صندوق‌ ورودی",
@@ -184,6 +206,7 @@
       "TITLE": "صندوق ورودی حاضره!",
       "MESSAGE": "حالا از طریق این کانال جدید می‌توانید با مشتریان صحبت کنید. به امید موفقیت ",
       "BUTTON_TEXT": "نشانم بده",
+      "MORE_SETTINGS": "More settings",
       "WEBSITE_SUCCESS": "ساختن کانال وب سایت با موفقیت انجام شد. قطعه کد زیر را کپی کرده و در سایت خود قرار دهید. در صورتیکه مشتری از ویجت پشتیبانی آنلاین استفاده کند گفتگوی شما در این صندوق ورودی ظاهر می‌شود."
     },
     "REAUTH": "احراز هویت مجدد",
@@ -197,6 +220,14 @@
       "AUTO_ASSIGNMENT": {
         "ENABLED": "فعال",
         "DISABLED": "غیرفعال"
+      },
+      "EMAIL_COLLECT_BOX": {
+        "ENABLED": "فعال",
+        "DISABLED": "غیرفعال"
+      },
+      "ENABLE_CSAT": {
+        "ENABLED": "فعال",
+        "DISABLED": "غیرفعال"
       }
     },
     "DELETE": {
@@ -204,6 +235,7 @@
       "CONFIRM": {
         "TITLE": "تاییدیه حذف",
         "MESSAGE": "مطمئن هستید که حذف شود ",
+        "PLACE_HOLDER": "برای تایید لطفا {inboxName} را تایپ کنید",
         "YES": "بله، حذف شود ",
         "NO": "نه، بماند "
       },
@@ -214,14 +246,17 @@
     },
     "TABS": {
       "SETTINGS": "تنظیمات",
-      "COLLABORATORS": "Collaborators",
-      "CONFIGURATION": "Configuration"
+      "COLLABORATORS": "همکاران",
+      "CONFIGURATION": "پیکربندی",
+      "CAMPAIGN": "Campaigns",
+      "PRE_CHAT_FORM": "Pre Chat Form",
+      "BUSINESS_HOURS": "ساعت کاری"
     },
     "SETTINGS": "تنظیمات",
     "FEATURES": {
-      "LABEL": "Features",
-      "DISPLAY_FILE_PICKER": "Display file picker on the widget",
-      "DISPLAY_EMOJI_PICKER": "Display emoji picker on the widget"
+      "LABEL": "امکانات",
+      "DISPLAY_FILE_PICKER": "نمایش گزینه ضمیه فایل در ویجت",
+      "DISPLAY_EMOJI_PICKER": "نمایش گزینه انتخاب ایموجی در ویجت"
     },
     "SETTINGS_POPUP": {
       "MESSENGER_HEADING": "اسکریپت ویجت",
@@ -229,10 +264,57 @@
       "INBOX_AGENTS": "اپراتورها",
       "INBOX_AGENTS_SUB_TEXT": "اضافه کردن یا حذف کردن دسترسی اپراتور به صندوق ورودی",
       "UPDATE": "اعمال شود",
+      "ENABLE_EMAIL_COLLECT_BOX": "Enable email collect box",
+      "ENABLE_EMAIL_COLLECT_BOX_SUB_TEXT": "Enable or disable email collect box on new conversation",
       "AUTO_ASSIGNMENT": "فعال کردن واگذاری خودکار گفتگو به اپراتورها",
+      "ENABLE_CSAT": "Enable CSAT",
+      "ENABLE_CSAT_SUB_TEXT": "Enable/Disable CSAT(Customer satisfaction) survey after resolving a conversation",
       "INBOX_UPDATE_TITLE": "تنظیمات صندوق ورودی",
       "INBOX_UPDATE_SUB_TEXT": "تغییر پارامترهای صندوق ورودی",
-      "AUTO_ASSIGNMENT_SUB_TEXT": "فعال کردن یا غیرفعال کردن واگذاری خودکار گفتگوها به اپراتورهای عضو این صندوق ورودی."
+      "AUTO_ASSIGNMENT_SUB_TEXT": "فعال کردن یا غیرفعال کردن واگذاری خودکار گفتگوها به اپراتورهای عضو این صندوق ورودی.",
+      "HMAC_VERIFICATION": "اعتبار سنجی کاربر",
+      "HMAC_DESCRIPTION": "برای اعتبار سنجی کاربران با استفاده از این کلید یک هش HMAC sha256 تولید کنید."
+    },
+    "FACEBOOK_REAUTHORIZE": {
+      "TITLE": "احراز هویت مجدد",
+      "SUBTITLE": "اتصال فیس بوک شما منقضی شده است ، لطفاً برای ادامه خدمات دوباره صفحه فیس بوک خود را متصل کنید",
+      "MESSAGE_SUCCESS": "اتصال مجدد موفقیت آمیز بود",
+      "MESSAGE_ERROR": "خطایی پیش آمد. لطفا دوباره امتحان کنید"
+    },
+    "PRE_CHAT_FORM": {
+      "DESCRIPTION": "Pre chat forms enable you to capture user information before they start conversation with you.",
+      "ENABLE": {
+        "LABEL": "Enable pre chat form",
+        "OPTIONS": {
+          "ENABLED": "Yes",
+          "DISABLED": "No"
+        }
+      },
+      "PRE_CHAT_MESSAGE": {
+        "LABEL": "Pre Chat Message",
+        "PLACEHOLDER": "This message would be visible to the users along with the form"
+      },
+      "REQUIRE_EMAIL": {
+        "LABEL": "Visitors should provide their name and email address before starting the chat"
+      }
+    },
+    "BUSINESS_HOURS": {
+      "TITLE": "Set your availability",
+      "SUBTITLE": "Set your availability on your livechat widget",
+      "WEEKLY_TITLE": "Set your weekly hours",
+      "TIMEZONE_LABEL": "Select timezone",
+      "UPDATE": "Update business hours settings",
+      "TOGGLE_AVAILABILITY": "Enable business availability for this inbox",
+      "UNAVAILABLE_MESSAGE_LABEL": "Unavailable message for vistors",
+      "UNAVAILABLE_MESSAGE_DEFAULT": "We are unavailable at the moment. Leave a message we will respond once we are back.",
+      "TOGGLE_HELP": "Enabling business availability will show the available hours on live chat widget even if all the agents are offline. Outside available hours vistors can be warned with a message and a pre-chat form.",
+      "DAY": {
+        "ENABLE": "Enable availability for this day",
+        "UNAVAILABLE": "Unavailable",
+        "HOURS": "ساعت",
+        "VALIDATION_ERROR": "Starting time should be before closing time.",
+        "CHOOSE": "انتخاب کنید"
+      }
     }
   }
 }

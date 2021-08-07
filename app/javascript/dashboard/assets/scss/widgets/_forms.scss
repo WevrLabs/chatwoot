@@ -1,13 +1,16 @@
 .error {
+
   #{$all-text-inputs},
   select,
-  .multiselect > .multiselect__tags {
-    @include thin-border(darken(get-color(alert), 25%));
+  .multiselect>.multiselect__tags {
+    @include thin-border(var(--r-400));
+    background: $color-background-dark1;
   }
 
   .message {
-    color: darken(get-color(alert), 25%);
+    color: var(--r-400);
     display: block;
+    font-size: var(--font-size-small);
     font-weight: $font-weight-normal;
     margin-bottom: $space-one;
     margin-top: -$space-normal;
@@ -31,4 +34,11 @@ input {
 
 .help-text {
   font-weight: $font-weight-normal;
+}
+
+.input-group.small {
+  input {
+    font-size: var(--font-size-small);
+    height: var(--space-large);
+  }
 }

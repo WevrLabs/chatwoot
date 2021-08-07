@@ -9,17 +9,19 @@ class SupportMailbox < ApplicationMailbox
                     :decorate_mail
 
   def process
-    find_or_create_contact
-    create_conversation
-    create_message
-    add_attachments_to_message
+    ActiveRecord::Base.transaction do
+      find_or_create_contact
+      create_conversation
+      create_message
+      add_attachments_to_message
+    end
   end
 
   private
 
   def find_channel
     mail.to.each do |email|
-      @channel = Channel::Email.find_by(email: email)
+      @channel = Channel::Email.find_by('email = ? OR forward_to_email = ?', email, email)
       break if @channel.present?
     end
     raise 'Email channel/inbox not found' if @channel.nil?
@@ -47,6 +49,7 @@ class SupportMailbox < ApplicationMailbox
                                              contact_inbox_id: @contact_inbox.id,
                                              additional_attributes: {
                                                source: 'email',
+                                               mail_subject: @processed_mail.subject,
                                                initiated_at: {
                                                  timestamp: Time.now.utc
                                                }

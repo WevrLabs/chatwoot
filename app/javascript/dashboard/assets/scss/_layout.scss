@@ -22,6 +22,7 @@ body {
   @include flex;
   @include full-height;
   overflow: hidden;
+  background: $color-background-dark1;
 }
 
 .view-box {
@@ -42,7 +43,7 @@ body {
 
 .content-box {
   @include padding($space-normal);
-
+  background: $color-background-dark1;
   overflow: auto;
 }
 

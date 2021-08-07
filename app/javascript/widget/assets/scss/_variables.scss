@@ -35,20 +35,35 @@ $font-weight-bold: 600;
 $font-weight-black: 700;
 
 // Colors
-$color-woot: #1f93ff;
+// $color-woot: #1f93ff;
+$color-woot: #34628e;
 $color-primary: $color-woot;
 $color-gray: #6e6f73;
-$color-light-gray: #999a9b;
-$color-border: #e0e6ed;
+// $color-light-gray: #c2c2c2;
+$color-light-gray: #c3c3c3;
+$color-dark-gray: #7c9cb9;
+// $color-border: #e0e6ed;
+$color-border: rgba(235, 245, 255, 0.13);
 $color-border-transparent: rgba(224, 230, 237, 0.5);
-$color-border-light: #f0f4f5;
+// $color-border-light: #f0f4f5;
+$color-border-light: #3a3a3a;
 $color-border-dark: #cad0d4;
-$color-background: #f4f6fb;
-$color-background-light: #fafafa;
+$color-border-dark2: #3a3a3a;
+$color-background: rgba(235, 245, 255, 0.13);
+// $color-background: #f4f6fb;
+// $color-background-light: #f9fafc;
+$color-background-light: #26282b;
+$color-background-dark1: #1f2123;
+$color-background-dark2: #26282b;
+$color-background-dark3: #000;
+$color-background-dark4: rgba(235, 245, 255, 0.13);
 $color-white: #fff;
-$color-body: #3c4858;
-$color-heading: #1f2d3d;
+$color-body: #6d6e73;
+// $color-body: #657b95; *backup*
+$color-heading: #c2c2c2;
+// $color-heading: #657b95;
 $color-error: #ff382d;
+$color-success: #44ce4b;
 
 // Color-palettes
 

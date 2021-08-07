@@ -3,6 +3,8 @@
     "LINK": "Configurações do perfil",
     "TITLE": "Configurações do perfil",
     "BTN_TEXT": "Atualizar o perfil",
+    "UPDATE_SUCCESS": "Your profile has been updated successfully",
+    "PASSWORD_UPDATE_SUCCESS": "Sua senha foi alterada com sucesso",
     "AFTER_EMAIL_CHANGED": "Seu perfil foi atualizado com sucesso, faça o login novamente pois suas credenciais foram alteradas",
     "FORM": {
       "AVATAR": "Imagem do perfil",
@@ -16,17 +18,27 @@
       },
       "PASSWORD_SECTION": {
         "TITLE": "Palavra-passe",
-        "NOTE": "Atualizar sua senha irá redefinir seus logins em vários dispositivos."
+        "NOTE": "Atualizar sua senha irá redefinir seus logins em vários dispositivos.",
+        "BTN_TEXT": "Change password"
       },
       "ACCESS_TOKEN": {
         "TITLE": "Token de acesso",
         "NOTE": "Este token pode ser usado se você estiver construindo uma integração baseada em API"
       },
+      "AUDIO_NOTIFICATIONS_SECTION": {
+        "TITLE": "Audio Notifications",
+        "NOTE": "Enable audio notifications in dashboard for new messages and conversations.",
+        "NONE": "None",
+        "ASSIGNED": "Assigned Conversations",
+        "ALL_CONVERSATIONS": "All Conversations"
+      },
       "EMAIL_NOTIFICATIONS_SECTION": {
         "TITLE": "Notificações por e-mail",
         "NOTE": "Atualize suas preferências de notificação por e-mail aqui",
         "CONVERSATION_ASSIGNMENT": "Enviar notificações por email quando uma conversa é atribuída a mim",
-        "CONVERSATION_CREATION": "Enviar notificações por email quando uma nova conversa é criada"
+        "CONVERSATION_CREATION": "Enviar notificações por email quando uma nova conversa é criada",
+        "CONVERSATION_MENTION": "Send email notifications when you are mentioned in a conversation",
+        "ASSIGNED_CONVERSATION_NEW_MESSAGE": "Send email notifications when a new message is created in an assigned conversation"
       },
       "API": {
         "UPDATE_SUCCESS": "Your notification preferences are updated successfully",
@@ -37,6 +49,8 @@
         "NOTE": "Update your push notification preferences here",
         "CONVERSATION_ASSIGNMENT": "Send push notifications when a conversation is assigned to me",
         "CONVERSATION_CREATION": "Send push notifications when a new conversation is created",
+        "CONVERSATION_MENTION": "Send push notifications when you are mentioned in a conversation",
+        "ASSIGNED_CONVERSATION_NEW_MESSAGE": "Send push notifications when a new message is created in an assigned conversation",
         "HAS_ENABLED_PUSH": "You have enabled push for this browser.",
         "REQUEST_PUSH": "Enable push notifications"
       },
@@ -56,24 +70,20 @@
       "AVAILABILITY": {
         "LABEL": "Availability",
         "STATUSES_LIST": [
-          {
-            "value": "online",
-            "label": "Online"
-          },
-          {
-            "value": "busy",
-            "label": "Busy"
-          },
-          {
-            "value": "offline",
-            "label": "Offline"
-          }
+          "Online",
+          "Busy",
+          "Offline"
         ]
       },
       "EMAIL": {
         "LABEL": "Seu endereço de e-mail",
         "ERROR": "Por favor, insira um endereço de e-mail válido",
         "PLACEHOLDER": "Por favor, insira seu endereço de e-mail, que será exibido em conversas"
+      },
+      "CURRENT_PASSWORD": {
+        "LABEL": "Current password",
+        "ERROR": "Please enter the current password",
+        "PLACEHOLDER": "Please enter the current password"
       },
       "PASSWORD": {
         "LABEL": "Palavra-passe",
@@ -120,14 +130,22 @@
   "SIDEBAR": {
     "CONVERSATIONS": "Conversas",
     "REPORTS": "relatórios",
+    "CONTACTS": "Contacts",
     "SETTINGS": "Confirgurações",
     "HOME": "Home",
     "AGENTS": "agentes",
     "INBOXES": "Caixas de Entrada",
+    "NOTIFICATIONS": "Notifications",
     "CANNED_RESPONSES": "Respostas Prontas",
     "INTEGRATIONS": "Integrações",
     "ACCOUNT_SETTINGS": "Account Settings",
-    "LABELS": "Labels"
+    "APPLICATIONS": "Applications",
+    "LABELS": "Etiquetas",
+    "TEAMS": "Teams",
+    "ALL_CONTACTS": "All Contacts",
+    "TAGGED_WITH": "Tagged with",
+    "REPORTS_OVERVIEW": "Overview",
+    "CSAT": "CSAT"
   },
   "CREATE_ACCOUNT": {
     "NEW_ACCOUNT": "New Account",

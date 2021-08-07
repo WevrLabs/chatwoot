@@ -1,5 +1,7 @@
 class Api::V1::Accounts::BaseController < Api::BaseController
+  include SwitchLocale
   before_action :current_account
+  around_action :switch_locale_using_account_locale
 
   private
 
@@ -12,7 +14,7 @@ class Api::V1::Accounts::BaseController < Api::BaseController
     account = Account.find(params[:account_id])
     if current_user
       account_accessible_for_user?(account)
-    elsif @resource&.is_a?(AgentBot)
+    elsif @resource.is_a?(AgentBot)
       account_accessible_for_bot?(account)
     end
     account

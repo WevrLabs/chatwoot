@@ -41,21 +41,35 @@ $header-height: 5.6rem;
 $woot-logo-padding: $space-large $space-two;
 
 // Colors
-$color-woot: #1f93ff;
+// $color-woot: #1f93ff;
+$color-woot: #34628e;
 $color-gray: #6e6f73;
-$color-light-gray: #999a9b;
-$color-border: #e0e6ed;
+// $color-light-gray: #c2c2c2;
+$color-light-gray: #c3c3c3;
+$color-dark-gray: #7c9cb9;
+// $color-border: #e0e6ed;
+$color-border: rgba(235, 245, 255, 0.13);
 $color-border-light: #f0f4f5;
+$color-background: rgba(235, 245, 255, 0.13);
+// $color-background: #f4f6fb;
+$color-border-light: #3a3a3a;
 $color-border-dark: #cad0d4;
-$color-background: #f4f6fb;
-$color-background-light: #f9fafc;
+$color-border-dark2: #3a3a3a;
+// $color-background-light: #f9fafc;
+$color-background-light: #26282b;
+$color-background-dark1: #1f2123;
+$color-background-dark2: #26282b;
+$color-background-dark3: #000;
+$color-background-dark4: rgba(235, 245, 255, 0.13);
 $color-white: #fff;
-$color-body: #3c4858;
-$color-heading: #1f2d3d;
+$color-body: #6d6e73;
+// $color-body: #657b95; *backup*
+$color-heading: #c2c2c2;
+// $color-heading: #657b95;
 $color-extra-light-blue: #f5f7f9;
 
 $primary-color: $color-woot;
-$secondary-color: #35c5ff;
+$secondary-color: #5d7592;
 $success-color: #44ce4b;
 $warning-color: #ffc532;
 $alert-color: #ff382d;
@@ -88,8 +102,8 @@ $woot-snackbar-bg: #323232;
 $woot-snackbar-button: #ffeb3b;
 
 $swift-ease-out-duration: .4s !default;
-$swift-ease-out-timing-function: cubic-bezier(.25, .8, .25, 1) !default;
-$swift-ease-out: all $swift-ease-out-duration $swift-ease-out-timing-function !default;
+$swift-ease-out-function: cubic-bezier(0.37, 0, 0.63, 1) !default;
+$swift-ease-out: all $swift-ease-out-duration $swift-ease-out-function !default;
 
 // Ionicons
 $ionicons-font-path: '~ionicons/fonts';

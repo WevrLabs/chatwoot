@@ -42,6 +42,34 @@
         "INBOUND_EMAIL_ENABLED": "Для вашего аккаунта включено продолжение диалогов по электронной почте.",
         "CUSTOM_EMAIL_DOMAIN_ENABLED": "Теперь вы можете получать письма на свой домен."
       }
+    },
+    "UPDATE_CHATWOOT": "Доступно обновление %{latestChatwootVersion} для Chatwoot. Пожалуйста, обновите свою версию."
+  },
+  "FORMS": {
+    "MULTISELECT": {
+      "ENTER_TO_SELECT": "Нажмите Enter для выбора",
+      "ENTER_TO_REMOVE": "Нажмите Enter для удаления",
+      "SELECT_ONE": "Выберите один"
+    }
+  },
+  "NOTIFICATIONS_PAGE": {
+    "HEADER": "Уведомления",
+    "MARK_ALL_DONE": "Отметить все прочитанными",
+    "LIST": {
+      "LOADING_MESSAGE": "Загрузка уведомлений...",
+      "404": "Уведомления отсутствуют",
+      "TABLE_HEADER": [
+        "Имя",
+        "Номер телефона",
+        "Диалоги",
+        "Последний Контакт"
+      ]
+    },
+    "TYPE_LABEL": {
+      "conversation_creation": "Новая беседа",
+      "conversation_assignment": "Беседа назначена",
+      "assigned_conversation_new_message": "Новое сообщение",
+      "conversation_mention": "Упоминание"
     }
   }
 }

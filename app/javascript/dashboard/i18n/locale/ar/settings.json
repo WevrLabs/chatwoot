@@ -2,31 +2,43 @@
   "PROFILE_SETTINGS": {
     "LINK": "إعدادات الملف الشخصي",
     "TITLE": "إعدادات الملف الشخصي",
-    "BTN_TEXT": "تحديث الملف الشخصي",
+    "BTN_TEXT": "تعديل الملف الشخصي",
+    "UPDATE_SUCCESS": "تم تحديث حسابك بنجاح",
+    "PASSWORD_UPDATE_SUCCESS": "تم تغيير كلمة المرور بنجاح",
     "AFTER_EMAIL_CHANGED": "تم تحديث ملفك الشخصي بنجاح، الرجاء تسجيل الدخول مرة أخرى حيث أنه قد تم تغيير بيانات تسجيل الدخول الخاصة بك",
     "FORM": {
       "AVATAR": "صورة الملف الشخصي",
-      "ERROR": "الرجاء إصلاح الأخطاء في الفورم",
+      "ERROR": "الرجاء إصلاح الأخطاء في النموذج",
       "REMOVE_IMAGE": "حذف",
       "UPLOAD_IMAGE": "رفع صورة",
-      "UPDATE_IMAGE": "تحديث الصورة",
+      "UPDATE_IMAGE": "تعديل الصورة",
       "PROFILE_SECTION": {
         "TITLE": "الملف الشخصي",
-        "NOTE": "عنوان بريدك الإلكتروني هو هويتك ويستخدم لتسجيل الدخول."
+        "NOTE": "عنوان بريدك الإلكتروني هو المعرف الخاص بك الذي ستستخدمه لتسجيل الدخول."
       },
       "PASSWORD_SECTION": {
         "TITLE": "كلمة المرور",
-        "NOTE": "تحديث كلمة المرور الخاصة بك سيعيد ضبط تسجيلات الدخول الخاصة بك في الأجهزة الأخرى التي قمت بالدخول عبرها."
+        "NOTE": "تعديل كلمة المرور الخاصة بك سيعيد ضبط تسجيلات الدخول الخاصة بك في الأجهزة الأخرى.",
+        "BTN_TEXT": "تغيير كلمة المرور"
       },
       "ACCESS_TOKEN": {
         "TITLE": "رمز المصادقة",
         "NOTE": "يمكن استخدام هذا رمز المصادقة إذا كنت تبني تطبيقات API للتكامل مع Chatwoot"
       },
+      "AUDIO_NOTIFICATIONS_SECTION": {
+        "TITLE": "الإشعارات الصوتية",
+        "NOTE": "تمكين التنبيهات الصوتية في لوحة التحكم للرسائل والمحادثات الجديدة.",
+        "NONE": "لا شيء",
+        "ASSIGNED": "Assigned Conversations",
+        "ALL_CONVERSATIONS": "All Conversations"
+      },
       "EMAIL_NOTIFICATIONS_SECTION": {
         "TITLE": "إشعارات البريد الإلكتروني",
         "NOTE": "قم بتحديث تفضيلات إشعار البريد الإلكتروني الخاص بك من هنا",
         "CONVERSATION_ASSIGNMENT": "إرسال إشعارات البريد الإلكتروني عند إسناد محادثة لي",
-        "CONVERSATION_CREATION": "إرسال إشعارات للبريد الإلكتروني عند ورود محادثة جديدة"
+        "CONVERSATION_CREATION": "إرسال إشعارات للبريد الإلكتروني عند ورود محادثة جديدة",
+        "CONVERSATION_MENTION": "إرسال إشعارات بالبريد الإلكتروني عندما يتم ذكرك في محادثة",
+        "ASSIGNED_CONVERSATION_NEW_MESSAGE": "إرسال إشعارات البريد الإلكتروني عند إنشاء رسالة جديدة في محادثة موكلة"
       },
       "API": {
         "UPDATE_SUCCESS": "يتم تحديث إعدادات الإشعارات بنجاح",
@@ -37,6 +49,8 @@
         "NOTE": "قم بتحديث تفضيلات إشعارات المتصفح من هنا",
         "CONVERSATION_ASSIGNMENT": "إرسال إشعارات على المتصفح عند إسناد محادثة لي",
         "CONVERSATION_CREATION": "إرسال إشعارات المتصفح عند ورود محادثة جديدة",
+        "CONVERSATION_MENTION": "إرسال إشعارات بالبريد الإلكتروني عندما يتم ذكرك او الاشارة اليك في محادثة",
+        "ASSIGNED_CONVERSATION_NEW_MESSAGE": "إرسال إشعارات التنية عند إنشاء رسالة جديدة في محادثة موكلة",
         "HAS_ENABLED_PUSH": "لقد قمت بتمكين الإشعارات لهذا المتصفح.",
         "REQUEST_PUSH": "تفعيل إشعارات المتصفح"
       },
@@ -56,24 +70,20 @@
       "AVAILABILITY": {
         "LABEL": "التوفر",
         "STATUSES_LIST": [
-          {
-            "value": "متصل",
-            "label": "متصل"
-          },
-          {
-            "value": "مشغول",
-            "label": "مشغول"
-          },
-          {
-            "value": "غير متصل",
-            "label": "غير متصل"
-          }
+          "متصل",
+          "مشغول",
+          "غير متصل"
         ]
       },
       "EMAIL": {
         "LABEL": "عنوان البريد الإلكتروني الخاص بك",
         "ERROR": "الرجاء إدخال عنوان بريد إلكتروني صحيح",
         "PLACEHOLDER": "الرجاء إدخال عنوان البريد الإلكتروني الخاص بك، سيتم عرضه في المحادثات"
+      },
+      "CURRENT_PASSWORD": {
+        "LABEL": "Current password",
+        "ERROR": "Please enter the current password",
+        "PLACEHOLDER": "Please enter the current password"
       },
       "PASSWORD": {
         "LABEL": "كلمة المرور",
@@ -120,14 +130,22 @@
   "SIDEBAR": {
     "CONVERSATIONS": "المحادثات",
     "REPORTS": "التقارير",
+    "CONTACTS": "جهات الاتصال",
     "SETTINGS": "الإعدادات",
     "HOME": "الرئيسية",
     "AGENTS": "موظف الدعم",
     "INBOXES": "قنوات التواصل",
+    "NOTIFICATIONS": "الإشعارات",
     "CANNED_RESPONSES": "الردود السريعة",
     "INTEGRATIONS": "خيارات الربط",
     "ACCOUNT_SETTINGS": "إعدادات الحساب",
-    "LABELS": "الوسوم"
+    "APPLICATIONS": "Applications",
+    "LABELS": "الوسوم",
+    "TEAMS": "الفرق",
+    "ALL_CONTACTS": "All Contacts",
+    "TAGGED_WITH": "Tagged with",
+    "REPORTS_OVERVIEW": "Overview",
+    "CSAT": "CSAT"
   },
   "CREATE_ACCOUNT": {
     "NEW_ACCOUNT": "حساب جديد",

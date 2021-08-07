@@ -3,6 +3,8 @@
     "LINK": "个人资料设置",
     "TITLE": "个人资料设置",
     "BTN_TEXT": "更新个人资料",
+    "UPDATE_SUCCESS": "Your profile has been updated successfully",
+    "PASSWORD_UPDATE_SUCCESS": "Your password has been changed successfully",
     "AFTER_EMAIL_CHANGED": "您的个人资料已成功更新，请在您的登录凭据更改后重新登录",
     "FORM": {
       "AVATAR": "头像",
@@ -16,17 +18,27 @@
       },
       "PASSWORD_SECTION": {
         "TITLE": "密码",
-        "NOTE": "更新您的密码会在多个设备中重置您的登录信息。"
+        "NOTE": "更新您的密码会在多个设备中重置您的登录信息。",
+        "BTN_TEXT": "Change password"
       },
       "ACCESS_TOKEN": {
         "TITLE": "访问令牌",
         "NOTE": "如果您正在构建基于 API 的集成，这个令牌可以被使用"
       },
+      "AUDIO_NOTIFICATIONS_SECTION": {
+        "TITLE": "Audio Notifications",
+        "NOTE": "Enable audio notifications in dashboard for new messages and conversations.",
+        "NONE": "None",
+        "ASSIGNED": "Assigned Conversations",
+        "ALL_CONVERSATIONS": "All Conversations"
+      },
       "EMAIL_NOTIFICATIONS_SECTION": {
         "TITLE": "电子邮件通知",
         "NOTE": "在此更新您的电子邮件通知设置",
         "CONVERSATION_ASSIGNMENT": "当对话分配给我时发送电子邮件通知",
-        "CONVERSATION_CREATION": "当对话分配给我时发送电子邮件通知"
+        "CONVERSATION_CREATION": "当对话分配给我时发送电子邮件通知",
+        "CONVERSATION_MENTION": "Send email notifications when you are mentioned in a conversation",
+        "ASSIGNED_CONVERSATION_NEW_MESSAGE": "Send email notifications when a new message is created in an assigned conversation"
       },
       "API": {
         "UPDATE_SUCCESS": "您的通知设置已成功更新",
@@ -37,6 +49,8 @@
         "NOTE": "在此更新您的电子邮件通知设置",
         "CONVERSATION_ASSIGNMENT": "当对话被分配给我时发送推送通知",
         "CONVERSATION_CREATION": "创建新对话时发送推送通知",
+        "CONVERSATION_MENTION": "Send push notifications when you are mentioned in a conversation",
+        "ASSIGNED_CONVERSATION_NEW_MESSAGE": "Send push notifications when a new message is created in an assigned conversation",
         "HAS_ENABLED_PUSH": "您已启用此浏览器的推送。",
         "REQUEST_PUSH": "启用推送通知"
       },
@@ -56,24 +70,20 @@
       "AVAILABILITY": {
         "LABEL": "有效的",
         "STATUSES_LIST": [
-          {
-            "value": "online",
-            "label": "在线的"
-          },
-          {
-            "value": "busy",
-            "label": "忙碌中"
-          },
-          {
-            "value": "offline",
-            "label": "离线的"
-          }
+          "在线的",
+          "忙碌中",
+          "离线的"
         ]
       },
       "EMAIL": {
         "LABEL": "您的电子邮件地址",
         "ERROR": "请输入一个有效的电子邮件",
         "PLACEHOLDER": "请输入您的名字，这将会在对话中显示"
+      },
+      "CURRENT_PASSWORD": {
+        "LABEL": "Current password",
+        "ERROR": "Please enter the current password",
+        "PLACEHOLDER": "Please enter the current password"
       },
       "PASSWORD": {
         "LABEL": "密码",
@@ -120,14 +130,22 @@
   "SIDEBAR": {
     "CONVERSATIONS": "会话",
     "REPORTS": "报告",
+    "CONTACTS": "Contacts",
     "SETTINGS": "设置",
     "HOME": "首页",
     "AGENTS": "客服代理们",
     "INBOXES": "收件箱",
+    "NOTIFICATIONS": "消息通知",
     "CANNED_RESPONSES": "预设回复",
     "INTEGRATIONS": "集成方式",
     "ACCOUNT_SETTINGS": "帐户设置",
-    "LABELS": "标签"
+    "APPLICATIONS": "Applications",
+    "LABELS": "标签",
+    "TEAMS": "Teams",
+    "ALL_CONTACTS": "All Contacts",
+    "TAGGED_WITH": "Tagged with",
+    "REPORTS_OVERVIEW": "Overview",
+    "CSAT": "CSAT"
   },
   "CREATE_ACCOUNT": {
     "NEW_ACCOUNT": "New Account",

@@ -3,6 +3,8 @@
     "LINK": "Setări profil",
     "TITLE": "Setări profil",
     "BTN_TEXT": "Actualizeaza profil",
+    "UPDATE_SUCCESS": "Your profile has been updated successfully",
+    "PASSWORD_UPDATE_SUCCESS": "Parola ta a fost schimbată cu succes",
     "AFTER_EMAIL_CHANGED": "Profilul tău a fost actualizat cu succes, te rugăm să te autentifici din nou pentru că datele tale de autentificare au fost modificate",
     "FORM": {
       "AVATAR": "Imagine de profil",
@@ -16,17 +18,27 @@
       },
       "PASSWORD_SECTION": {
         "TITLE": "Parola",
-        "NOTE": "Actualizarea parolei ar reseta autentificările pe mai multe dispozitive."
+        "NOTE": "Actualizarea parolei ar reseta autentificările pe mai multe dispozitive.",
+        "BTN_TEXT": "Change password"
       },
       "ACCESS_TOKEN": {
         "TITLE": "Token acces",
         "NOTE": "Acest token poate fi utilizat dacă construiți o integrare bazată pe API"
       },
+      "AUDIO_NOTIFICATIONS_SECTION": {
+        "TITLE": "Audio Notifications",
+        "NOTE": "Enable audio notifications in dashboard for new messages and conversations.",
+        "NONE": "None",
+        "ASSIGNED": "Assigned Conversations",
+        "ALL_CONVERSATIONS": "All Conversations"
+      },
       "EMAIL_NOTIFICATIONS_SECTION": {
         "TITLE": "Notificări prin e-mail",
         "NOTE": "Actualizați preferințele de notificare prin e-mail aici",
         "CONVERSATION_ASSIGNMENT": "Trimite notificări prin e-mail atunci când o conversație îmi este atribuită",
-        "CONVERSATION_CREATION": "Trimite notificări prin e-mail atunci când o conversație nouă este creată"
+        "CONVERSATION_CREATION": "Trimite notificări prin e-mail atunci când o conversație nouă este creată",
+        "CONVERSATION_MENTION": "Send email notifications when you are mentioned in a conversation",
+        "ASSIGNED_CONVERSATION_NEW_MESSAGE": "Send email notifications when a new message is created in an assigned conversation"
       },
       "API": {
         "UPDATE_SUCCESS": "Preferințele de notificare sunt actualizate cu succes",
@@ -37,6 +49,8 @@
         "NOTE": "Actualizați preferințele de notificare push aici",
         "CONVERSATION_ASSIGNMENT": "Trimite notificări push atunci când o conversație îmi este atribuită",
         "CONVERSATION_CREATION": "Trimite notificări push atunci când o conversație nouă este creată",
+        "CONVERSATION_MENTION": "Send push notifications when you are mentioned in a conversation",
+        "ASSIGNED_CONVERSATION_NEW_MESSAGE": "Send push notifications when a new message is created in an assigned conversation",
         "HAS_ENABLED_PUSH": "Ați activat apăsarea pentru acest browser.",
         "REQUEST_PUSH": "Activează notificările push"
       },
@@ -56,24 +70,20 @@
       "AVAILABILITY": {
         "LABEL": "Disponibilitate",
         "STATUSES_LIST": [
-          {
-            "value": "online",
-            "label": "Online"
-          },
-          {
-            "value": "busy",
-            "label": "Ocupat"
-          },
-          {
-            "value": "offline",
-            "label": "Deconectat"
-          }
+          "Online",
+          "Ocupat",
+          "Deconectat"
         ]
       },
       "EMAIL": {
         "LABEL": "Adresa ta de email",
         "ERROR": "Vă rugăm să introduceți o adresă de e-mail validă",
         "PLACEHOLDER": "Te rugăm să introduci adresa ta de e-mail, aceasta va fi afișată în conversații"
+      },
+      "CURRENT_PASSWORD": {
+        "LABEL": "Current password",
+        "ERROR": "Please enter the current password",
+        "PLACEHOLDER": "Please enter the current password"
       },
       "PASSWORD": {
         "LABEL": "Parola",
@@ -120,14 +130,22 @@
   "SIDEBAR": {
     "CONVERSATIONS": "Conversații",
     "REPORTS": "Rapoarte",
+    "CONTACTS": "Contacts",
     "SETTINGS": "Setări",
     "HOME": "Acasa",
     "AGENTS": "Agenți",
     "INBOXES": "Căsuțe",
+    "NOTIFICATIONS": "Notifications",
     "CANNED_RESPONSES": "Răspunsuri predefinite",
     "INTEGRATIONS": "Integrări",
     "ACCOUNT_SETTINGS": "Setările contului",
-    "LABELS": "Etichete"
+    "APPLICATIONS": "Applications",
+    "LABELS": "Etichete",
+    "TEAMS": "Teams",
+    "ALL_CONTACTS": "All Contacts",
+    "TAGGED_WITH": "Tagged with",
+    "REPORTS_OVERVIEW": "Overview",
+    "CSAT": "CSAT"
   },
   "CREATE_ACCOUNT": {
     "NEW_ACCOUNT": "Cont Nou",

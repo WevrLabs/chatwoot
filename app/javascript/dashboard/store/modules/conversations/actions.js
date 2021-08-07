@@ -2,7 +2,8 @@ import Vue from 'vue';
 import * as types from '../../mutation-types';
 import ConversationApi from '../../../api/inbox/conversation';
 import MessageApi from '../../../api/inbox/message';
-import { MESSAGE_TYPE } from 'widget/helpers/constants';
+import { MESSAGE_STATUS, MESSAGE_TYPE } from 'shared/constants/messages';
+import { createPendingMessage } from 'dashboard/helper/commons';
 
 // actions
 const actions = {
@@ -102,25 +103,52 @@ const actions = {
     }
   },
 
-  assignAgent: async ({ commit }, { conversationId, agentId }) => {
+  assignAgent: async ({ dispatch }, { conversationId, agentId }) => {
     try {
       const response = await ConversationApi.assignAgent({
         conversationId,
         agentId,
       });
-      commit(types.default.ASSIGN_AGENT, response.data);
+      dispatch('setCurrentChatAssignee', response.data);
     } catch (error) {
       // Handle error
     }
   },
 
-  toggleStatus: async ({ commit }, data) => {
+  setCurrentChatAssignee({ commit }, assignee) {
+    commit(types.default.ASSIGN_AGENT, assignee);
+  },
+
+  assignTeam: async ({ dispatch }, { conversationId, teamId }) => {
     try {
-      const response = await ConversationApi.toggleStatus(data);
-      commit(
-        types.default.RESOLVE_CONVERSATION,
-        response.data.payload.current_status
-      );
+      const response = await ConversationApi.assignTeam({
+        conversationId,
+        teamId,
+      });
+      dispatch('setCurrentChatTeam', response.data);
+    } catch (error) {
+      // Handle error
+    }
+  },
+
+  setCurrentChatTeam({ commit }, team) {
+    commit(types.default.ASSIGN_TEAM, team);
+  },
+
+  toggleStatus: async (
+    { commit },
+    { conversationId, status, snoozedUntil = null }
+  ) => {
+    try {
+      const response = await ConversationApi.toggleStatus({
+        conversationId,
+        status,
+        snoozedUntil,
+      });
+      commit(types.default.RESOLVE_CONVERSATION, {
+        conversationId,
+        status: response.data.payload.current_status,
+      });
     } catch (error) {
       // Handle error
     }
@@ -128,8 +156,13 @@ const actions = {
 
   sendMessage: async ({ commit }, data) => {
     try {
-      const response = await MessageApi.create(data);
-      commit(types.default.ADD_MESSAGE, response.data);
+      const pendingMessage = createPendingMessage(data);
+      commit(types.default.ADD_MESSAGE, pendingMessage);
+      const response = await MessageApi.create(pendingMessage);
+      commit(types.default.ADD_MESSAGE, {
+        ...response.data,
+        status: MESSAGE_STATUS.SENT,
+      });
     } catch (error) {
       // Handle error
     }
@@ -147,6 +180,20 @@ const actions = {
 
   updateMessage({ commit }, message) {
     commit(types.default.ADD_MESSAGE, message);
+  },
+
+  deleteMessage: async function deleteLabels(
+    { commit },
+    { conversationId, messageId }
+  ) {
+    try {
+      const response = await MessageApi.delete(conversationId, messageId);
+      const { data } = response;
+      // The delete message is actually deleting the content.
+      commit(types.default.ADD_MESSAGE, data);
+    } catch (error) {
+      throw new Error(error);
+    }
   },
 
   addConversation({ commit, state, dispatch }, conversation) {
@@ -204,15 +251,6 @@ const actions = {
 
   setActiveInbox({ commit }, inboxId) {
     commit(types.default.SET_ACTIVE_INBOX, inboxId);
-  },
-
-  sendAttachment: async ({ commit }, data) => {
-    try {
-      const response = await MessageApi.sendAttachment(data);
-      commit(types.default.ADD_MESSAGE, response.data);
-    } catch (error) {
-      // Handle error
-    }
   },
 
   muteConversation: async ({ commit }, conversationId) => {

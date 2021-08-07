@@ -28,6 +28,14 @@
       }
     ],
     "ADD": {
+      "CHANNEL_NAME": {
+        "LABEL": "收件箱名称",
+        "PLACEHOLDER": "Enter your inbox name (eg: Acme Inc)"
+      },
+      "WEBSITE_NAME": {
+        "LABEL": "网站名称",
+        "PLACEHOLDER": "输入您的网站名称 (e.g: Acme Inc)"
+      },
       "FB": {
         "HELP": "注意: 通过登录，我们只能访问您的页面的消息。您的私人消息永远不能被聊天室访问。",
         "CHOOSE_PAGE": "选择页面",
@@ -38,7 +46,8 @@
         "PICK_A_VALUE": "选择一个数值"
       },
       "TWITTER": {
-        "HELP": "若要将您的Twitter个人资料添加为频道，您需要通过点击“使用Twitter登录”来验证您的Twitter个人资料。 "
+        "HELP": "若要将您的Twitter个人资料添加为频道，您需要通过点击“使用Twitter登录”来验证您的Twitter个人资料。 ",
+        "ERROR_MESSAGE": "There was an error connecting to Twitter, please try again"
       },
       "WEBSITE_CHANNEL": {
         "TITLE": "网站频道",
@@ -46,10 +55,6 @@
         "LOADING_MESSAGE": "创建网站支持频道",
         "CHANNEL_AVATAR": {
           "LABEL": "频道头像"
-        },
-        "CHANNEL_NAME": {
-          "LABEL": "网站名称",
-          "PLACEHOLDER": "输入您的网站名称 (e.g: Acme Inc)"
         },
         "CHANNEL_DOMAIN": {
           "LABEL": "网站域名",
@@ -72,6 +77,13 @@
           "HELP_TEXT": "在用户开始对话时发送问候消息。",
           "ENABLED": "已启用",
           "DISABLED": "已禁用"
+        },
+        "REPLY_TIME": {
+          "TITLE": "设置回复时间",
+          "IN_A_FEW_MINUTES": "几分钟前",
+          "IN_A_FEW_HOURS": "几个小时前",
+          "IN_A_DAY": "一天内",
+          "HELP_TEXT": "此回复时间将会显示在实时聊天窗口上"
         },
         "WIDGET_COLOR": {
           "LABEL": "窗口小部件颜色",
@@ -115,6 +127,14 @@
           "ERROR_MESSAGE": "我们无法验证 Twilio 凭据，请重试"
         }
       },
+      "SMS": {
+        "TITLE": "SMS Channel via Twilio",
+        "DESC": "Start supporting your customers via SMS with Twilio integration."
+      },
+      "WHATSAPP": {
+        "TITLE": "Whatsapp Channel via Twilio",
+        "DESC": "Start supporting your customers via Whatsapp with Twilio integration."
+      },
       "API_CHANNEL": {
         "TITLE": "API 频道",
         "DESC": "Integrate with API channel and start supporting your customers.",
@@ -153,12 +173,14 @@
         "FINISH_MESSAGE": "开始将您的电子邮件转发到以下电子邮件地址。"
       },
       "AUTH": {
-        "TITLE": "频道",
-        "DESC": "目前我们支持网站在线聊天小部件、Facebook页面和Twitter配置文件作为平台。 我们在工作中拥有更多平台，如Whatsapp、Email、Telegram 和 Line，这些平台将很快出台。"
+        "TITLE": "Choose a channel",
+        "DESC": "Chatwoot supports live-chat widget, Facebook page, Twitter profile, Whatsapp, Email etc., as channels. If you want to build a custom channel, you can create it using the API channel. Select one channel from the options below to proceed."
       },
       "AGENTS": {
         "TITLE": "客服代理们",
-        "DESC": "在这里您可以添加代理来管理您新创建的收件箱。只有这些选定的代理才能访问您的收件箱。 不属于此收件箱的代理人在登录时将无法看到或回复此收件箱中的消息。 <br> <b>PS：</b> 作为管理员，如果您需要访问所有收件箱， 您应该将自己添加到您创建的所有收件箱中。"
+        "DESC": "在这里您可以添加代理来管理您新创建的收件箱。只有这些选定的代理才能访问您的收件箱。 不属于此收件箱的代理人在登录时将无法看到或回复此收件箱中的消息。 <br> <b>PS：</b> 作为管理员，如果您需要访问所有收件箱， 您应该将自己添加到您创建的所有收件箱中。",
+        "VALIDATION_ERROR": "Add atleast one agent to your new Inbox",
+        "PICK_AGENTS": "Pick agents for the inbox"
       },
       "DETAILS": {
         "TITLE": "收件箱详细信息",
@@ -184,6 +206,7 @@
       "TITLE": "您的收件箱已准备就绪！",
       "MESSAGE": "您现在可以通过您的新频道与您的客户联系。快乐支持 ",
       "BUTTON_TEXT": "带我到这里",
+      "MORE_SETTINGS": "More settings",
       "WEBSITE_SUCCESS": "您已成功完成创建网站频道。复制下面显示的代码并将其粘贴在您的网站上。 下次客户使用实时聊天时，对话将自动出现在您的收件箱中。"
     },
     "REAUTH": "重新授权",
@@ -197,6 +220,14 @@
       "AUTO_ASSIGNMENT": {
         "ENABLED": "已启用",
         "DISABLED": "已禁用"
+      },
+      "EMAIL_COLLECT_BOX": {
+        "ENABLED": "已启用",
+        "DISABLED": "已禁用"
+      },
+      "ENABLE_CSAT": {
+        "ENABLED": "已启用",
+        "DISABLED": "已禁用"
       }
     },
     "DELETE": {
@@ -204,6 +235,7 @@
       "CONFIRM": {
         "TITLE": "确认删除",
         "MESSAGE": "您确定要删除吗？ ",
+        "PLACE_HOLDER": "Please type {inboxName} to confirm",
         "YES": "是，删除 ",
         "NO": "不，保留 "
       },
@@ -215,7 +247,10 @@
     "TABS": {
       "SETTINGS": "设置",
       "COLLABORATORS": "Collaborators",
-      "CONFIGURATION": "Configuration"
+      "CONFIGURATION": "Configuration",
+      "CAMPAIGN": "Campaigns",
+      "PRE_CHAT_FORM": "Pre Chat Form",
+      "BUSINESS_HOURS": "Business Hours"
     },
     "SETTINGS": "设置",
     "FEATURES": {
@@ -229,10 +264,57 @@
       "INBOX_AGENTS": "客服代理们",
       "INBOX_AGENTS_SUB_TEXT": "添加或删除此收件箱中的客服",
       "UPDATE": "更新",
+      "ENABLE_EMAIL_COLLECT_BOX": "Enable email collect box",
+      "ENABLE_EMAIL_COLLECT_BOX_SUB_TEXT": "Enable or disable email collect box on new conversation",
       "AUTO_ASSIGNMENT": "启用自动分配",
+      "ENABLE_CSAT": "Enable CSAT",
+      "ENABLE_CSAT_SUB_TEXT": "Enable/Disable CSAT(Customer satisfaction) survey after resolving a conversation",
       "INBOX_UPDATE_TITLE": "收件箱设置",
       "INBOX_UPDATE_SUB_TEXT": "更新收件箱设置",
-      "AUTO_ASSIGNMENT_SUB_TEXT": "启用或禁用添加到此收件箱的代理人自动分配新的会话。"
+      "AUTO_ASSIGNMENT_SUB_TEXT": "启用或禁用添加到此收件箱的代理人自动分配新的会话。",
+      "HMAC_VERIFICATION": "User Identity Validation",
+      "HMAC_DESCRIPTION": "Inorder validate the users identity, the SDK allows you to pass an `identifier_hash` for each user. You can generate HMAC using 'sha256' with the key shown here."
+    },
+    "FACEBOOK_REAUTHORIZE": {
+      "TITLE": "重新授权",
+      "SUBTITLE": "您的 Facebook 连接已过期，请重新连接您的 Facebook 页面以继续服务",
+      "MESSAGE_SUCCESS": "重新连接成功",
+      "MESSAGE_ERROR": "出现错误，请重试"
+    },
+    "PRE_CHAT_FORM": {
+      "DESCRIPTION": "Pre chat forms enable you to capture user information before they start conversation with you.",
+      "ENABLE": {
+        "LABEL": "Enable pre chat form",
+        "OPTIONS": {
+          "ENABLED": "Yes",
+          "DISABLED": "No"
+        }
+      },
+      "PRE_CHAT_MESSAGE": {
+        "LABEL": "Pre Chat Message",
+        "PLACEHOLDER": "This message would be visible to the users along with the form"
+      },
+      "REQUIRE_EMAIL": {
+        "LABEL": "Visitors should provide their name and email address before starting the chat"
+      }
+    },
+    "BUSINESS_HOURS": {
+      "TITLE": "Set your availability",
+      "SUBTITLE": "Set your availability on your livechat widget",
+      "WEEKLY_TITLE": "Set your weekly hours",
+      "TIMEZONE_LABEL": "Select timezone",
+      "UPDATE": "Update business hours settings",
+      "TOGGLE_AVAILABILITY": "Enable business availability for this inbox",
+      "UNAVAILABLE_MESSAGE_LABEL": "Unavailable message for vistors",
+      "UNAVAILABLE_MESSAGE_DEFAULT": "We are unavailable at the moment. Leave a message we will respond once we are back.",
+      "TOGGLE_HELP": "Enabling business availability will show the available hours on live chat widget even if all the agents are offline. Outside available hours vistors can be warned with a message and a pre-chat form.",
+      "DAY": {
+        "ENABLE": "Enable availability for this day",
+        "UNAVAILABLE": "Unavailable",
+        "HOURS": "hours",
+        "VALIDATION_ERROR": "Starting time should be before closing time.",
+        "CHOOSE": "Choose"
+      }
     }
   }
 }

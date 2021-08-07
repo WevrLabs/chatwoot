@@ -1,8 +1,9 @@
 <template>
   <div class="custom-attributes--panel">
     <contact-details-item
-      :title="$t('CONTACT_PANEL.CUSTOM_ATTRIBUTES.TITLE')"
+      :title="$t('CUSTOM_ATTRIBUTES.TITLE')"
       icon="ion-code"
+      emoji="📕"
     />
     <div
       v-for="attribute in listOfAttributes"
@@ -13,7 +14,7 @@
         {{ attribute }}
       </div>
       <div>
-        {{ customAttributes[attribute] }}
+        <span v-html="valueWithLink(customAttributes[attribute])"></span>
       </div>
     </div>
   </div>
@@ -21,11 +22,13 @@
 
 <script>
 import ContactDetailsItem from './ContactDetailsItem.vue';
+import MessageFormatter from 'shared/helpers/MessageFormatter.js';
 
 export default {
   components: {
     ContactDetailsItem,
   },
+
   props: {
     customAttributes: {
       type: Object,
@@ -40,20 +43,43 @@ export default {
       });
     },
   },
+  methods: {
+    valueWithLink(attribute) {
+      const messageFormatter = new MessageFormatter(attribute);
+      return messageFormatter.formattedMessage;
+    },
+  },
 };
 </script>
 
 <style scoped>
 .custom-attributes--panel {
-  border-top: 1px solid var(--b-100);
-  padding: var(--space-normal);
+  padding: 0 var(--space-slab) var(--space-slab);
+  margin-bottom: var(--space-normal);
 }
 
+.conv-details--item {
+  padding-bottom: 0;
+}
 .custom-attribute--row {
   margin-bottom: var(--space-small);
+  margin-left: var(--space-medium);
 }
-
+.custom-attribute--row div {
+    border: 1px solid #333;
+    padding: 5px 15px;
+    display: inline-flex;
+}
+.custom-attribute--row span {
+    word-break: break-all;
+}
+.custom-attribute--row div span p {
+    margin-bottom: 0 !important;
+}
 .custom-attribute--row__attribute {
   font-weight: 500;
+  margin: 0 0 8px 0px;
+  background: #31302a;
+  color: #8e8e8e;
 }
 </style>

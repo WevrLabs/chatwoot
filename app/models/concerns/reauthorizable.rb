@@ -1,4 +1,4 @@
-# This concern is primarily targetted for business models dependant on external services
+# This concern is primarily targeted for business models dependent on external services
 # The auth tokens we obtained on their behalf could expire or becomes invalid.
 # We would be aware of it until we make the API call to the service and it throws error
 
@@ -25,7 +25,7 @@ module Reauthorizable
     ::Redis::Alfred.get(authorization_error_count_key).to_i
   end
 
-  # action to be performed when we recieve authorization errors
+  # action to be performed when we receive authorization errors
   # Implement in your exception handling logic for authorization errors
   def authorization_error!
     ::Redis::Alfred.incr(authorization_error_count_key)
@@ -36,7 +36,13 @@ module Reauthorizable
   # could used to manually prompt reauthorization if auth scope changes
   def prompt_reauthorization!
     ::Redis::Alfred.set(reauthorization_required_key, true)
-    AdministratorNotifications::ChannelNotificationsMailer.slack_disconnect(account)&.deliver_later if (is_a? Integrations::Hook) && slack?
+
+    if (is_a? Integrations::Hook) && slack?
+      AdministratorNotifications::ChannelNotificationsMailer.with(account: account).slack_disconnect.deliver_later
+    end
+    return unless is_a? Channel::FacebookPage
+
+    AdministratorNotifications::ChannelNotificationsMailer.with(account: account).facebook_disconnect(inbox).deliver_later
   end
 
   # call this after you successfully Reauthorized the object in UI

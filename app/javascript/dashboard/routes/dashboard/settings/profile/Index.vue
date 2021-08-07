@@ -1,8 +1,8 @@
 <template>
-  <div class="columns profile--settings ">
-    <form @submit.prevent="updateUser">
+  <div class="columns profile--settings">
+    <form @submit.prevent="updateUser('profile')">
       <div class="small-12 row profile--settings--row">
-        <div class="columns small-3 ">
+        <div class="columns small-3">
           <h4 class="block-title">
             {{ $t('PROFILE_SETTINGS.FORM.PROFILE_SECTION.TITLE') }}
           </h4>
@@ -49,78 +49,25 @@
               {{ $t('PROFILE_SETTINGS.FORM.EMAIL.ERROR') }}
             </span>
           </label>
-          <label>
-            {{ $t('PROFILE_SETTINGS.FORM.AVAILABILITY.LABEL') }}
-            <select v-model="availability">
-              <option
-                v-for="status in $t(
-                  'PROFILE_SETTINGS.FORM.AVAILABILITY.STATUSES_LIST'
-                )"
-                :key="status.key"
-                class="text-capitalize"
-                :value="status.value"
-              >
-                {{ status.label }}
-              </option>
-            </select>
-          </label>
+          <woot-button type="submit" :is-loading="isProfileUpdating">
+            {{ $t('PROFILE_SETTINGS.BTN_TEXT') }}
+          </woot-button>
         </div>
       </div>
-      <div class="profile--settings--row row">
-        <div class="columns small-3 ">
-          <h4 class="block-title">
-            {{ $t('PROFILE_SETTINGS.FORM.PASSWORD_SECTION.TITLE') }}
-          </h4>
-          <p>{{ $t('PROFILE_SETTINGS.FORM.PASSWORD_SECTION.NOTE') }}</p>
-        </div>
-        <div class="columns small-9 medium-5">
-          <label :class="{ error: $v.password.$error }">
-            {{ $t('PROFILE_SETTINGS.FORM.PASSWORD.LABEL') }}
-            <input
-              v-model.trim="password"
-              type="password"
-              :placeholder="$t('PROFILE_SETTINGS.FORM.PASSWORD.PLACEHOLDER')"
-              @input="$v.password.$touch"
-            />
-            <span v-if="$v.password.$error" class="message">
-              {{ $t('PROFILE_SETTINGS.FORM.PASSWORD.ERROR') }}
-            </span>
-          </label>
-          <label :class="{ error: $v.passwordConfirmation.$error }">
-            {{ $t('PROFILE_SETTINGS.FORM.PASSWORD_CONFIRMATION.LABEL') }}
-            <input
-              v-model.trim="passwordConfirmation"
-              type="password"
-              :placeholder="
-                $t('PROFILE_SETTINGS.FORM.PASSWORD_CONFIRMATION.PLACEHOLDER')
-              "
-              @input="$v.passwordConfirmation.$touch"
-            />
-            <span v-if="$v.passwordConfirmation.$error" class="message">
-              {{ $t('PROFILE_SETTINGS.FORM.PASSWORD_CONFIRMATION.ERROR') }}
-            </span>
-          </label>
-        </div>
-      </div>
-      <notification-settings />
-      <div class="profile--settings--row row">
-        <div class="columns small-3 ">
-          <h4 class="block-title">
-            {{ $t('PROFILE_SETTINGS.FORM.ACCESS_TOKEN.TITLE') }}
-          </h4>
-          <p>{{ $t('PROFILE_SETTINGS.FORM.ACCESS_TOKEN.NOTE') }}</p>
-        </div>
-        <div class="columns small-9 medium-5">
-          <woot-code :script="currentUser.access_token"></woot-code>
-        </div>
-      </div>
-      <woot-submit-button
-        class="button nice success button--fixed-right-top"
-        :button-text="$t('PROFILE_SETTINGS.BTN_TEXT')"
-        :loading="isUpdating"
-      >
-      </woot-submit-button>
     </form>
+    <change-password />
+    <notification-settings />
+    <div class="profile--settings--row row">
+      <div class="columns small-3">
+        <h4 class="block-title">
+          {{ $t('PROFILE_SETTINGS.FORM.ACCESS_TOKEN.TITLE') }}
+        </h4>
+        <p>{{ $t('PROFILE_SETTINGS.FORM.ACCESS_TOKEN.NOTE') }}</p>
+      </div>
+      <div class="columns small-9 medium-5">
+        <woot-code :script="currentUser.access_token"></woot-code>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -130,12 +77,14 @@ import { mapGetters } from 'vuex';
 import { clearCookiesOnLogout } from '../../../../store/utils/api';
 import NotificationSettings from './NotificationSettings';
 import alertMixin from 'shared/mixins/alertMixin';
+import ChangePassword from './ChangePassword.vue';
 
 export default {
   components: {
     NotificationSettings,
+    ChangePassword,
   },
-  mixin: [alertMixin],
+  mixins: [alertMixin],
   data() {
     return {
       avatarFile: '',
@@ -143,50 +92,31 @@ export default {
       name: '',
       displayName: '',
       email: '',
-      password: '',
-      passwordConfirmation: '',
-      availability: 'online',
-      isUpdating: false,
+      isProfileUpdating: false,
+      errorMessage: '',
     };
   },
   validations: {
     name: {
       required,
+      minLength: minLength(1),
     },
     displayName: {},
     email: {
       required,
       email,
     },
-    password: {
-      minLength: minLength(6),
-    },
-    passwordConfirmation: {
-      minLength: minLength(6),
-      isEqPassword(value) {
-        if (value !== this.password) {
-          return false;
-        }
-        return true;
-      },
-    },
   },
   computed: {
     ...mapGetters({
       currentUser: 'getCurrentUser',
       currentUserId: 'getCurrentUserID',
-      currentAvailabilityStatus: 'getCurrentUserAvailabilityStatus',
     }),
   },
   watch: {
     currentUserId(newCurrentUserId, prevCurrentUserId) {
       if (prevCurrentUserId !== newCurrentUserId) {
         this.initializeUser();
-      }
-    },
-    currentAvailabilityStatus(newStatus, oldStatus) {
-      if (newStatus !== oldStatus) {
-        this.availability = newStatus;
       }
     },
   },
@@ -200,7 +130,6 @@ export default {
       this.name = this.currentUser.name;
       this.email = this.currentUser.email;
       this.avatarUrl = this.currentUser.avatar_url;
-      this.availability = this.currentUser.availability_status;
       this.displayName = this.currentUser.display_name;
     },
     async updateUser() {
@@ -209,25 +138,30 @@ export default {
         this.showAlert(this.$t('PROFILE_SETTINGS.FORM.ERROR'));
         return;
       }
-      this.isUpdating = true;
+
+      this.isProfileUpdating = true;
       const hasEmailChanged = this.currentUser.email !== this.email;
       try {
         await this.$store.dispatch('updateProfile', {
           name: this.name,
           email: this.email,
           avatar: this.avatarFile,
-          password: this.password,
           displayName: this.displayName,
-          availability: this.availability,
-          password_confirmation: this.passwordConfirmation,
         });
-        this.isUpdating = false;
+        this.isProfileUpdating = false;
         if (hasEmailChanged) {
           clearCookiesOnLogout();
-          this.showAlert(this.$t('PROFILE_SETTINGS.AFTER_EMAIL_CHANGED'));
+          this.errorMessage = this.$t('PROFILE_SETTINGS.AFTER_EMAIL_CHANGED');
         }
+        this.errorMessage = this.$t('PROFILE_SETTINGS.UPDATE_SUCCESS');
       } catch (error) {
-        this.isUpdating = false;
+        this.errorMessage = this.$t('RESET_PASSWORD.API.ERROR_MESSAGE');
+        if (error?.response?.data?.error) {
+          this.errorMessage = error.response.data.error;
+        }
+      } finally {
+        this.isProfileUpdating = false;
+        this.showAlert(this.errorMessage);
       }
     },
     handleImageUpload({ file, url }) {

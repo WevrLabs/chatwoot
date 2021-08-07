@@ -1,17 +1,12 @@
 <template>
-  <section class="app-content columns">
-    <chat-list :conversation-inbox="inboxId" :label="label">
-      <button class="search--button" @click="onSearch">
-        <i class="ion-ios-search-strong search--icon" />
-        <div class="text-truncate">
-          {{ $t('CONVERSATION.SEARCH_MESSAGES') }}
-        </div>
-      </button>
-      <search
-        v-if="showSearchModal"
-        :show="showSearchModal"
-        :on-close="closeSearch"
-      />
+  <section class="conversation-page">
+    <chat-list
+      :conversation-inbox="inboxId"
+      :label="label"
+      :team-id="teamId"
+      @conversation-load="onConversationLoad"
+    >
+      <pop-over-search />
     </chat-list>
     <conversation-box
       :inbox-id="inboxId"
@@ -19,29 +14,23 @@
       @contact-panel-toggle="onToggleContactPanel"
     >
     </conversation-box>
-    <contact-panel
-      v-if="isContactPanelOpen"
-      :conversation-id="conversationId"
-      :on-toggle="onToggleContactPanel"
-    />
   </section>
 </template>
 
 <script>
 import { mapGetters } from 'vuex';
-
 import ChatList from '../../../components/ChatList';
-import ContactPanel from './ContactPanel';
 import ConversationBox from '../../../components/widgets/conversation/ConversationBox';
-import Search from './search/Search.vue';
+import PopOverSearch from './search/PopOverSearch';
+import uiSettingsMixin from 'dashboard/mixins/uiSettings';
 
 export default {
   components: {
     ChatList,
-    ContactPanel,
     ConversationBox,
-    Search,
+    PopOverSearch,
   },
+  mixins: [uiSettingsMixin],
   props: {
     inboxId: {
       type: [String, Number],
@@ -55,11 +44,13 @@ export default {
       type: String,
       default: '',
     },
+    teamId: {
+      type: String,
+      default: '',
+    },
   },
-
   data() {
     return {
-      panelToggleState: true,
       showSearchModal: false,
     };
   },
@@ -68,38 +59,35 @@ export default {
       chatList: 'getAllConversations',
       currentChat: 'getSelectedChat',
     }),
-    isContactPanelOpen: {
-      get() {
-        if (this.currentChat.id) {
-          return this.panelToggleState;
-        }
-        return false;
-      },
-      set(val) {
-        this.panelToggleState = val;
-      },
+    isContactPanelOpen() {
+      if (this.currentChat.id) {
+        const {
+          is_contact_sidebar_open: isContactSidebarOpen,
+        } = this.uiSettings;
+        return isContactSidebarOpen;
+      }
+      return false;
     },
   },
 
   mounted() {
-    this.$store.dispatch('labels/get');
     this.$store.dispatch('agents/get');
-
     this.initialize();
     this.$watch('$store.state.route', () => this.initialize());
     this.$watch('chatList.length', () => {
-      this.fetchConversation();
       this.setActiveChat();
     });
   },
 
   methods: {
+    onConversationLoad() {
+      this.fetchConversationIfUnavailable();
+    },
     initialize() {
       this.$store.dispatch('setActiveInbox', this.inboxId);
       this.setActiveChat();
     },
-
-    fetchConversation() {
+    fetchConversationIfUnavailable() {
       if (!this.conversationId) {
         return;
       }
@@ -113,7 +101,6 @@ export default {
       const [chat] = this.chatList.filter(c => c.id === conversationId);
       return chat;
     },
-
     setActiveChat() {
       if (this.conversationId) {
         const chat = this.findConversation();
@@ -128,7 +115,9 @@ export default {
       }
     },
     onToggleContactPanel() {
-      this.isContactPanelOpen = !this.isContactPanelOpen;
+      this.updateUISettings({
+        is_contact_sidebar_open: !this.isContactPanelOpen,
+      });
     },
     onSearch() {
       this.showSearchModal = true;
@@ -139,23 +128,10 @@ export default {
   },
 };
 </script>
-<style scoped>
-.search--button {
-  align-items: center;
-  border: 0;
-  color: var(--s-400);
-  cursor: pointer;
+<style lang="scss" scoped>
+.conversation-page {
   display: flex;
-  font-size: var(--font-size-small);
-  font-weight: 400;
-  padding: var(--space-normal);
-  text-align: left;
-  line-height: var(--font-size-large);
-}
-
-.search--icon {
-  color: var(--s-600);
-  font-size: var(--font-size-large);
-  padding-right: var(--space-small);
+  width: 100%;
+  height: 100%;
 }
 </style>

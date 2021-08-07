@@ -5,7 +5,7 @@
       <div class="message-wrap">
         <div class="typing-bubble chat-bubble agent">
           <img
-            src="~widget/assets/images/typing.gif"
+            src="~widget/assets/images/loading.svg"
             alt="Agent is typing a message"
           />
         </div>
@@ -23,6 +23,10 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
 @import '~widget/assets/scss/variables.scss';
+.agent-message-wrap {
+  position: sticky;
+  bottom: $space-smaller;
+}
 
 .typing-bubble {
   max-width: $space-normal * 2.4;

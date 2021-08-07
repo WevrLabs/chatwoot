@@ -1,4 +1,4 @@
-import { mutations } from '../../conversation';
+import { mutations } from '../../conversation/mutations';
 
 const temporaryMessagePayload = {
   content: 'hello',
@@ -70,6 +70,17 @@ describe('#mutations', () => {
       const state = { uiFlags: { isFetchingList: false } };
       mutations.setConversationListLoading(state, true);
       expect(state.uiFlags.isFetchingList).toEqual(true);
+    });
+  });
+
+  describe('#setConversationUIFlag', () => {
+    it('set uiFlags correctly', () => {
+      const state = { uiFlags: { isFetchingList: false } };
+      mutations.setConversationUIFlag(state, { isCreating: true });
+      expect(state.uiFlags).toEqual({
+        isFetchingList: false,
+        isCreating: true,
+      });
     });
   });
 
@@ -154,6 +165,22 @@ describe('#mutations', () => {
           ],
         },
       });
+    });
+  });
+
+  describe('#clearConversations', () => {
+    it('clears the state', () => {
+      const state = { conversations: { 1: { id: 1 } } };
+      mutations.clearConversations(state);
+      expect(state.conversations).toEqual({});
+    });
+  });
+
+  describe('#deleteMessage', () => {
+    it('delete the message from conversation', () => {
+      const state = { conversations: { 1: { id: 1 } } };
+      mutations.deleteMessage(state, 1);
+      expect(state.conversations).toEqual({});
     });
   });
 });

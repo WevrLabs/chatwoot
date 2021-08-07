@@ -22,6 +22,7 @@
 #  reset_password_token   :string
 #  sign_in_count          :integer          default(0), not null
 #  tokens                 :json
+#  ui_settings            :jsonb
 #  uid                    :string           default(""), not null
 #  unconfirmed_email      :string
 #  created_at             :datetime         not null
@@ -44,6 +45,7 @@ class User < ApplicationRecord
   include Pubsubable
   include Rails.application.routes.url_helpers
   include Reportable
+  include SsoAuthenticatable
 
   devise :database_authenticatable,
          :registerable,
@@ -51,7 +53,8 @@ class User < ApplicationRecord
          :rememberable,
          :trackable,
          :validatable,
-         :confirmable
+         :confirmable,
+         :password_has_required_content
 
   enum availability: { online: 0, offline: 1, busy: 2 }
 
@@ -60,12 +63,16 @@ class User < ApplicationRecord
   # validates_uniqueness_of :email, scope: :account_id
 
   validates :email, :name, presence: true
+  validates_length_of :name, minimum: 1
 
   has_many :account_users, dependent: :destroy
   has_many :accounts, through: :account_users
   accepts_nested_attributes_for :account_users
 
   has_many :assigned_conversations, foreign_key: 'assignee_id', class_name: 'Conversation', dependent: :nullify
+  alias_attribute :conversations, :assigned_conversations
+  has_many :csat_survey_responses, foreign_key: 'assigned_agent_id', dependent: :nullify
+
   has_many :inbox_members, dependent: :destroy
   has_many :inboxes, through: :inbox_members, source: :inbox
   has_many :messages, as: :sender
@@ -74,16 +81,19 @@ class User < ApplicationRecord
   has_many :notifications, dependent: :destroy
   has_many :notification_settings, dependent: :destroy
   has_many :notification_subscriptions, dependent: :destroy
+  has_many :team_members, dependent: :destroy
+  has_many :teams, through: :team_members
+  has_many :notes, dependent: :nullify
+  has_many :custom_filters, dependent: :destroy
 
   before_validation :set_password_and_uid, on: :create
 
-  after_create_commit :create_access_token
   after_save :update_presence_in_redis, if: :saved_change_to_availability?
 
   scope :order_by_full_name, -> { order('lower(name) ASC') }
 
   def send_devise_notification(notification, *args)
-    devise_mailer.send(notification, self, *args).deliver_later
+    devise_mailer.with(account: Current.account).send(notification, self, *args).deliver_later
   end
 
   def set_password_and_uid
@@ -102,21 +112,19 @@ class User < ApplicationRecord
     self[:display_name].presence || name
   end
 
+  def hmac_identifier
+    hmac_key = GlobalConfig.get('CHATWOOT_INBOX_HMAC_KEY')['CHATWOOT_INBOX_HMAC_KEY']
+    return OpenSSL::HMAC.hexdigest('sha256', hmac_key, email) if hmac_key.present?
+
+    ''
+  end
+
   def account
     current_account_user&.account
   end
 
   def assigned_inboxes
-    inboxes.where(account_id: Current.account.id)
-  end
-
-  alias avatar_img_url avatar_url
-  def avatar_url
-    if avatar_img_url == ''
-      hash = Digest::MD5.hexdigest(email)
-      return "https://www.gravatar.com/avatar/#{hash}?d=404"
-    end
-    avatar_img_url
+    administrator? ? Current.account.inboxes : inboxes.where(account_id: Current.account.id)
   end
 
   def administrator?

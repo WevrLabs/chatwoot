@@ -2,37 +2,78 @@
 GlobalConfig.clear_cache
 ConfigLoader.new.process
 
-account = Account.create!(
-  name: 'Acme Inc',
-  domain: 'support.chatwoot.com',
-  support_email: ENV.fetch('MAILER_SENDER_EMAIL', 'accounts@chatwoot.com')
-)
+## Seeds productions
+if Rails.env.production?
+  # Setup Onboarding flow
+  ::Redis::Alfred.set(::Redis::Alfred::CHATWOOT_INSTALLATION_ONBOARDING, true)
+end
 
-user = User.new(name: 'John', email: 'john@acme.inc', password: '123456')
-user.skip_confirmation!
-user.save!
+## Seeds for Local Development
+unless Rails.env.production?
+  SuperAdmin.create!(email: 'john@acme.inc', password: 'Password1!')
 
-AccountUser.create!(
-  account_id: account.id,
-  user_id: user.id,
-  role: :administrator
-)
+  account = Account.create!(
+    name: 'Acme Inc'
+  )
 
-web_widget = Channel::WebWidget.create!(account: account, website_url: 'https://acme.inc')
+  secondary_account = Account.create!(
+    name: 'Acme Org'
+  )
 
-inbox = Inbox.create!(channel: web_widget, account: account, name: 'Acme Support')
-InboxMember.create!(user: user, inbox: inbox)
+  user = User.new(name: 'John', email: 'john@acme.inc', password: 'Password1!')
+  user.skip_confirmation!
+  user.save!
 
-contact = Contact.create!(name: 'jane', email: 'jane@example.com', phone_number: '0000', account: account)
-contact_inbox = ContactInbox.create!(inbox: inbox, contact: contact, source_id: user.id)
-conversation = Conversation.create!(
-  account: account,
-  inbox: inbox,
-  status: :open,
-  assignee: user,
-  contact: contact,
-  contact_inbox: contact_inbox,
-  additional_attributes: {}
-)
-Message.create!(content: 'Hello', account: account, inbox: inbox, conversation: conversation, message_type: :incoming)
-CannedResponse.create!(account: account, short_code: 'start', content: 'Hello welcome to chatwoot.')
+  AccountUser.create!(
+    account_id: account.id,
+    user_id: user.id,
+    role: :administrator
+  )
+
+  AccountUser.create!(
+    account_id: secondary_account.id,
+    user_id: user.id,
+    role: :administrator
+  )
+
+  # Enables creating additional accounts from dashboard
+  installation_config = InstallationConfig.find_by(name: 'CREATE_NEW_ACCOUNT_FROM_DASHBOARD')
+  installation_config.value = true
+  installation_config.save!
+  GlobalConfig.clear_cache
+
+  web_widget = Channel::WebWidget.create!(account: account, website_url: 'https://acme.inc')
+
+  inbox = Inbox.create!(channel: web_widget, account: account, name: 'Acme Support')
+  InboxMember.create!(user: user, inbox: inbox)
+
+  contact = Contact.create!(name: 'jane', email: 'jane@example.com', phone_number: '+2320000', account: account)
+  contact_inbox = ContactInbox.create!(inbox: inbox, contact: contact, source_id: user.id, hmac_verified: true)
+  conversation = Conversation.create!(
+    account: account,
+    inbox: inbox,
+    status: :open,
+    assignee: user,
+    contact: contact,
+    contact_inbox: contact_inbox,
+    additional_attributes: {}
+  )
+
+  # sample email collect
+  WootMessageSeeder.create_sample_email_collect_message conversation
+
+  Message.create!(content: 'Hello', account: account, inbox: inbox, conversation: conversation, message_type: :incoming)
+
+  # sample card
+  WootMessageSeeder.create_sample_cards_message conversation
+  # input select
+  WootMessageSeeder.create_sample_input_select_message conversation
+  # form
+  WootMessageSeeder.create_sample_form_message conversation
+  # articles
+  WootMessageSeeder.create_sample_articles_message conversation
+  # csat
+  WootMessageSeeder.create_sample_csat_collect_message conversation
+
+  CannedResponse.create!(account: account, short_code: 'start', content: 'Hello welcome to chatwoot.')
+end

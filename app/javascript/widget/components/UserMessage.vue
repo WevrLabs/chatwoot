@@ -37,6 +37,7 @@ import UserMessageBubble from 'widget/components/UserMessageBubble';
 import ImageBubble from 'widget/components/ImageBubble';
 import FileBubble from 'widget/components/FileBubble';
 import timeMixin from 'dashboard/mixins/time';
+import messageMixin from '../mixins/messageMixin';
 import { mapGetters } from 'vuex';
 
 export default {
@@ -46,7 +47,7 @@ export default {
     ImageBubble,
     FileBubble,
   },
-  mixins: [timeMixin],
+  mixins: [timeMixin, messageMixin],
   props: {
     message: {
       type: Object,
@@ -61,11 +62,6 @@ export default {
     isInProgress() {
       const { status = '' } = this.message;
       return status === 'in_progress';
-    },
-    hasAttachments() {
-      return !!(
-        this.message.attachments && this.message.attachments.length > 0
-      );
     },
     showTextBubble() {
       const { message } = this;
@@ -91,9 +87,14 @@ export default {
     margin: 0 $space-smaller $space-micro auto;
     max-width: 85%;
     text-align: right;
+    text-align: start !important;
+    unicode-bidi: plaintext;
 
     .message-wrap {
       margin-right: $space-small;
+      max-width: 100%;
+      text-align: start !important;
+      unicode-bidi: plaintext;
     }
 
     .in-progress {
@@ -119,15 +120,25 @@ export default {
   .user-message-wrap {
     + .user-message-wrap {
       margin-top: $space-micro;
+      text-align: start !important;
+      unicode-bidi: plaintext;
 
       .user-message .chat-bubble {
         border-top-right-radius: $space-smaller;
+        text-align: start !important;
+        unicode-bidi: plaintext;
       }
     }
 
     + .agent-message-wrap {
       margin-top: $space-normal;
+      text-align: start !important;
+      unicode-bidi: plaintext;
     }
+  }
+
+  p:not(:last-child) {
+    margin-bottom: $space-normal;
   }
 }
 </style>

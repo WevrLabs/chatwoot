@@ -6,18 +6,34 @@
       "CONFIGURE": "配置",
       "HEADER": "Webhook 設定",
       "HEADER_BTN_TXT": "建立新的 webhook",
-      "INTEGRATION_TXT": "Webhook 事件為您提供了有關 Chatwoot 帳戶中發生的事情的即時資訊。 您可以使用 webhooks 將事件傳遞給您喜歡的 Slack 或 Github。 點擊配置來設定您的 webhooks。",
       "LOADING": "正在獲取已建立的 webhooks",
       "SEARCH_404": "没有任何項目符合此查詢",
       "SIDEBAR_TXT": "<p><b>Webhooks</b> </p> <p>Webhooks 是 HTTP 回呼，可以為每個帳戶定義的。 他們是由諸如在 Chatwoot 中建立消息等事件所觸發的。您可以為此帳戶建立多個 webhook。 <br /><br /> 建立一個 <b>webhook</b>, 點擊 <b>建立新的 webhook</b> 按鈕。 您也可以通過點擊刪除按鈕刪除任何現有的 webhook。</p>",
       "LIST": {
         "404": "此帳戶没有配置 webhooks。",
         "TITLE": "管理 webhooks",
-        "DESC": "預設的回覆是預定義的回覆模板，可以用來快速發送對工單的答覆。",
         "TABLE_HEADER": [
           "Webhook 端点",
           "操作"
         ]
+      },
+      "EDIT": {
+        "BUTTON_TEXT": "編輯",
+        "TITLE": "Edit webhook",
+        "CANCEL": "取消",
+        "DESC": "Webhook 事件為您提供了有關 Chatwoot 帳戶中發生的事情的即時資訊。請輸入一個有效的URL來配置回呼。",
+        "FORM": {
+          "END_POINT": {
+            "LABEL": "Webhook 網址",
+            "PLACEHOLDER": "例如：https://example/api/webhook",
+            "ERROR": "請輸入一個有效的 URL"
+          },
+          "SUBMIT": "Edit webhook"
+        },
+        "API": {
+          "SUCCESS_MESSAGE": "Webhook URL updated successfully",
+          "ERROR_MESSAGE": "無法連接伺服器，請稍後再試"
+        }
       },
       "ADD": {
         "CANCEL": "取消操作",
@@ -48,6 +64,12 @@
           "YES": "是，刪除 ",
           "NO": "否，保留它"
         }
+      }
+    },
+    "SLACK": {
+      "HELP_TEXT": {
+        "TITLE": "Using Slack Integration",
+        "BODY": "<br/><p>Chatwoot will now sync all the incoming conversations into the <b><i>customer-conversations</i></b> channel inside your slack workplace.</p><p>Replying to a conversation thread in <b><i>customer-conversations</i></b> slack channel will create a response back to the customer through chatwoot.</p><p>Start the replies with <b><i>note:</i></b> to create private notes instead of replies.</p><p>If the replier on slack has an agent profile in chatwoot under the same email, the replies will be associated accordingly.</p><p>When the replier doesn't have an associated agent profile, the replies will be made from the bot profile.</p>"
       }
     },
     "DELETE": {

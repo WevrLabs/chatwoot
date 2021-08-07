@@ -1,7 +1,7 @@
 {
   "INBOX_MGMT": {
     "HEADER": "Posteingänge",
-    "SIDEBAR_TXT": "<p><b>Inbox</b></p> <p> When you connect a website or a facebook Page to Chatwoot, it is called an <b>Inbox</b>. You can have unlimited inboxes in your Chatwoot account. </p><p> Click on <b>Add Inbox</b> to connect a website or a Facebook Page. </p><p> In the Dashboard, you can see all the conversations from all your inboxes in a single place and respond to them under the `Conversations` tab. </p><p> You can also see conversations specific to an inbox by clicking on the inbox name on the left pane of the dashboard. </p>",
+    "SIDEBAR_TXT": "<p><b>Posteingang</b></p> <p> Wenn du eine Webseite oder eine Facebook-Seite mit Chatwood verbindest, wird dieser Kanal als <b>Posteingang</b> bezeichnet. Dabei können unbegrenzte viele Posteingänge angelegt werden. </p><p> Klicke auf <b>Posteingang hinzufügen</b>, um eine Webseite oder eine Facebook-Seite zu verbinden. </p><p> Im Dashboard du kannst alle Unterhaltungen aus allen deinen Posteingängen an einem Ort sehen und unter der Registerkarte \"Unterhaltungen\" beantworten. </p><p> Du kannst dir auch nur Konversationen anzeigen lassen, die in einen bestimmten Posteingang enthalten sind, indem du auf den Posteingangsnamen auf der linken Seite des Dashboards klicken. </p>",
     "LIST": {
       "404": "Diesem Konto sind keine Posteingänge zugeordnet."
     },
@@ -28,50 +28,62 @@
       }
     ],
     "ADD": {
+      "CHANNEL_NAME": {
+        "LABEL": "Posteingang-Name",
+        "PLACEHOLDER": "Geben Sie den Namen für Ihren Posteingang ein (eg: Acme Inc)"
+      },
+      "WEBSITE_NAME": {
+        "LABEL": "Webseiten-Name",
+        "PLACEHOLDER": "Geben Sie den Namen Ihrer Website ein (zum Beispiel: Acme Inc)"
+      },
       "FB": {
         "HELP": "PS: Durch die Anmeldung erhalten wir nur Zugriff auf die Nachrichten Ihrer Seite. Auf Ihre privaten Nachrichten kann Chatwoot niemals zugreifen.",
-        "CHOOSE_PAGE": "Choose Page",
-        "CHOOSE_PLACEHOLDER": "Select a page from the list",
-        "INBOX_NAME": "Inbox Name",
-        "ADD_NAME": "Add a name for your inbox",
-        "PICK_NAME": "Pick A Name Your Inbox",
-        "PICK_A_VALUE": "Pick a value"
+        "CHOOSE_PAGE": "Seite auswählen",
+        "CHOOSE_PLACEHOLDER": "Wähle eine Seite aus der Liste",
+        "INBOX_NAME": "Posteingang-Name",
+        "ADD_NAME": "Namen für diesen Posteingang eingeben",
+        "PICK_NAME": "Wähle einen Namen für deinen Posteingang",
+        "PICK_A_VALUE": "Wähle einen Wert"
       },
       "TWITTER": {
-        "HELP": "Um Ihr Twitter-Profil als Kanal hinzuzufügen, müssen Sie Ihr Twitter-Profil authentifizieren, indem Sie auf 'Mit Twitter anmelden' klicken."
+        "HELP": "Um Ihr Twitter-Profil als Kanal hinzuzufügen, müssen Sie Ihr Twitter-Profil authentifizieren, indem Sie auf 'Mit Twitter anmelden' klicken.",
+        "ERROR_MESSAGE": "Beim Verbinden mit Twitter ist ein Fehler aufgetreten, bitte versuchen Sie es erneut"
       },
       "WEBSITE_CHANNEL": {
         "TITLE": "Website-Kanal",
         "DESC": "Erstellen Sie einen Kanal für Ihre Website und unterstützen Sie Ihre Kunden über unser Website-Widget.",
-        "LOADING_MESSAGE": "Creating Website Support Channel",
+        "LOADING_MESSAGE": "Website-Support-Channel erstellen",
         "CHANNEL_AVATAR": {
-          "LABEL": "Channel Avatar"
-        },
-        "CHANNEL_NAME": {
-          "LABEL": "Webseiten-Name",
-          "PLACEHOLDER": "Geben Sie den Namen Ihrer Website ein (eg: Acme Inc)"
+          "LABEL": "Kanal-Avatar"
         },
         "CHANNEL_DOMAIN": {
-          "LABEL": "Website Domain",
+          "LABEL": "Website-Domain",
           "PLACEHOLDER": "Geben Sie Ihre Website-Domain ein (eg: acme.com)"
         },
         "CHANNEL_WELCOME_TITLE": {
-          "LABEL": "Welcome Heading",
-          "PLACEHOLDER": "Hi there !"
+          "LABEL": "Willkommens-Überschrift",
+          "PLACEHOLDER": "Hallo!"
         },
         "CHANNEL_WELCOME_TAGLINE": {
-          "LABEL": "Welcome Tagline",
-          "PLACEHOLDER": "We make it simple to connect with us. Ask us anything, or share your feedback."
+          "LABEL": "Willkommens-Schlagzeile",
+          "PLACEHOLDER": "Wir machen es einfach, mit uns in Verbindung zu treten. Fragen Sie uns etwas oder teilen Sie Ihr Feedback."
         },
         "CHANNEL_GREETING_MESSAGE": {
-          "LABEL": "Channel greeting message",
-          "PLACEHOLDER": "Acme Inc typically replies in a few hours."
+          "LABEL": "Grußnachricht des Kanals",
+          "PLACEHOLDER": "Acme Inc antwortet in der Regel innerhalb weniger Stunden."
         },
         "CHANNEL_GREETING_TOGGLE": {
-          "LABEL": "Enable channel greeting",
-          "HELP_TEXT": "Send a greeting message to the user when he starts the conversation.",
+          "LABEL": "Kanal Begrüßung aktivieren",
+          "HELP_TEXT": "Senden Sie eine Grußnachricht an den Benutzer, wenn er die Unterhaltung beginnt.",
           "ENABLED": "Aktiviert",
-          "DISABLED": "Behindert"
+          "DISABLED": "Deaktiviert"
+        },
+        "REPLY_TIME": {
+          "TITLE": "Reaktionszeit festlegen",
+          "IN_A_FEW_MINUTES": "Innerhalb weniger Minuten",
+          "IN_A_FEW_HOURS": "Innerhalb weniger Stunden",
+          "IN_A_DAY": "Innerhalb eines Tages",
+          "HELP_TEXT": "Diese Antwortzeit wird im Live-Chat-Widget angezeigt"
         },
         "WIDGET_COLOR": {
           "LABEL": "Widget Farbe",
@@ -80,7 +92,7 @@
         "SUBMIT_BUTTON": "Posteingang erstellen"
       },
       "TWILIO": {
-        "TITLE": "Twilio SMS/Whatsapp Channel",
+        "TITLE": "Twilio SMS/Whatsapp Kanal",
         "DESC": "Integrieren Sie Twilio und unterstützen Sie Ihre Kunden per SMS/Whatsapp.",
         "ACCOUNT_SID": {
           "LABEL": "Account SID",
@@ -88,11 +100,11 @@
           "ERROR": "Dieses Feld wird benötigt"
         },
         "CHANNEL_TYPE": {
-          "LABEL": "Channel Type",
-          "ERROR": "Please select your Channel Type"
+          "LABEL": "Kanal-Typ",
+          "ERROR": "Bitte wählen Sie den Kanal-Typ aus"
         },
         "AUTH_TOKEN": {
-          "LABEL": "Auth Token",
+          "LABEL": "Auth-Token",
           "PLACEHOLDER": "Bitte geben Sie Ihr Twilio Auth Token ein",
           "ERROR": "Dieses Feld wird benötigt"
         },
@@ -108,16 +120,24 @@
         },
         "API_CALLBACK": {
           "TITLE": "Callback URL",
-          "SUBTITLE": "You have to configure the message callback URL in Twilio with the URL mentioned here."
+          "SUBTITLE": "Sie müssen die Callback-URL in Twilio mit der hier genannten URL konfigurieren."
         },
         "SUBMIT_BUTTON": "Erstellen Sie Twilio Channel",
         "API": {
           "ERROR_MESSAGE": "Wir konnten die Twilio-Anmeldeinformationen nicht authentifizieren. Bitte versuchen Sie es erneut"
         }
       },
+      "SMS": {
+        "TITLE": "SMS Channel via Twilio",
+        "DESC": "Start supporting your customers via SMS with Twilio integration."
+      },
+      "WHATSAPP": {
+        "TITLE": "Whatsapp Channel via Twilio",
+        "DESC": "Start supporting your customers via Whatsapp with Twilio integration."
+      },
       "API_CHANNEL": {
-        "TITLE": "API Channel",
-        "DESC": "Integrate with API channel and start supporting your customers.",
+        "TITLE": "API-Kanal",
+        "DESC": "Integrieren Sie einen API-Kanal und starten Sie mit der Unterstützung Ihrer Kunden.",
         "CHANNEL_NAME": {
           "LABEL": "Kanal Name",
           "PLACEHOLDER": "Bitte geben Sie einen Kanalnamen ein",
@@ -125,40 +145,42 @@
         },
         "WEBHOOK_URL": {
           "LABEL": "Webhook-URL",
-          "SUBTITLE": "Configure the URL where you want to recieve callbacks on events.",
+          "SUBTITLE": "Konfigurieren Sie die URL, auf der Sie Callbacks bei Events erhalten möchten.",
           "PLACEHOLDER": "Webhook-URL"
         },
-        "SUBMIT_BUTTON": "Create API Channel",
+        "SUBMIT_BUTTON": "API-Kanal erstellen",
         "API": {
-          "ERROR_MESSAGE": "We were not able to save the api channel"
+          "ERROR_MESSAGE": "Der API-Kanal konnte nicht gespeichert werden"
         }
       },
       "EMAIL_CHANNEL": {
-        "TITLE": "Email Channel",
-        "DESC": "Integrate you email inbox.",
+        "TITLE": "E-Mail-Kanal",
+        "DESC": "Integrieren Sie Ihren Posteingang.",
         "CHANNEL_NAME": {
           "LABEL": "Kanal Name",
           "PLACEHOLDER": "Bitte geben Sie einen Kanalnamen ein",
           "ERROR": "Dieses Feld wird benötigt"
         },
         "EMAIL": {
-          "LABEL": "Email",
-          "SUBTITLE": "Email where your customers sends you support tickets",
-          "PLACEHOLDER": "Email"
+          "LABEL": "E-Mail",
+          "SUBTITLE": "E-Mail Adresse, an die Ihre Kunden Ihnen Support-Tickets senden",
+          "PLACEHOLDER": "E-Mail"
         },
-        "SUBMIT_BUTTON": "Create Email Channel",
+        "SUBMIT_BUTTON": "E-Mail-Kanal erstellen",
         "API": {
-          "ERROR_MESSAGE": "We were not able to save the email channel"
+          "ERROR_MESSAGE": "Wir konnten den E-Mail-Kanal nicht speichern"
         },
-        "FINISH_MESSAGE": "Start forwarding your emails to the following email address."
+        "FINISH_MESSAGE": "Starten Sie die Weiterleitung Ihrer E-Mails an die folgende E-Mail-Adresse."
       },
       "AUTH": {
-        "TITLE": "Kanäle",
-        "DESC": "Derzeit unterstützen wir Website-Live-Chat-Widgets, Facebook-Seiten und Twitter-Profile als Plattformen. Wir haben weitere Plattformen wie WhatsApp, Email, Telegram und Line in Arbeit, die bald veröffentlicht werden."
+        "TITLE": "Choose a channel",
+        "DESC": "Chatwoot supports live-chat widget, Facebook page, Twitter profile, Whatsapp, Email etc., as channels. If you want to build a custom channel, you can create it using the API channel. Select one channel from the options below to proceed."
       },
       "AGENTS": {
         "TITLE": "Agenten",
-        "DESC": "Hier können Sie Agenten hinzufügen, um Ihren neu erstellten Posteingang zu verwalten. Nur diese ausgewählten Agenten haben Zugriff auf Ihren Posteingang. Agenten, die nicht Teil dieses Posteingangs sind, können bei der Anmeldung keine Nachrichten in diesem Posteingang sehen oder darauf antworten. <br> <b> PS: </b> Wenn Sie als Administrator Zugriff auf alle Posteingänge benötigen, sollten Sie sich als Agent zu allen von Ihnen erstellten Posteingängen hinzufügen."
+        "DESC": "Hier können Sie Agenten hinzufügen, um Ihren neu erstellten Posteingang zu verwalten. Nur diese ausgewählten Agenten haben Zugriff auf Ihren Posteingang. Agenten, die nicht Teil dieses Posteingangs sind, können bei der Anmeldung keine Nachrichten in diesem Posteingang sehen oder darauf antworten. <br> <b> PS: </b> Wenn Sie als Administrator Zugriff auf alle Posteingänge benötigen, sollten Sie sich als Agent zu allen von Ihnen erstellten Posteingängen hinzufügen.",
+        "VALIDATION_ERROR": "Fügen Sie mindestens einen Agenten zu Ihrem neuen Posteingang hinzu",
+        "PICK_AGENTS": "Agenten für den Posteingang auswählen"
       },
       "DETAILS": {
         "TITLE": "Posteingangsdetails",
@@ -184,17 +206,26 @@
       "TITLE": "Ihr Posteingang ist fertig!",
       "MESSAGE": "Sie können jetzt über Ihren neuen Kanal mit Ihren Kunden in Kontakt treten. Viel Spaß beim Unterstützen",
       "BUTTON_TEXT": "Bring mich dahin",
+      "MORE_SETTINGS": "Weitere Einstellungen",
       "WEBSITE_SUCCESS": "Sie haben die Erstellung eines Website-Kanals erfolgreich abgeschlossen. Kopieren Sie den unten gezeigten Code und fügen Sie ihn in Ihre Website ein. Wenn ein Kunde das nächste Mal den Live-Chat verwendet, wird die Konversation automatisch in Ihrem Posteingang angezeigt."
     },
     "REAUTH": "Neu autorisieren",
     "VIEW": "Aussicht",
     "EDIT": {
       "API": {
-        "SUCCESS_MESSAGE": "Widget-Farbe erfolgreich aktualisiert",
+        "SUCCESS_MESSAGE": "Posteingangseinstellungen erfolgreich aktualisiert",
         "AUTO_ASSIGNMENT_SUCCESS_MESSAGE": "Automatische Zuordnung erfolgreich aktualisiert",
         "ERROR_MESSAGE": "Widget-Farbe konnte nicht aktualisiert werden. Bitte versuchen Sie es später noch einmal."
       },
       "AUTO_ASSIGNMENT": {
+        "ENABLED": "Aktiviert",
+        "DISABLED": "Behindert"
+      },
+      "EMAIL_COLLECT_BOX": {
+        "ENABLED": "Aktiviert",
+        "DISABLED": "Behindert"
+      },
+      "ENABLE_CSAT": {
         "ENABLED": "Aktiviert",
         "DISABLED": "Behindert"
       }
@@ -204,8 +235,9 @@
       "CONFIRM": {
         "TITLE": "Löschung bestätigen",
         "MESSAGE": "Bist du sicher, das du das löschen möchtest ",
+        "PLACE_HOLDER": "Bitte geben Sie {inboxName} zur Bestätigung ein",
         "YES": "Ja, löschen",
-        "NO": "No, Keep "
+        "NO": "Nein, behalten "
       },
       "API": {
         "SUCCESS_MESSAGE": "Posteingang erfolgreich gelöscht",
@@ -213,15 +245,18 @@
       }
     },
     "TABS": {
-      "SETTINGS": "die Einstellungen",
-      "COLLABORATORS": "Collaborators",
-      "CONFIGURATION": "Configuration"
+      "SETTINGS": "Einstellungen",
+      "COLLABORATORS": "Mitarbeitende",
+      "CONFIGURATION": "Konfiguration",
+      "CAMPAIGN": "Kampagnen",
+      "PRE_CHAT_FORM": "Pre-Chat-Formular",
+      "BUSINESS_HOURS": "Öffnungszeiten"
     },
     "SETTINGS": "die Einstellungen",
     "FEATURES": {
-      "LABEL": "Features",
-      "DISPLAY_FILE_PICKER": "Display file picker on the widget",
-      "DISPLAY_EMOJI_PICKER": "Display emoji picker on the widget"
+      "LABEL": "Funktionen",
+      "DISPLAY_FILE_PICKER": "Dateiauswahl im Widget anzeigen",
+      "DISPLAY_EMOJI_PICKER": "Emoji-Auswahl im Widget anzeigen"
     },
     "SETTINGS_POPUP": {
       "MESSENGER_HEADING": "Messenger-Skript",
@@ -229,10 +264,57 @@
       "INBOX_AGENTS": "Agenten",
       "INBOX_AGENTS_SUB_TEXT": "Hinzufügen oder Entfernen von Agenten zu diesem Posteingang",
       "UPDATE": "Aktualisieren",
+      "ENABLE_EMAIL_COLLECT_BOX": "E-Mail-Sammelbox aktivieren",
+      "ENABLE_EMAIL_COLLECT_BOX_SUB_TEXT": "Aktiviere oder deaktiviere die E-Mail-Sammelbox bei einer neuen Unterhaltung",
       "AUTO_ASSIGNMENT": "Aktivieren Sie die automatische Zuweisung",
-      "INBOX_UPDATE_TITLE": "Inbox Settings",
-      "INBOX_UPDATE_SUB_TEXT": "Update your inbox settings",
-      "AUTO_ASSIGNMENT_SUB_TEXT": "Aktivieren oder deaktivieren Sie die automatische Zuweisung verfügbarer Agenten für neue Konversationen"
+      "ENABLE_CSAT": "CSAT aktivieren",
+      "ENABLE_CSAT_SUB_TEXT": "CSAT(Kundenzufriedenheit) Umfrage aktivieren/deaktivieren nach Abschluss eines Gesprächs",
+      "INBOX_UPDATE_TITLE": "Posteingangseinstellungen",
+      "INBOX_UPDATE_SUB_TEXT": "Posteingangseinstellungen aktualisieren",
+      "AUTO_ASSIGNMENT_SUB_TEXT": "Aktivieren oder deaktivieren Sie die automatische Zuweisung verfügbarer Agenten für neue Konversationen",
+      "HMAC_VERIFICATION": "Benutzeridentitätsüberprüfung",
+      "HMAC_DESCRIPTION": "Um die Benutzer-Identität zu validieren, kannst du einen `identifier_hash` für jeden Benutzer übergeben. Du kannst den Hash mithilfe des 'sha256' Verfahrens generieren, der notwendige Schlüssel wird hier angezeigt."
+    },
+    "FACEBOOK_REAUTHORIZE": {
+      "TITLE": "Neu autorisieren",
+      "SUBTITLE": "Ihre Facebook-Verbindung ist abgelaufen, bitte verbinden Sie sich neu, um die Dienste fortzuführen",
+      "MESSAGE_SUCCESS": "Wiederverbindung erfolgreich",
+      "MESSAGE_ERROR": "Es ist ein Fehler aufgetreten, bitte versuchen Sie es erneut"
+    },
+    "PRE_CHAT_FORM": {
+      "DESCRIPTION": "Chatformulare ermöglichen es dir, Benutzerinformationen zu erfassen, bevor ein Gespräch begonnen wird.",
+      "ENABLE": {
+        "LABEL": "Vorab Chatformulare aktivieren",
+        "OPTIONS": {
+          "ENABLED": "Ja",
+          "DISABLED": "Nein"
+        }
+      },
+      "PRE_CHAT_MESSAGE": {
+        "LABEL": "Vorab Chat-Nachricht",
+        "PLACEHOLDER": "Diese Nachricht ist für alle Benutzer dieses Formulars sichtbar"
+      },
+      "REQUIRE_EMAIL": {
+        "LABEL": "Besucher sollten ihren Namen und ihre E-Mail-Adresse angeben, bevor sie den Chat starten"
+      }
+    },
+    "BUSINESS_HOURS": {
+      "TITLE": "Legen Sie Ihre Verfügbarkeit fest",
+      "SUBTITLE": "Legen Sie die Verfügbarkeit für das Live-Chat-Widget fest",
+      "WEEKLY_TITLE": "Wöchentliche Stunden festlegen",
+      "TIMEZONE_LABEL": "Zeitzone auswählen",
+      "UPDATE": "Einstellungen für Geschäftszeiten aktualisieren",
+      "TOGGLE_AVAILABILITY": "Geschäftszeiten für diesen Posteingang aktivieren",
+      "UNAVAILABLE_MESSAGE_LABEL": "Nachricht für Besucher außerhalb der Geschäftszeiten",
+      "UNAVAILABLE_MESSAGE_DEFAULT": "Wir sind momentan nicht erreichbar. Hinterlassen Sie eine Nachricht und wir antworten Ihnen sobald wir wieder zurück sind.",
+      "TOGGLE_HELP": "Die Aktivierung der Geschäftsverfügbarkeit zeigt die verfügbaren Stunden auf dem Live-Chat-Widget an, auch wenn alle Agenten offline sind. Außerhalb der verfügbaren Stunden können Besucher mit einer Nachricht und einem Vor-Chat-Formular gewarnt werden.",
+      "DAY": {
+        "ENABLE": "Verfügbarkeit für diesen Tag aktivieren",
+        "UNAVAILABLE": "Nicht verfügbar",
+        "HOURS": "Stunden",
+        "VALIDATION_ERROR": "Die Startzeit sollte vor der Schließzeit liegen.",
+        "CHOOSE": "Auswählen"
+      }
     }
   }
 }

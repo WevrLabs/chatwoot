@@ -13,7 +13,7 @@ describe ::ContactIdentifyAction do
       expect(ContactAvatarJob).not_to receive(:perform_later).with(contact, params[:avatar_url])
       contact_identify
       expect(contact.reload.name).to eq 'test'
-      # custom attributes are merged properly without overwritting existing ones
+      # custom attributes are merged properly without overwriting existing ones
       expect(contact.custom_attributes).to eq({ 'test' => 'new test', 'test1' => 'test1', 'test2' => 'test2' })
       expect(contact.reload.identifier).to eq 'test_id'
     end
@@ -42,6 +42,16 @@ describe ::ContactIdentifyAction do
         expect(result.id).to eq existing_email_contact.id
         expect(result.name).to eq existing_email_contact.name
         expect { contact.reload }.to raise_error(ActiveRecord::RecordNotFound)
+      end
+    end
+
+    context 'when contacts with blank identifiers exist and identify action is called with blank identifier' do
+      it 'updates the attributes of contact passed in to identify action' do
+        create(:contact, account: account, identifier: '')
+        params = { identifier: '', name: 'new name' }
+        result = described_class.new(contact: contact, params: params).perform
+        expect(result.id).to eq contact.id
+        expect(result.name).to eq 'new name'
       end
     end
   end

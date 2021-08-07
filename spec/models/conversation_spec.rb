@@ -1,8 +1,20 @@
 # frozen_string_literal: true
 
 require 'rails_helper'
+require Rails.root.join 'spec/models/concerns/assignment_handler_shared.rb'
+require Rails.root.join 'spec/models/concerns/round_robin_handler_shared.rb'
 
 RSpec.describe Conversation, type: :model do
+  describe 'associations' do
+    it { is_expected.to belong_to(:account) }
+    it { is_expected.to belong_to(:inbox) }
+  end
+
+  describe 'concerns' do
+    it_behaves_like 'assignment_handler'
+    it_behaves_like 'round_robin_handler'
+  end
+
   describe '.before_create' do
     let(:conversation) { build(:conversation, display_id: nil) }
 
@@ -82,7 +94,6 @@ RSpec.describe Conversation, type: :model do
 
       conversation.update(
         status: :resolved,
-        locked: true,
         contact_last_seen_at: Time.now,
         assignee: new_assignee,
         label_list: [label.title]
@@ -96,8 +107,6 @@ RSpec.describe Conversation, type: :model do
       expect(Rails.configuration.dispatcher).to have_received(:dispatch)
         .with(described_class::CONVERSATION_READ, kind_of(Time), conversation: conversation)
       expect(Rails.configuration.dispatcher).to have_received(:dispatch)
-        .with(described_class::CONVERSATION_LOCK_TOGGLE, kind_of(Time), conversation: conversation)
-      expect(Rails.configuration.dispatcher).to have_received(:dispatch)
         .with(described_class::ASSIGNEE_CHANGED, kind_of(Time), conversation: conversation)
     end
 
@@ -109,8 +118,8 @@ RSpec.describe Conversation, type: :model do
     end
 
     it 'adds a message for system auto resolution if marked resolved by system' do
-      conversation2 = create(:conversation, status: 'open', account: account, assignee: old_assignee)
       account.update(auto_resolve_duration: 40)
+      conversation2 = create(:conversation, status: 'open', account: account, assignee: old_assignee)
       Current.user = nil
       conversation2.update(status: :resolved)
       system_resolved_message = "Conversation was marked resolved by system due to #{account.auto_resolve_duration} days of inactivity"
@@ -124,110 +133,8 @@ RSpec.describe Conversation, type: :model do
 
     it 'does trigger AutoResolutionJob if conversation reopened and account has auto resolve duration' do
       account.update(auto_resolve_duration: 40)
-      expect { conversation.update(status: :open) }
+      expect { conversation.reload.update(status: :open) }
         .to have_enqueued_job(AutoResolveConversationsJob).with(conversation.id)
-    end
-  end
-
-  describe '#round robin' do
-    let(:account) { create(:account) }
-    let(:agent) { create(:user, email: 'agent1@example.com', account: account) }
-    let(:inbox) { create(:inbox, account: account) }
-    let(:conversation) do
-      create(
-        :conversation,
-        account: account,
-        contact: create(:contact, account: account),
-        inbox: inbox,
-        assignee: nil
-      )
-    end
-
-    before do
-      create(:inbox_member, inbox: inbox, user: agent)
-      allow(Redis::Alfred).to receive(:rpoplpush).and_return(agent.id)
-    end
-
-    it 'runs round robin on after_save callbacks' do
-      # run_round_robin
-      expect(conversation.reload.assignee).to eq(agent)
-    end
-
-    it 'will not auto assign agent if enable_auto_assignment is false' do
-      inbox.update(enable_auto_assignment: false)
-
-      # run_round_robin
-      expect(conversation.reload.assignee).to eq(nil)
-    end
-
-    it 'will not auto assign agent if its a bot conversation' do
-      conversation = create(
-        :conversation,
-        account: account,
-        contact: create(:contact, account: account),
-        inbox: inbox,
-        status: 'bot',
-        assignee: nil
-      )
-
-      # run_round_robin
-      expect(conversation.reload.assignee).to eq(nil)
-    end
-
-    it 'gets triggered on update only when status changes to open' do
-      conversation.status = 'resolved'
-      conversation.save!
-      expect(conversation.reload.assignee).to eq(agent)
-      inbox.inbox_members.where(user_id: agent.id).first.destroy!
-
-      # round robin changes assignee in this case since agent doesn't have access to inbox
-      agent2 = create(:user, email: 'agent2@example.com', account: account)
-      create(:inbox_member, inbox: inbox, user: agent2)
-      allow(Redis::Alfred).to receive(:rpoplpush).and_return(agent2.id)
-      conversation.status = 'open'
-      conversation.save!
-      expect(conversation.reload.assignee).to eq(agent2)
-    end
-  end
-
-  describe '#update_assignee' do
-    subject(:update_assignee) { conversation.update_assignee(agent) }
-
-    let(:conversation) { create(:conversation, assignee: nil) }
-    let(:agent) do
-      create(:user, email: 'agent@example.com', account: conversation.account, role: :agent)
-    end
-    let(:assignment_mailer) { double(deliver: true) }
-
-    it 'assigns the agent to conversation' do
-      expect(update_assignee).to eq(true)
-      expect(conversation.reload.assignee).to eq(agent)
-    end
-
-    it 'creates a new notification for the agent' do
-      expect(update_assignee).to eq(true)
-      expect(agent.notifications.count).to eq(1)
-    end
-
-    it 'does not create assignment notification if notification setting is turned off' do
-      notification_setting = agent.notification_settings.first
-      notification_setting.unselect_all_email_flags
-      notification_setting.unselect_all_push_flags
-      notification_setting.save!
-
-      expect(update_assignee).to eq(true)
-      expect(agent.notifications.count).to eq(0)
-    end
-
-    context 'when agent is current user' do
-      before do
-        Current.user = agent
-      end
-
-      it 'creates self-assigned message activity' do
-        expect(update_assignee).to eq(true)
-        expect(conversation.messages.pluck(:content)).to include("#{agent.name} self-assigned this conversation")
-      end
     end
   end
 
@@ -274,35 +181,37 @@ RSpec.describe Conversation, type: :model do
   end
 
   describe '#toggle_status' do
-    subject(:toggle_status) { conversation.toggle_status }
-
-    let(:conversation) { create(:conversation, status: :open) }
-
-    it 'toggles conversation status' do
-      expect(toggle_status).to eq(true)
+    it 'toggles conversation status to resolved when open' do
+      conversation = create(:conversation, status: 'open')
+      expect(conversation.toggle_status).to eq(true)
       expect(conversation.reload.status).to eq('resolved')
     end
-  end
 
-  describe '#lock!' do
-    subject(:lock!) { conversation.lock! }
+    it 'toggles conversation status to open when resolved' do
+      conversation = create(:conversation, status: 'resolved')
+      expect(conversation.toggle_status).to eq(true)
+      expect(conversation.reload.status).to eq('open')
+    end
 
-    let(:conversation) { create(:conversation) }
+    it 'toggles conversation status to open when pending' do
+      conversation = create(:conversation, status: 'pending')
+      expect(conversation.toggle_status).to eq(true)
+      expect(conversation.reload.status).to eq('open')
+    end
 
-    it 'assigns locks the conversation' do
-      expect(lock!).to eq(true)
-      expect(conversation.reload.locked).to eq(true)
+    it 'toggles conversation status to open when snoozed' do
+      conversation = create(:conversation, status: 'snoozed')
+      expect(conversation.toggle_status).to eq(true)
+      expect(conversation.reload.status).to eq('open')
     end
   end
 
-  describe '#unlock!' do
-    subject(:unlock!) { conversation.unlock! }
-
-    let(:conversation) { create(:conversation) }
-
-    it 'unlocks the conversation' do
-      expect(unlock!).to eq(true)
-      expect(conversation.reload.locked).to eq(false)
+  describe '#ensure_snooze_until_reset' do
+    it 'resets the snoozed_until when status is toggled' do
+      conversation = create(:conversation, status: 'snoozed', snoozed_until: 2.days.from_now)
+      expect(conversation.snoozed_until).not_to eq nil
+      expect(conversation.toggle_status).to eq(true)
+      expect(conversation.reload.snoozed_until).to eq(nil)
     end
   end
 
@@ -441,6 +350,7 @@ RSpec.describe Conversation, type: :model do
         messages: [],
         inbox_id: conversation.inbox_id,
         status: conversation.status,
+        contact_inbox: conversation.contact_inbox,
         timestamp: conversation.last_activity_at.to_i,
         can_reply: true,
         channel: 'Channel::WebWidget',
@@ -455,24 +365,21 @@ RSpec.describe Conversation, type: :model do
     end
   end
 
-  describe '#lock_event_data' do
-    subject(:lock_event_data) { conversation.lock_event_data }
-
-    let(:conversation) do
-      build(:conversation, display_id: 505, locked: false)
-    end
-
-    it 'returns lock event payload' do
-      expect(lock_event_data).to eq(id: 505, locked: false)
-    end
-  end
-
   describe '#botinbox: when conversation created inside inbox with agent bot' do
     let!(:bot_inbox) { create(:agent_bot_inbox) }
     let(:conversation) { create(:conversation, inbox: bot_inbox.inbox) }
 
-    it 'returns conversation status as bot' do
-      expect(conversation.status).to eq('bot')
+    it 'returns conversation status as pending' do
+      expect(conversation.status).to eq('pending')
+    end
+  end
+
+  describe '#botintegration: when conversation created in inbox with dialogflow integration' do
+    let(:hook) { create(:integrations_hook, :dialogflow) }
+    let(:conversation) { create(:conversation, inbox: hook.inbox) }
+
+    it 'returns conversation status as pending' do
+      expect(conversation.status).to eq('pending')
     end
   end
 
@@ -514,6 +421,17 @@ RSpec.describe Conversation, type: :model do
         )
         expect(conversation.can_reply?).to eq true
       end
+    end
+  end
+
+  describe '#delete conversation' do
+    let!(:conversation) { create(:conversation) }
+
+    let!(:notification) { create(:notification, notification_type: 'conversation_creation', primary_actor: conversation) }
+
+    it 'delete associated notifications if conversation is deleted' do
+      conversation.destroy
+      expect { notification.reload }.to raise_error ActiveRecord::RecordNotFound
     end
   end
 end

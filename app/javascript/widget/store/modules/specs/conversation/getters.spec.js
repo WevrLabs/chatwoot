@@ -1,4 +1,4 @@
-import { getters } from '../../conversation';
+import { getters } from '../../conversation/getters';
 
 describe('#getters', () => {
   it('getConversation', () => {
@@ -14,6 +14,11 @@ describe('#getters', () => {
         content: 'hello',
       },
     });
+  });
+
+  it('getIsCreating', () => {
+    const state = { uiFlags: { isCreating: true } };
+    expect(getters.getIsCreating(state)).toEqual(true);
   });
 
   it('getConversationSize', () => {
@@ -428,5 +433,16 @@ describe('#getters', () => {
         },
       ]);
     });
+  });
+
+  it('getMessageCount', () => {
+    const state = {
+      conversations: {
+        1: {
+          content: 'hey, how are you?',
+        },
+      },
+    };
+    expect(getters.getMessageCount(state)).toEqual(1);
   });
 });

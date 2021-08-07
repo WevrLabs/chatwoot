@@ -55,7 +55,7 @@
 
 
   &.navigation__link--active {
-    background-color: $color-background;
+    background-color: $color-background-dark4;
     border-radius: $base-border-radius;
     color: $blue;
 
@@ -63,6 +63,10 @@
       color: $blue;
     }
   }
+}
+
+.menu .active>a, .menu .is-active>a {
+  background-color: $color-background-dark4;
 }
 
 .logout {

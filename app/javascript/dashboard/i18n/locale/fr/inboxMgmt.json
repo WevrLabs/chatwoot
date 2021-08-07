@@ -28,6 +28,14 @@
       }
     ],
     "ADD": {
+      "CHANNEL_NAME": {
+        "LABEL": "Nom de la boîte de réception",
+        "PLACEHOLDER": "Entrez le nom de votre boîte de réception (ex: Acme Inc)"
+      },
+      "WEBSITE_NAME": {
+        "LABEL": "Nom du site web",
+        "PLACEHOLDER": "Entrez le nom de votre boîte de réception (ex: Acme Inc)"
+      },
       "FB": {
         "HELP": "PS : En vous connectant, nous avons seulement accès aux messages de votre page. Vos messages privés ne peuvent jamais être consultés par Chatwoot.",
         "CHOOSE_PAGE": "Choisir la page",
@@ -38,7 +46,8 @@
         "PICK_A_VALUE": "Choisir une valeur"
       },
       "TWITTER": {
-        "HELP": "Pour ajouter votre profil Twitter en tant que canal, vous devez lier votre profil Twitter en cliquant sur 'Se connecter avec Twitter' "
+        "HELP": "Pour ajouter votre profil Twitter en tant que canal, vous devez lier votre profil Twitter en cliquant sur 'Se connecter avec Twitter' ",
+        "ERROR_MESSAGE": "Une erreur s'est produite lors de la connexion à Twitter, veuillez réessayer"
       },
       "WEBSITE_CHANNEL": {
         "TITLE": "Canal site Web",
@@ -46,10 +55,6 @@
         "LOADING_MESSAGE": "Création du canal de support du site Web",
         "CHANNEL_AVATAR": {
           "LABEL": "Avatar du canal"
-        },
-        "CHANNEL_NAME": {
-          "LABEL": "Nom du site Web",
-          "PLACEHOLDER": "Entrez le nom de votre site Web (ex : Acme Inc)"
         },
         "CHANNEL_DOMAIN": {
           "LABEL": "Domaine du site Web",
@@ -72,6 +77,13 @@
           "HELP_TEXT": "Envoyer un message de bienvenue à l'utilisateur lorsqu'il démarre la conversation.",
           "ENABLED": "Activé",
           "DISABLED": "Désactivé"
+        },
+        "REPLY_TIME": {
+          "TITLE": "Définir le temps de réponse",
+          "IN_A_FEW_MINUTES": "En quelques minutes",
+          "IN_A_FEW_HOURS": "En quelques heures",
+          "IN_A_DAY": "En une journée",
+          "HELP_TEXT": "Ce temps de réponse sera affichée sur le widget de chat en direct"
         },
         "WIDGET_COLOR": {
           "LABEL": "Couleur du Widget",
@@ -115,6 +127,14 @@
           "ERROR_MESSAGE": "Nous n'avons pas pu authentifier les identifiants Twilio, veuillez réessayer"
         }
       },
+      "SMS": {
+        "TITLE": "SMS Channel via Twilio",
+        "DESC": "Start supporting your customers via SMS with Twilio integration."
+      },
+      "WHATSAPP": {
+        "TITLE": "Whatsapp Channel via Twilio",
+        "DESC": "Start supporting your customers via Whatsapp with Twilio integration."
+      },
       "API_CHANNEL": {
         "TITLE": "Canal API",
         "DESC": "Intégrez le canal API et commencez à aider vos clients.",
@@ -153,12 +173,14 @@
         "FINISH_MESSAGE": "Commencez à transférer vos courriels à l'adresse suivante."
       },
       "AUTH": {
-        "TITLE": "Canaux",
-        "DESC": "Actuellement, nous prenons en charge les widgets de chat en direct, les pages Facebook et les profils Twitter en tant que plateformes. Plus de plateformes telles que Whatsapp, Courriels, Telegram et Line sont en cours de développement et seront prochainement disponibles."
+        "TITLE": "Choose a channel",
+        "DESC": "Chatwoot supports live-chat widget, Facebook page, Twitter profile, Whatsapp, Email etc., as channels. If you want to build a custom channel, you can create it using the API channel. Select one channel from the options below to proceed."
       },
       "AGENTS": {
         "TITLE": "Agents",
-        "DESC": "Ici vous pouvez ajouter des agents pour gérer votre boîte de réception nouvellement créée. Seuls ces agents sélectionnés auront accès à votre boîte de réception. Les agents qui ne font pas partie de cette boîte de réception ne seront pas en mesure de voir ou de répondre aux messages de cette boîte de réception lorsqu'ils se connectent. <br> <b>PS :</b> En tant qu'administrateur, si vous avez besoin d'accéder à toutes les boîtes de réception, vous devriez vous ajouter en tant qu'agent à toutes les boîtes de réception que vous créez."
+        "DESC": "Ici vous pouvez ajouter des agents pour gérer votre boîte de réception nouvellement créée. Seuls ces agents sélectionnés auront accès à votre boîte de réception. Les agents qui ne font pas partie de cette boîte de réception ne seront pas en mesure de voir ou de répondre aux messages de cette boîte de réception lorsqu'ils se connectent. <br> <b>PS :</b> En tant qu'administrateur, si vous avez besoin d'accéder à toutes les boîtes de réception, vous devriez vous ajouter en tant qu'agent à toutes les boîtes de réception que vous créez.",
+        "VALIDATION_ERROR": "Ajouter au moins un agent à votre nouvelle boîte de réception",
+        "PICK_AGENTS": "Sélectionner les agents de la boîte de réception"
       },
       "DETAILS": {
         "TITLE": "Détails de la boîte de réception",
@@ -184,6 +206,7 @@
       "TITLE": "Votre boîte de réception est prête !",
       "MESSAGE": "Vous pouvez maintenant vous impliquer auprès de vos clients par le biais de votre nouveau canal. Bonne assistance ",
       "BUTTON_TEXT": "Emmenez-moi là",
+      "MORE_SETTINGS": "Plus de paramètres",
       "WEBSITE_SUCCESS": "Vous avez terminé avec succès la création d'un canal Web. Copiez le code affiché ci-dessous et collez-le sur votre site web. La prochaine fois qu'un client utilisera le chat en direct, la conversation apparaîtra automatiquement dans votre boîte de réception."
     },
     "REAUTH": "Réautoriser",
@@ -197,6 +220,14 @@
       "AUTO_ASSIGNMENT": {
         "ENABLED": "Activé",
         "DISABLED": "Désactivé"
+      },
+      "EMAIL_COLLECT_BOX": {
+        "ENABLED": "Activé",
+        "DISABLED": "Désactivé"
+      },
+      "ENABLE_CSAT": {
+        "ENABLED": "Activé",
+        "DISABLED": "Désactivé"
       }
     },
     "DELETE": {
@@ -204,6 +235,7 @@
       "CONFIRM": {
         "TITLE": "Confirmer la suppression",
         "MESSAGE": "Êtes-vous sûr de vouloir supprimer ",
+        "PLACE_HOLDER": "Veuillez taper {inboxName} pour confirmer",
         "YES": "Oui, supprimer ",
         "NO": "Non, Conserver "
       },
@@ -215,7 +247,10 @@
     "TABS": {
       "SETTINGS": "Paramètres",
       "COLLABORATORS": "Collaborateurs",
-      "CONFIGURATION": "Configuration"
+      "CONFIGURATION": "Configuration",
+      "CAMPAIGN": "Campagnes",
+      "PRE_CHAT_FORM": "Formulaire avant chat",
+      "BUSINESS_HOURS": "Heures de bureau"
     },
     "SETTINGS": "Paramètres",
     "FEATURES": {
@@ -229,10 +264,57 @@
       "INBOX_AGENTS": "Agents",
       "INBOX_AGENTS_SUB_TEXT": "Ajouter ou supprimer des agents de cette boîte de réception",
       "UPDATE": "Mettre à jour",
+      "ENABLE_EMAIL_COLLECT_BOX": "Activer la boîte de collecte des courriels",
+      "ENABLE_EMAIL_COLLECT_BOX_SUB_TEXT": "Activer ou désactiver la boîte de collecte des courriels pour les nouvelles conversations",
       "AUTO_ASSIGNMENT": "Activer l'assignation automatique",
+      "ENABLE_CSAT": "Enable CSAT",
+      "ENABLE_CSAT_SUB_TEXT": "Enable/Disable CSAT(Customer satisfaction) survey after resolving a conversation",
       "INBOX_UPDATE_TITLE": "Paramètres de boîtes de réception",
       "INBOX_UPDATE_SUB_TEXT": "Mettre à jour les paramètres de votre boîte de réception",
-      "AUTO_ASSIGNMENT_SUB_TEXT": "Activer ou désactiver l'affectation automatique de nouvelles conversations aux agents ajoutés à cette boîte de réception."
+      "AUTO_ASSIGNMENT_SUB_TEXT": "Activer ou désactiver l'affectation automatique de nouvelles conversations aux agents ajoutés à cette boîte de réception.",
+      "HMAC_VERIFICATION": "Validation de l'identité de l'utilisateur",
+      "HMAC_DESCRIPTION": "Afin de valider l'identité des utilisateurs, le SDK vous permet de passer un `identifier_hash` pour chaque utilisateur. Vous pouvez générer HMAC en utilisant 'sha256' avec la clé indiquée ici."
+    },
+    "FACEBOOK_REAUTHORIZE": {
+      "TITLE": "Réautoriser",
+      "SUBTITLE": "Votre connexion Facebook a expiré, veuillez reconnecter votre page Facebook pour continuer les services",
+      "MESSAGE_SUCCESS": "Reconnexion réussie",
+      "MESSAGE_ERROR": "Une erreur est survenue, veuillez réessayer"
+    },
+    "PRE_CHAT_FORM": {
+      "DESCRIPTION": "Les formulaires précédant le chat vous permettent de saisir les informations de l'utilisateur avant qu'ils ne commencent à discuter avec vous.",
+      "ENABLE": {
+        "LABEL": "Activer le formulaire précédant le chat",
+        "OPTIONS": {
+          "ENABLED": "Oui",
+          "DISABLED": "Non"
+        }
+      },
+      "PRE_CHAT_MESSAGE": {
+        "LABEL": "Message avant le chat",
+        "PLACEHOLDER": "Ce message serait visible pour les utilisateurs avec le formulaire"
+      },
+      "REQUIRE_EMAIL": {
+        "LABEL": "Les visiteurs doivent indiquer leur nom et leur courriel avant de commencer le chat"
+      }
+    },
+    "BUSINESS_HOURS": {
+      "TITLE": "Définissez votre disponibilité",
+      "SUBTITLE": "Définissez votre disponibilité sur votre widget livechat",
+      "WEEKLY_TITLE": "Définissez vos horaires de travail",
+      "TIMEZONE_LABEL": "Sélectionnez le fuseau horaire",
+      "UPDATE": "Mettre à jour les paramètres des heures de bureau",
+      "TOGGLE_AVAILABILITY": "Activer la disponibilité aux heures de bureau pour cette boîte de réception",
+      "UNAVAILABLE_MESSAGE_LABEL": "Message indisponible pour les visiteurs",
+      "UNAVAILABLE_MESSAGE_DEFAULT": "Nous ne sommes pas disponibles pour le moment. Laissez-nous un message, et nous répondrons dès notre retour.",
+      "TOGGLE_HELP": "Activer la disponibilité aux heures de bureau montrera les heures disponibles sur le widget chat en direct même si tous les agents sont hors ligne. En dehors des heures disponibles, les visiteurs peuvent être avertis avec un message et un formulaire de préconversation.",
+      "DAY": {
+        "ENABLE": "Activer la disponibilité pour ce jour",
+        "UNAVAILABLE": "Non disponible",
+        "HOURS": "heures",
+        "VALIDATION_ERROR": "L'heure de début doit être avant l'heure de fermeture.",
+        "CHOOSE": "Sélectionner"
+      }
     }
   }
 }

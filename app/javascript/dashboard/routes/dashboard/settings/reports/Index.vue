@@ -1,17 +1,15 @@
 <template>
   <div class="column content-box">
-    <div class="small-3 pull-right">
-      <multiselect
-        v-model="currentDateRangeSelection"
-        track-by="name"
-        label="name"
-        placeholder="Select one"
-        :options="dateRange"
-        :searchable="false"
-        :allow-empty="true"
-        @select="changeDateSelection"
-      />
-    </div>
+    <woot-button
+      color-scheme="success"
+      class-names="button--fixed-right-top"
+      icon="ion-android-download"
+      @click="downloadAgentReports"
+    >
+      {{ $t('REPORT.DOWNLOAD_AGENT_REPORTS') }}
+    </woot-button>
+
+    <report-date-range-selector @date-range-change="onDateRangeChange" />
     <div class="row">
       <woot-report-stats-card
         v-for="(metric, index) in metrics"
@@ -41,11 +39,9 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import startOfDay from 'date-fns/startOfDay';
-import subDays from 'date-fns/subDays';
-import getUnixTime from 'date-fns/getUnixTime';
 import fromUnixTime from 'date-fns/fromUnixTime';
 import format from 'date-fns/format';
+import ReportDateRangeSelector from './components/DateRangeSelector';
 
 const REPORTS_KEYS = {
   CONVERSATIONS: 'conversations_count',
@@ -57,26 +53,17 @@ const REPORTS_KEYS = {
 };
 
 export default {
+  components: {
+    ReportDateRangeSelector,
+  },
   data() {
-    return {
-      currentSelection: 0,
-      currentDateRangeSelection: this.$t('REPORT.DATE_RANGE')[0],
-      dateRange: this.$t('REPORT.DATE_RANGE'),
-    };
+    return { from: 0, to: 0, currentSelection: 0 };
   },
   computed: {
     ...mapGetters({
       accountSummary: 'getAccountSummary',
       accountReport: 'getAccountReports',
     }),
-    to() {
-      return getUnixTime(startOfDay(new Date()));
-    },
-    from() {
-      const diff = this.currentDateRangeSelection.id ? 29 : 6;
-      const fromDate = subDays(new Date(), diff);
-      return getUnixTime(startOfDay(fromDate));
-    },
     collection() {
       if (this.accountReport.isFetching) {
         return {};
@@ -113,28 +100,10 @@ export default {
       }));
     },
   },
-  mounted() {
-    this.fetchAllData();
-  },
   methods: {
     fetchAllData() {
       const { from, to } = this;
-      this.$store.dispatch('fetchAccountSummary', {
-        from,
-        to,
-      });
-      this.$store.dispatch('fetchAccountReport', {
-        metric: this.metrics[this.currentSelection].KEY,
-        from,
-        to,
-      });
-    },
-    changeDateSelection(selectedRange) {
-      this.currentDateRangeSelection = selectedRange;
-      this.fetchAllData();
-    },
-    changeSelection(index) {
-      this.currentSelection = index;
+      this.$store.dispatch('fetchAccountSummary', { from, to });
       this.fetchChartData();
     },
     fetchChartData() {
@@ -144,6 +113,19 @@ export default {
         from,
         to,
       });
+    },
+    downloadAgentReports() {
+      const { from, to } = this;
+      this.$store.dispatch('downloadAgentReports', { from, to });
+    },
+    changeSelection(index) {
+      this.currentSelection = index;
+      this.fetchChartData();
+    },
+    onDateRangeChange({ from, to }) {
+      this.from = from;
+      this.to = to;
+      this.fetchAllData();
     },
   },
 };

@@ -1,27 +1,71 @@
 {
   "COMPONENTS": {
     "FILE_BUBBLE": {
-      "DOWNLOAD": "Download",
-      "UPLOADING": "Uploading..."
+      "DOWNLOAD": "Lataa",
+      "UPLOADING": "Lähetetään..."
     },
     "FORM_BUBBLE": {
-      "SUBMIT": "Submit"
+      "SUBMIT": "Lähetä"
     }
   },
-  "AGENT_AVAILABILITY": {
-    "IS_AVAILABLE": "is available",
-    "ARE_AVAILABLE": "are available",
-    "OTHERS_ARE_AVAILABLE": "others are available",
-    "AND": "and"
+  "TEAM_AVAILABILITY": {
+    "ONLINE": "Olemme paikalla",
+    "OFFLINE": "Olemme hetken poissa"
   },
+  "REPLY_TIME": {
+    "IN_A_FEW_MINUTES": "Vastaa tyypillisesti muutamassa minuutissa",
+    "IN_A_FEW_HOURS": "Tyypillisesti vastaa muutaman tunnin kuluessa",
+    "IN_A_DAY": "Vastaa tyypillisesti päivässä"
+  },
+  "START_CONVERSATION": "Aloita keskustelu",
+  "START_NEW_CONVERSATION": "Aloita uusi keskustelu",
   "UNREAD_VIEW": {
-    "VIEW_MESSAGES_BUTTON": "See new messages",
-    "CLOSE_MESSAGES_BUTTON": "Close"
+    "VIEW_MESSAGES_BUTTON": "Näytä uudet viestit",
+    "CLOSE_MESSAGES_BUTTON": "Sulje",
+    "COMPANY_FROM": "yrityksessä",
+    "BOT": "Botti"
   },
   "BUBBLE": {
-    "LABEL": "Chat with us"
+    "LABEL": "Keskustele kanssamme"
   },
-  "POWERED_BY": "Powered by Chatwoot",
-  "EMAIL_PLACEHOLDER": "Please enter your email",
-  "CHAT_PLACEHOLDER": "Type your message"
+  "POWERED_BY": "Palvelun tarjoaa Chatwoot",
+  "EMAIL_PLACEHOLDER": "Ole hyvä ja syötä sähköpostiosoitteesi",
+  "CHAT_PLACEHOLDER": "Kirjoita viestisi",
+  "TODAY": "Tänään",
+  "YESTERDAY": "Eilen",
+  "PRE_CHAT_FORM": {
+    "FIELDS": {
+      "FULL_NAME": {
+        "LABEL": "Koko nimi",
+        "PLACEHOLDER": "Syötä koko nimesi",
+        "ERROR": "Koko nimi on pakollinen kenttä"
+      },
+      "EMAIL_ADDRESS": {
+        "LABEL": "Sähköpostiosoite",
+        "PLACEHOLDER": "Syötä sähköpostiosoite",
+        "ERROR": "Virheellinen sähköpostiosoite"
+      },
+      "MESSAGE": {
+        "LABEL": "Message",
+        "PLACEHOLDER": "Viestisi",
+        "ERROR": "Viesti on liian lyhyt"
+      }
+    }
+  },
+  "FILE_SIZE_LIMIT": "Tiedoston koko ylittää {MAXIMUM_FILE_UPLOAD_SIZE} maksimin",
+  "CHAT_FORM": {
+    "INVALID": {
+      "FIELD": "Virheellinen kenttä"
+    }
+  },
+  "CSAT": {
+    "TITLE": "Arvostele keskustelu",
+    "SUBMITTED_TITLE": "Kiitos arvostelustasi",
+    "PLACEHOLDER": "Kerro lisää"
+  },
+  "EMAIL_TRANSCRIPT": {
+    "BUTTON_TEXT": "Pyydä keskustelun kopiota",
+    "SEND_EMAIL_SUCCESS": "Chat-keskustelu on lähetetty onnistuneesti",
+    "SEND_EMAIL_ERROR": "Tapahtui virhe, yritä uudelleen"
+  }
 }

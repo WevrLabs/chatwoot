@@ -3,6 +3,8 @@
     "LINK": "Profielinstellingen",
     "TITLE": "Profielinstellingen",
     "BTN_TEXT": "Profiel bijwerken",
+    "UPDATE_SUCCESS": "Your profile has been updated successfully",
+    "PASSWORD_UPDATE_SUCCESS": "Uw wachtwoord is succesvol gewijzigd",
     "AFTER_EMAIL_CHANGED": "Uw profiel is succesvol bijgewerkt. Log opnieuw in als uw inloggegevens zijn gewijzigd",
     "FORM": {
       "AVATAR": "Profiel afbeelding",
@@ -16,17 +18,27 @@
       },
       "PASSWORD_SECTION": {
         "TITLE": "Wachtwoord",
-        "NOTE": "Het bijwerken van uw wachtwoord zou uw logins op meerdere apparaten opnieuw instellen."
+        "NOTE": "Het bijwerken van uw wachtwoord zou uw logins op meerdere apparaten opnieuw instellen.",
+        "BTN_TEXT": "Change password"
       },
       "ACCESS_TOKEN": {
         "TITLE": "Toegangs-token",
         "NOTE": "Dit token kan worden gebruikt als u een API gebaseerde integratie bouwt"
       },
+      "AUDIO_NOTIFICATIONS_SECTION": {
+        "TITLE": "Audio Notifications",
+        "NOTE": "Enable audio notifications in dashboard for new messages and conversations.",
+        "NONE": "None",
+        "ASSIGNED": "Assigned Conversations",
+        "ALL_CONVERSATIONS": "All Conversations"
+      },
       "EMAIL_NOTIFICATIONS_SECTION": {
         "TITLE": "E-mail notificaties",
         "NOTE": "Update hier uw e-mailvoorkeuren",
         "CONVERSATION_ASSIGNMENT": "E-mailberichten verzenden wanneer een gesprek aan mij is toegewezen",
-        "CONVERSATION_CREATION": "E-mailberichten verzenden wanneer een nieuw gesprek is gemaakt"
+        "CONVERSATION_CREATION": "E-mailberichten verzenden wanneer een nieuw gesprek is gemaakt",
+        "CONVERSATION_MENTION": "Send email notifications when you are mentioned in a conversation",
+        "ASSIGNED_CONVERSATION_NEW_MESSAGE": "Send email notifications when a new message is created in an assigned conversation"
       },
       "API": {
         "UPDATE_SUCCESS": "Uw notificatie-instellingen zijn succesvol bijgewerkt",
@@ -37,6 +49,8 @@
         "NOTE": "Werk je pushberichtvoorkeuren hier bij",
         "CONVERSATION_ASSIGNMENT": "Stuur pushberichten wanneer een gesprek aan mij is toegewezen",
         "CONVERSATION_CREATION": "Stuur pushberichten wanneer een nieuw gesprek is aangemaakt",
+        "CONVERSATION_MENTION": "Send push notifications when you are mentioned in a conversation",
+        "ASSIGNED_CONVERSATION_NEW_MESSAGE": "Send push notifications when a new message is created in an assigned conversation",
         "HAS_ENABLED_PUSH": "Je hebt pushberichten voor deze browser ingeschakeld.",
         "REQUEST_PUSH": "Pushberichten inschakelen"
       },
@@ -56,24 +70,20 @@
       "AVAILABILITY": {
         "LABEL": "Availability",
         "STATUSES_LIST": [
-          {
-            "value": "online",
-            "label": "Online"
-          },
-          {
-            "value": "busy",
-            "label": "Busy"
-          },
-          {
-            "value": "offline",
-            "label": "Offline"
-          }
+          "Online",
+          "Busy",
+          "Offline"
         ]
       },
       "EMAIL": {
         "LABEL": "Uw e-mailadres",
         "ERROR": "Voer een geldig e-mailadres in",
         "PLACEHOLDER": "Voer je e-mailadres in, dit zou worden weergegeven in gesprekken"
+      },
+      "CURRENT_PASSWORD": {
+        "LABEL": "Current password",
+        "ERROR": "Please enter the current password",
+        "PLACEHOLDER": "Please enter the current password"
       },
       "PASSWORD": {
         "LABEL": "Wachtwoord",
@@ -120,14 +130,22 @@
   "SIDEBAR": {
     "CONVERSATIONS": "Gesprekken",
     "REPORTS": "Rapporten",
+    "CONTACTS": "Contacts",
     "SETTINGS": "Instellingen",
     "HOME": "Startpagina",
     "AGENTS": "Medewerkers",
     "INBOXES": "Inboxen",
+    "NOTIFICATIONS": "Notifications",
     "CANNED_RESPONSES": "Standaard antwoorden",
     "INTEGRATIONS": "Integraties",
     "ACCOUNT_SETTINGS": "Accountinstellingen",
-    "LABELS": "Labelen"
+    "APPLICATIONS": "Applications",
+    "LABELS": "Labelen",
+    "TEAMS": "Teams",
+    "ALL_CONTACTS": "All Contacts",
+    "TAGGED_WITH": "Tagged with",
+    "REPORTS_OVERVIEW": "Overview",
+    "CSAT": "CSAT"
   },
   "CREATE_ACCOUNT": {
     "NEW_ACCOUNT": "New Account",

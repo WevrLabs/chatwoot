@@ -1,24 +1,25 @@
 <template>
   <div class="contact-info--row">
     <a v-if="href" :href="href" class="contact-info--details">
-      <i :class="icon" class="contact-info--icon" />
+      <emoji-or-icon :icon="icon" :emoji="emoji" />
       <span v-if="value" class="text-truncate" :title="value">{{ value }}</span>
       <span v-else class="text-muted">{{
         $t('CONTACT_PANEL.NOT_AVAILABLE')
       }}</span>
 
-      <button
+      <woot-button
         v-if="showCopy"
         type="submit"
-        class="button nice link hollow grey-btn compact"
+        variant="link"
+        color-scheme="secondary"
+        icon="ion-clipboard"
+        class-names="icon copy-icon"
         @click="onCopy"
-      >
-        <i class="icon copy-icon ion-clipboard"></i>
-      </button>
+      />
     </a>
 
     <div v-else class="contact-info--details">
-      <i :class="icon" class="contact-info--icon" />
+      <emoji-or-icon :icon="icon" :emoji="emoji" />
       <span v-if="value" class="text-truncate">{{ value }}</span>
       <span v-else class="text-muted">{{
         $t('CONTACT_PANEL.NOT_AVAILABLE')
@@ -29,7 +30,12 @@
 <script>
 import copy from 'copy-text-to-clipboard';
 import alertMixin from 'shared/mixins/alertMixin';
+import EmojiOrIcon from 'shared/components/EmojiOrIcon';
+
 export default {
+  components: {
+    EmojiOrIcon,
+  },
   mixins: [alertMixin],
   props: {
     href: {
@@ -37,6 +43,10 @@ export default {
       default: '',
     },
     icon: {
+      type: String,
+      required: true,
+    },
+    emoji: {
       type: String,
       required: true,
     },
@@ -59,26 +69,21 @@ export default {
 };
 </script>
 <style scoped lang="scss">
-@import '~dashboard/assets/scss/variables';
-
 .contact-info--row {
   .contact-info--icon {
-    font-size: $font-size-default;
-    min-width: $space-medium;
+    font-size: var(--font-size-default);
+    min-width: var(--space-medium);
   }
 }
 
 .contact-info--details {
   display: flex;
   align-items: center;
-  margin-bottom: $space-smaller;
-  color: $color-body;
+  margin-bottom: var(--space-small);
+  color: var(--color-body);
 
   .copy-icon {
-    margin-left: $space-one;
-    &:hover {
-      color: $color-woot;
-    }
+    margin-left: var(--space-smaller);
   }
 
   &.a {
@@ -86,5 +91,11 @@ export default {
       text-decoration: underline;
     }
   }
+}
+
+.contact-info--details .icon--emoji,
+.contact-info--details .icon--font {
+  display: inline-block;
+  width: var(--space-medium);
 }
 </style>

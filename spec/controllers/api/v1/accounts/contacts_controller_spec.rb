@@ -29,6 +29,17 @@ RSpec.describe 'Contacts API', type: :request do
         expect(response_body['payload'].first['contact_inboxes'].first['inbox']['name']).to eq(contact_inbox.inbox.name)
       end
 
+      it 'returns all contacts without contact inboxes' do
+        get "/api/v1/accounts/#{account.id}/contacts?include_contact_inboxes=false",
+            headers: admin.create_new_auth_token,
+            as: :json
+
+        expect(response).to have_http_status(:success)
+        response_body = JSON.parse(response.body)
+        expect(response_body['payload'].first['email']).to eq(contact.email)
+        expect(response_body['payload'].first['contact_inboxes'].blank?).to eq(true)
+      end
+
       it 'returns includes conversations count and last seen at' do
         create(:conversation, contact: contact, account: account, inbox: contact_inbox.inbox, contact_last_seen_at: Time.now.utc)
         get "/api/v1/accounts/#{account.id}/contacts",
@@ -39,6 +50,59 @@ RSpec.describe 'Contacts API', type: :request do
         response_body = JSON.parse(response.body)
         expect(response_body['payload'].first['conversations_count']).to eq(contact.conversations.count)
         expect(response_body['payload'].first['last_seen_at']).present?
+      end
+
+      it 'filters contacts based on label filter' do
+        contact_with_label1, contact_with_label2 = FactoryBot.create_list(:contact, 2, account: account)
+        contact_with_label1.update_labels(['label1'])
+        contact_with_label2.update_labels(['label2'])
+
+        get "/api/v1/accounts/#{account.id}/contacts",
+            params: { labels: %w[label1 label2] },
+            headers: admin.create_new_auth_token,
+            as: :json
+
+        expect(response).to have_http_status(:success)
+        response_body = JSON.parse(response.body)
+        expect(response_body['meta']['count']).to eq(2)
+        expect(response_body['payload'].pluck('email')).to include(contact_with_label1.email, contact_with_label2.email)
+      end
+    end
+  end
+
+  describe 'POST /api/v1/accounts/{account.id}/contacts/import' do
+    context 'when it is an unauthenticated user' do
+      it 'returns unauthorized' do
+        post "/api/v1/accounts/#{account.id}/contacts/import"
+
+        expect(response).to have_http_status(:unauthorized)
+      end
+    end
+
+    context 'when it is an authenticated user with out permission' do
+      let(:agent) { create(:user, account: account, role: :agent) }
+
+      it 'returns unauthorized' do
+        post "/api/v1/accounts/#{account.id}/contacts/import",
+             headers: agent.create_new_auth_token,
+             as: :json
+
+        expect(response).to have_http_status(:unauthorized)
+      end
+    end
+
+    context 'when it is an authenticated user' do
+      let(:admin) { create(:user, account: account, role: :administrator) }
+
+      it 'creates a data import' do
+        file = fixture_file_upload(Rails.root.join('spec/assets/contacts.csv'), 'text/csv')
+        post "/api/v1/accounts/#{account.id}/contacts/import",
+             headers: admin.create_new_auth_token,
+             params: { import_file: file }
+
+        expect(response).to have_http_status(:success)
+        expect(account.data_imports.count).to eq(1)
+        expect(account.data_imports.first.import_file.attached?).to eq(true)
       end
     end
   end
@@ -90,11 +154,33 @@ RSpec.describe 'Contacts API', type: :request do
     context 'when it is an authenticated user' do
       let(:admin) { create(:user, account: account, role: :administrator) }
       let!(:contact1) { create(:contact, account: account) }
-      let!(:contact2) { create(:contact, account: account, email: 'test@test.com') }
+      let!(:contact2) { create(:contact, name: 'testcontact', account: account, email: 'test@test.com') }
 
       it 'returns all contacts with contact inboxes' do
         get "/api/v1/accounts/#{account.id}/contacts/search",
             params: { q: contact2.email },
+            headers: admin.create_new_auth_token,
+            as: :json
+
+        expect(response).to have_http_status(:success)
+        expect(response.body).to include(contact2.email)
+        expect(response.body).not_to include(contact1.email)
+      end
+
+      it 'matches the contact ignoring the case in email' do
+        get "/api/v1/accounts/#{account.id}/contacts/search",
+            params: { q: 'Test@Test.com' },
+            headers: admin.create_new_auth_token,
+            as: :json
+
+        expect(response).to have_http_status(:success)
+        expect(response.body).to include(contact2.email)
+        expect(response.body).not_to include(contact1.email)
+      end
+
+      it 'matches the contact ignoring the case in name' do
+        get "/api/v1/accounts/#{account.id}/contacts/search",
+            params: { q: 'TestContact' },
             headers: admin.create_new_auth_token,
             as: :json
 
@@ -126,6 +212,45 @@ RSpec.describe 'Contacts API', type: :request do
 
         expect(response).to have_http_status(:success)
         expect(response.body).to include(contact.email)
+      end
+    end
+  end
+
+  describe 'GET /api/v1/accounts/{account.id}/contacts/:id/contactable_inboxes' do
+    let!(:contact) { create(:contact, account: account) }
+
+    context 'when it is an unauthenticated user' do
+      it 'returns unauthorized' do
+        get "/api/v1/accounts/#{account.id}/contacts/#{contact.id}/contactable_inboxes"
+
+        expect(response).to have_http_status(:unauthorized)
+      end
+    end
+
+    context 'when it is an authenticated user' do
+      let(:agent) { create(:user, account: account, role: :agent) }
+      let!(:twilio_sms) { create(:channel_twilio_sms, account: account) }
+      let!(:twilio_sms_inbox) { create(:inbox, channel: twilio_sms, account: account) }
+      let!(:twilio_whatsapp) { create(:channel_twilio_sms, medium: :whatsapp, account: account) }
+      let!(:twilio_whatsapp_inbox) { create(:inbox, channel: twilio_whatsapp, account: account) }
+
+      it 'shows the contactable inboxes which the user has access to' do
+        create(:inbox_member, user: agent, inbox: twilio_whatsapp_inbox)
+
+        inbox_service = double
+        allow(Contacts::ContactableInboxesService).to receive(:new).and_return(inbox_service)
+        allow(inbox_service).to receive(:get).and_return([
+                                                           { source_id: '1123', inbox: twilio_sms_inbox },
+                                                           { source_id: '1123', inbox: twilio_whatsapp_inbox }
+                                                         ])
+        expect(inbox_service).to receive(:get)
+        get "/api/v1/accounts/#{account.id}/contacts/#{contact.id}/contactable_inboxes",
+            headers: agent.create_new_auth_token,
+            as: :json
+
+        expect(response).to have_http_status(:success)
+        # only the inboxes which agent has access to are shown
+        expect(JSON.parse(response.body)['payload'].pluck('inbox').pluck('id')).to eq([twilio_whatsapp_inbox.id])
       end
     end
   end
@@ -195,7 +320,7 @@ RSpec.describe 'Contacts API', type: :request do
 
         expect(response).to have_http_status(:success)
         expect(contact.reload.name).to eq('Test Blub')
-        # custom attributes are merged properly without overwritting existing ones
+        # custom attributes are merged properly without overwriting existing ones
         expect(contact.custom_attributes).to eq({ 'test' => 'new test', 'test1' => 'test1', 'test2' => 'test2' })
       end
 

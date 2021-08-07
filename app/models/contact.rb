@@ -7,6 +7,7 @@
 #  custom_attributes     :jsonb
 #  email                 :string
 #  identifier            :string
+#  last_activity_at      :datetime
 #  name                  :string
 #  phone_number          :string
 #  pubsub_token          :string
@@ -16,31 +17,37 @@
 #
 # Indexes
 #
-#  index_contacts_on_account_id         (account_id)
-#  index_contacts_on_pubsub_token       (pubsub_token) UNIQUE
-#  uniq_email_per_account_contact       (email,account_id) UNIQUE
-#  uniq_identifier_per_account_contact  (identifier,account_id) UNIQUE
+#  index_contacts_on_account_id                   (account_id)
+#  index_contacts_on_phone_number_and_account_id  (phone_number,account_id)
+#  index_contacts_on_pubsub_token                 (pubsub_token) UNIQUE
+#  uniq_email_per_account_contact                 (email,account_id) UNIQUE
+#  uniq_identifier_per_account_contact            (identifier,account_id) UNIQUE
 #
 
 class Contact < ApplicationRecord
   include Pubsubable
   include Avatarable
   include AvailabilityStatusable
+  include Labelable
 
   validates :account_id, presence: true
   validates :email, allow_blank: true, uniqueness: { scope: [:account_id], case_sensitive: false }
   validates :identifier, allow_blank: true, uniqueness: { scope: [:account_id] }
+  validates :phone_number,
+            allow_blank: true, uniqueness: { scope: [:account_id] },
+            format: { with: /\+[1-9]\d{1,14}\z/, message: 'should be in e164 format' }
 
   belongs_to :account
   has_many :conversations, dependent: :destroy
   has_many :contact_inboxes, dependent: :destroy
+  has_many :csat_survey_responses, dependent: :destroy
   has_many :inboxes, through: :contact_inboxes
   has_many :messages, as: :sender, dependent: :destroy
+  has_many :notes, dependent: :destroy
 
   before_validation :prepare_email_attribute
-  after_create_commit :dispatch_create_event
+  after_create_commit :dispatch_create_event, :ip_lookup
   after_update_commit :dispatch_update_event
-  after_commit :ip_lookup
 
   def get_source_id(inbox_id)
     contact_inboxes.find_by!(inbox_id: inbox_id).source_id
@@ -49,6 +56,7 @@ class Contact < ApplicationRecord
   def push_event_data
     {
       additional_attributes: additional_attributes,
+      custom_attributes: custom_attributes,
       email: email,
       id: id,
       identifier: identifier,

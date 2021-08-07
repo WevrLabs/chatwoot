@@ -10,7 +10,7 @@ describe Facebook::SendOnFacebookService do
   end
 
   let!(:account) { create(:account) }
-  let(:bot) { class_double('FacebookBot::Bot').as_stubbed_const }
+  let(:bot) { class_double('Facebook::Messenger::Bot').as_stubbed_const }
   let!(:widget_inbox) { create(:inbox, account: account) }
   let!(:facebook_channel) { create(:channel_facebook_page, account: account) }
   let!(:facebook_inbox) { create(:inbox, channel: facebook_channel, account: account) }
@@ -58,7 +58,21 @@ describe Facebook::SendOnFacebookService do
         attachment.file.attach(io: File.open(Rails.root.join('spec/assets/avatar.png')), filename: 'avatar.png', content_type: 'image/png')
         message.save!
         ::Facebook::SendOnFacebookService.new(message: message).perform
-        expect(bot).to have_received(:deliver)
+        expect(bot).to have_received(:deliver).with({
+                                                      recipient: { id: contact_inbox.source_id },
+                                                      message: { text: message.content }
+                                                    }, { page_id: facebook_channel.page_id })
+        expect(bot).to have_received(:deliver).with({
+                                                      recipient: { id: contact_inbox.source_id },
+                                                      message: {
+                                                        attachment: {
+                                                          type: 'image',
+                                                          payload: {
+                                                            url: attachment.file_url
+                                                          }
+                                                        }
+                                                      }
+                                                    }, { page_id: facebook_channel.page_id })
       end
     end
   end

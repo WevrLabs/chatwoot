@@ -24,8 +24,12 @@ class ContactIpLookupJob < ApplicationJob
     ip = get_contact_ip(contact)
     return if ip.blank?
 
-    contact.additional_attributes['city'] = Geocoder.search(ip).first.city
-    contact.additional_attributes['country'] = Geocoder.search(ip).first.country
+    geocoder_result = Geocoder.search(ip).first
+    return unless geocoder_result
+
+    contact.additional_attributes['city'] = geocoder_result.city
+    contact.additional_attributes['country'] = geocoder_result.country
+    contact.additional_attributes['country_code'] = geocoder_result.country_code
     contact.save!
   end
 
@@ -41,7 +45,7 @@ class ContactIpLookupJob < ApplicationJob
 
   def setup_vendor_db
     base_url = 'https://download.maxmind.com/app/geoip_download'
-    source = URI.open("#{base_url}?edition_id=GeoLite2-City&suffix=tar.gz&license_key=#{ENV['IP_LOOKUP_API_KEY']}")
+    source = URI.parse("#{base_url}?edition_id=GeoLite2-City&suffix=tar.gz&license_key=#{ENV['IP_LOOKUP_API_KEY']}").open
     tar_extract = Gem::Package::TarReader.new(Zlib::GzipReader.open(source))
     tar_extract.rewind
 

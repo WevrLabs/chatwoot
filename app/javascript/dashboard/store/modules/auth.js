@@ -6,6 +6,7 @@ import authAPI from '../../api/auth';
 import createAxios from '../../helper/APIHelper';
 import actionCable from '../../helper/actionCable';
 import { setUser, getHeaderExpiry, clearCookiesOnLogout } from '../utils/api';
+import { DEFAULT_REDIRECT_URL } from '../../constants';
 
 const state = {
   currentUser: {
@@ -32,6 +33,10 @@ export const getters = {
 
   getCurrentUserID(_state) {
     return _state.currentUser.id;
+  },
+
+  getUISettings(_state) {
+    return _state.currentUser.ui_settings || {};
   },
 
   getCurrentUserAvailabilityStatus(_state) {
@@ -65,7 +70,7 @@ export const actions = {
           commit(types.default.SET_CURRENT_USER);
           window.axios = createAxios(axios);
           actionCable.init(Vue);
-          window.location = '/';
+          window.location = DEFAULT_REDIRECT_URL;
           resolve();
         })
         .catch(error => {
@@ -79,7 +84,7 @@ export const actions = {
       setUser(response.data.payload.data, getHeaderExpiry(response));
       context.commit(types.default.SET_CURRENT_USER);
     } catch (error) {
-      if (error.response.status === 401) {
+      if (error?.response?.status === 401) {
         clearCookiesOnLogout();
       }
     }
@@ -95,9 +100,22 @@ export const actions = {
   logout({ commit }) {
     commit(types.default.CLEAR_USER);
   },
+
   updateProfile: async ({ commit }, params) => {
+    // eslint-disable-next-line no-useless-catch
     try {
       const response = await authAPI.profileUpdate(params);
+      setUser(response.data, getHeaderExpiry(response));
+      commit(types.default.SET_CURRENT_USER);
+    } catch (error) {
+      throw error;
+    }
+  },
+
+  updateUISettings: async ({ commit }, params) => {
+    try {
+      commit(types.default.SET_CURRENT_USER_UI_SETTINGS, params);
+      const response = await authAPI.updateUISettings(params);
       setUser(response.data, getHeaderExpiry(response));
       commit(types.default.SET_CURRENT_USER);
     } catch (error) {
@@ -105,10 +123,13 @@ export const actions = {
     }
   },
 
-  updateAvailability: ({ commit }, { availability }) => {
+  updateAvailability: ({ commit, dispatch }, { availability }) => {
     authAPI.updateAvailability({ availability }).then(response => {
-      setUser(response.data, getHeaderExpiry(response));
+      const userData = response.data;
+      const { id, availability_status: availabilityStatus } = userData;
+      setUser(userData, getHeaderExpiry(response));
       commit(types.default.SET_CURRENT_USER);
+      dispatch('agents/updatePresence', { [id]: availabilityStatus });
     });
   },
 
@@ -127,7 +148,7 @@ export const actions = {
 };
 
 // mutations
-const mutations = {
+export const mutations = {
   [types.default.SET_CURRENT_USER_AVAILABILITY](_state, status) {
     Vue.set(_state.currentUser, 'availability_status', status);
   },
@@ -141,6 +162,15 @@ const mutations = {
     };
 
     Vue.set(_state, 'currentUser', currentUser);
+  },
+  [types.default.SET_CURRENT_USER_UI_SETTINGS](_state, { uiSettings }) {
+    Vue.set(_state, 'currentUser', {
+      ..._state.currentUser,
+      ui_settings: {
+        ..._state.currentUser.ui_settings,
+        ...uiSettings,
+      },
+    });
   },
   [types.default.SET_CURRENT_ACCOUNT_ID](_state, accountId) {
     Vue.set(_state, 'currentAccountId', Number(accountId));

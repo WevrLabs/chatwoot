@@ -1,19 +1,39 @@
+@keyframes left-shift-animation {
+
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+
+  50% {
+    transform: translateX(1px);
+  }
+}
+
 .conversation {
   @include flex;
   @include flex-shrink;
   @include padding(0 0 0 $space-normal);
-  align-items: center;
   border-bottom: 1px solid transparent;
   border-left: $space-micro solid transparent;
   border-top: 1px solid transparent;
   cursor: pointer;
   position: relative;
-
+  
+  .user-thumbnail-box #badge {
+    left: -8px !important;
+    top: 25px !important;
+    width: 25px !important;
+    height: 25px !important;
+    background: $color-background-dark1;
+  }
+  
   &.active {
-    background: $color-background;
-    border-bottom-color: $color-border-light;
-    border-left-color: $color-woot;
-    border-top-color: $color-border-light;
+    background: $color-background-dark4;
+    border-bottom-color: $color-border-dark2;
+    animation: left-shift-animation .25s $swift-ease-out-function;
+    //border-left-color: $color-woot;
+    // border-top-color: $color-border-dark2;
 
     .conversation--details {
       border-top-color: transparent;
@@ -30,9 +50,9 @@
     }
   }
 
-  &:nth-last-child(2) {
+  &:last-child {
     .conversation--details {
-      border-bottom-color: $color-border-light;
+      border-bottom-color: $color-border-dark2;
     }
   }
 
@@ -40,7 +60,7 @@
   .conversation--details {
     @include margin(0 0 0 $space-one);
     @include border-light-bottom;
-    @include border-light-top;
+    border-top: 1px solid $color-border-dark2;
     @include padding($space-slab 0);
     border-bottom-color: transparent;
   }
@@ -49,15 +69,19 @@
     font-size: $font-size-small;
     margin-bottom: 0;
     text-transform: capitalize;
+    color: $color-light-gray;
 
     .label {
       left: $space-micro;
-      max-width: $space-jumbo;
+      max-width: $space-larger;
       overflow: hidden;
       position: relative;
       text-overflow: ellipsis;
       top: $space-micro;
       white-space: nowrap;
+      background: #2f3336;
+      color: #c1c1c1;
+      display: none;
     }
   }
 
@@ -78,11 +102,6 @@
       font-size: $font-size-mini;
       vertical-align: top;
     }
-
-    .message-from-agent {
-      color: $color-gray;
-      font-size: $font-size-mini;
-    }
   }
 
   .conversation--meta {
@@ -95,18 +114,25 @@
     .unread {
       $unread-size: $space-normal;
       @include round-corner;
-      @include light-shadow;
-      background: darken($success-color, 3%);
-      color: $color-white;
+      // @include light-shadow;
+      // box-shadow: 0 0.4rem 6px rgba(0, 0, 0, 1), 0 13px 31px rgba(0, 0, 0, 1);
+      // background: darken($success-color, 3%);
+      background: #632e00;
+      // color: $color-white;
+      color: #cecece;
       display: none;
-      font-size: $font-size-micro;
+      // font-size: $font-size-micro;
+      font-size: 1.4rem;
       font-weight: $font-weight-black;
-      height: $unread-size;
-      line-height: $unread-size;
+      // height: $unread-size;
+      height: 2.6rem;
+      // line-height: $unread-size;
+      line-height: 2.6rem;
       margin-left: auto;
       margin-top: $space-smaller;
       min-width: $unread-size;
-      padding: 0 $space-smaller;
+      // padding: 0 $space-smaller;
+      padding: 0 1rem;
       text-align: center;
     }
 
@@ -126,10 +152,13 @@
 
     .conversation--message {
       font-weight: $font-weight-bold;
+      // color: $color-light-gray;
+      color: #dadada;
     }
 
     .conversation--user {
       font-weight: $font-weight-bold;
+      color: $color-woot;
     }
   }
 

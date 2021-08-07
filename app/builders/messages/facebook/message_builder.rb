@@ -13,15 +13,21 @@ class Messages::Facebook::MessageBuilder
     @outgoing_echo = outgoing_echo
     @sender_id = (@outgoing_echo ? @response.recipient_id : @response.sender_id)
     @message_type = (@outgoing_echo ? :outgoing : :incoming)
+    @attachments = (@response.attachments || [])
   end
 
   def perform
+    # This channel might require reauthorization, may be owner might have changed the fb password
+    return if @inbox.channel.reauthorization_required?
+
     ActiveRecord::Base.transaction do
       build_contact
       build_message
     end
+  rescue Koala::Facebook::AuthenticationError
+    Rails.logger.info "Facebook Authorization expired for Inbox #{@inbox.id}"
   rescue StandardError => e
-    Raven.capture_exception(e)
+    Sentry.capture_exception(e)
     true
   end
 
@@ -41,11 +47,17 @@ class Messages::Facebook::MessageBuilder
 
   def build_message
     @message = conversation.messages.create!(message_params)
-    (response.attachments || []).each do |attachment|
-      attachment_obj = @message.attachments.new(attachment_params(attachment).except(:remote_file_url))
-      attachment_obj.save!
-      attach_file(attachment_obj, attachment_params(attachment)[:remote_file_url]) if attachment_params(attachment)[:remote_file_url]
+    @attachments.each do |attachment|
+      process_attachment(attachment)
     end
+  end
+
+  def process_attachment(attachment)
+    return if attachment['type'].to_sym == :template
+
+    attachment_obj = @message.attachments.new(attachment_params(attachment).except(:remote_file_url))
+    attachment_obj.save!
+    attach_file(attachment_obj, attachment_params(attachment)[:remote_file_url]) if attachment_params(attachment)[:remote_file_url]
   end
 
   def attach_file(attachment, file_url)
@@ -129,9 +141,12 @@ class Messages::Facebook::MessageBuilder
     begin
       k = Koala::Facebook::API.new(@inbox.channel.page_access_token) if @inbox.facebook?
       result = k.get_object(@sender_id) || {}
+    rescue Koala::Facebook::AuthenticationError
+      @inbox.channel.authorization_error!
+      raise
     rescue StandardError => e
       result = {}
-      Raven.capture_exception(e)
+      Sentry.capture_exception(e)
     end
     {
       name: "#{result['first_name'] || 'John'} #{result['last_name'] || 'Doe'}",

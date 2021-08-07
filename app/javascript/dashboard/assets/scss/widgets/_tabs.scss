@@ -1,6 +1,6 @@
 .tabs {
   @include padding($zero $space-normal);
-  @include border-normal-bottom;
+  border-bottom: 1px solid $color-border-dark2;
   border-left-width: 0;
   border-right-width: 0;
   border-top-width: 0;
@@ -14,6 +14,7 @@
     a {
       font-size: $font-size-default;
       font-weight: $font-weight-medium;
+      color: $color-dark-gray;
       padding-bottom: $space-slab;
       padding-top: $space-slab;
     }
@@ -24,12 +25,12 @@
   @include margin($zero $space-slab);
 
   .badge {
-    background: $color-background;
+    background: $color-background-dark4;
     border-radius: $space-small;
     color: $color-gray;
-    font-size: $font-size-micro;
+    font-size: $font-size-small;
     font-weight: $font-weight-black;
-    margin-left: $space-smaller;
+    margin-left: $space-one;
     padding: $space-smaller;
   }
 
@@ -56,7 +57,7 @@
     display: flex;
     flex-direction: row;
     font-size: $font-size-small;
-    transition: all .15s $ease-in-out-cubic;
+    transition: border-color .15s $swift-ease-out-function;
   }
 
   &.is-active {
@@ -66,7 +67,7 @@
     }
 
     .badge {
-      background: $color-extra-light-blue;
+      background: $color-background-dark4;
       color: $color-woot;
     }
   }
